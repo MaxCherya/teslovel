@@ -16,6 +16,7 @@ Teslovel is a modern web application built with a powerful full-stack architectu
 - [Framer Motion](https://www.framer.com/motion/) — Animation and transitions
 - [React Toastify](https://fkhadra.github.io/react-toastify/) — Toast notifications
 - [usehooks-ts](https://usehooks-ts.com/) — TypeScript-first React utility hooks
+- [Swiper](https://swiperjs.com/react) — Modern touch slider for carousels and galleries
 
 ### Backend
 
