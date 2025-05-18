@@ -1,0 +1,14 @@
+{
+    "editor.quickSuggestions": {
+      "other": true,
+      "comments": false,
+      "strings": true
+    },
+    "tailwindCSS.includeLanguages": {
+      "typescript": "html",
+      "typescriptreact": "html"
+    },
+    "emmet.includeLanguages": {
+      "typescript": "typescriptreact"
+    }
+  }  
