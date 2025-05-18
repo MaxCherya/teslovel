@@ -26,7 +26,7 @@ urlpatterns = [
 
     # Serves React index.html for frontend routes
     path("", CSRFAwareIndexView.as_view(), name="home"),
-    re_path(r"^(?!admin/|account/|api/|orders/).*", CSRFAwareIndexView.as_view()),
+    re_path(r"^(?!admin/).*", CSRFAwareIndexView.as_view()),
 ]
 
 if settings.DEBUG:
