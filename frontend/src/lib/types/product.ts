@@ -4,5 +4,5 @@ export type catwalkContent = {
     max_speed: number,
     range: number,
     wheels_size: number,
-    img: string
+    landscape_img: string
 }

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import ImgSwiper from "../../components/ui/swipers/ImgSwiper";
 import type { catwalkContent } from "../../lib/types/product";
 import MainContainer from "../../components/layouts/MainContainer";
+import HeaderCatwalk from "../../components/forPages/Home/HeaderCatwalk";
 
 const Home: React.FC = () => {
 
@@ -12,7 +12,7 @@ const Home: React.FC = () => {
             max_speed: 45,
             range: 90,
             wheels_size: 27,
-            img: 'https://ideogram.ai/assets/progressive-image/balanced/response/7Cp-JXkYQY2SelfyMMZdTg'
+            landscape_img: 'https://i.ibb.co/YBJJGQ9N/teslovel-Landscape.png'
         },
         {
             id: 1,
@@ -20,7 +20,7 @@ const Home: React.FC = () => {
             max_speed: 35,
             range: 150,
             wheels_size: 29,
-            img: 'https://ideogram.ai/assets/progressive-image/balanced/response/NisJKDW9ScSgAwA9Y3KLKA'
+            landscape_img: 'https://i.ibb.co/YBJJGQ9N/teslovel-Landscape.png'
         },
         {
             id: 2,
@@ -28,7 +28,7 @@ const Home: React.FC = () => {
             max_speed: 45,
             range: 90,
             wheels_size: 29,
-            img: 'https://ideogram.ai/assets/progressive-image/balanced/response/eiGBb2xtS_epGHOYXWBDyQ'
+            landscape_img: 'https://i.ibb.co/YBJJGQ9N/teslovel-Landscape.png'
         }
     ]
 
@@ -43,15 +43,7 @@ const Home: React.FC = () => {
 
             {/* Bikes Overview */}
             {catwalk ? (
-                <div className="w-screen h-screen flex items-center justify-center overflow-hidden">
-                    <div className="absolute w-full h-full bg-black/50 z-10">
-
-                    </div>
-                    <ImgSwiper duration={9000} imgs={catwalk?.map((item) => ({
-                        src: item.img,
-                        alt: item.name
-                    }))} />
-                </div>
+                <HeaderCatwalk catwalk={catwalk} />
             ) : null}
 
         </div>
