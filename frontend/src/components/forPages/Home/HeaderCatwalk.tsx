@@ -7,6 +7,7 @@ import ImgSwiper from "../../ui/swipers/ImgSwiper";
 import { CTAButton } from "../../ui/btns";
 import type { catwalkContent } from "../../../lib/types/product";
 import { useState } from "react";
+import { motion } from "framer-motion"
 
 interface Props {
     catwalk: catwalkContent[]
@@ -14,13 +15,15 @@ interface Props {
 
 const HeaderCatwalk: React.FC<Props> = ({ catwalk }) => {
 
+    const duration = 9000 // ms
+    const progressWidth = '8vw'
     const [activeIndex, setActiveIndex] = useState(0);
 
     return (
         <div className="relative w-screen overflow-hidden">
             {/* Swiper images as background layer */}
             <ImgSwiper
-                duration={9000}
+                duration={duration}
                 onIndexChange={setActiveIndex}
                 imgs={catwalk?.map((item) => ({
                     src: item.landscape_img,
@@ -33,6 +36,28 @@ const HeaderCatwalk: React.FC<Props> = ({ catwalk }) => {
 
             {/* Text content on top of the overlay */}
             <div className="absolute inset-0 z-20 flex items-center justify-center px-4">
+
+                {/* Progress */}
+                <div className="absolute bottom-1 flex flex-row gap-4">
+                    {Array.from({ length: catwalk.length }).map((_, index) => (
+                        <div
+                            key={index}
+                            style={{ width: progressWidth }}
+                            className="relative bg-gray-400 h-[0.2rem] overflow-hidden"
+                        >
+                            {index === activeIndex && (
+                                <motion.div
+                                    key={activeIndex}
+                                    initial={{ width: 0 }}
+                                    animate={{ width: "100%" }}
+                                    transition={{ duration: duration / 1000, ease: "linear" }}
+                                    className="absolute h-[0.2rem] bg-white"
+                                />
+                            )}
+                        </div>
+                    ))}
+                </div>
+
                 <div className="flex flex-col items-center w-full max-w-6xl mx-auto gap-6 sm:gap-8 md:gap-10 lg:gap-12 text-center">
                     {/* Bike Name */}
                     <h1 className="text-gray-200 text-2xl sm:text-4xl md:text-5xl lg:text-7xl font-semibold">

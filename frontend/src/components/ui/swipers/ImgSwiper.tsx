@@ -1,6 +1,6 @@
 import React from "react";
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, Pagination, Scrollbar, A11y } from 'swiper/modules';
+import { Autoplay, A11y } from 'swiper/modules';
 
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -22,11 +22,9 @@ interface Prop {
 const ImgSwiper: React.FC<Prop> = ({ imgs, duration = 3000, onSlideChange, onIndexChange }) => {
     return (
         <Swiper
-            modules={[Autoplay, Pagination, Scrollbar, A11y]}
+            modules={[Autoplay, A11y]}
             spaceBetween={2}
             slidesPerView={1}
-            pagination={{ clickable: true }}
-            scrollbar={{ draggable: true }}
             onSlideChange={(swiper) => {
                 onSlideChange && onSlideChange();
                 onIndexChange && onIndexChange(swiper.realIndex);
