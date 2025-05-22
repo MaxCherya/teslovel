@@ -2,8 +2,8 @@ import { Outlet } from 'react-router-dom'
 
 export default function MainLayout() {
     return (
-        <div>
-            <header className='flex flex-col items-center bg-yellow-500'>
+        <div className='max-w-screen w-screen min-h-screen h-screen overflow-x-hidden'>
+            <header className='bg-yellow-500 w-full'>
                 <h1>Teslovel</h1>
                 {/* Nav Bar will be added here */}
             </header>
@@ -12,7 +12,7 @@ export default function MainLayout() {
                 <Outlet />
             </main>
 
-            <footer className='flex flex-col items-center bg-yellow-500'>
+            <footer className='bg-yellow-500 w-full'>
                 {/* Footer will be added here */}
                 <p>© 2025 Teslovel</p>
             </footer>

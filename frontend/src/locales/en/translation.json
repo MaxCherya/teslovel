@@ -1,3 +1,16 @@
 {
-    
+    "homePage": {
+        "catwalk": {
+            "bookBtn": "Book Now",
+            "kmH": "km/h",
+            "km": "km"
+        },
+        "mainInfo": {
+            "header": "Electric Bike Rental in Dnipro",
+            "description": "Teslovel offers electric bike rentals in Dnipro – for commuting, leisure, and delivery services. We provide electric bikes for rent by the day, by the week, or on custom terms depending on your needs. A wide range of electric bike models to suit different preferences and requirements. Affordable, transparent rental conditions under contract. Convenient contact options and a high level of service.",
+            "feature_1": "For awesome journeys",
+            "feature_2": "For delivery service workers",
+            "feature_3": "For exciting leisure"
+        }
+    }
 }

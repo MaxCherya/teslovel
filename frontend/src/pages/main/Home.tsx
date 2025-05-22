@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import type { catwalkContent } from "../../lib/types/product";
-import MainContainer from "../../components/layouts/MainContainer";
 import HeaderCatwalk from "../../components/forPages/Home/HeaderCatwalk";
+import MainInfo from "../../components/forPages/Home/MainInfo";
 
 const Home: React.FC = () => {
 
@@ -39,12 +39,17 @@ const Home: React.FC = () => {
     }, [])
 
     return (
-        <div className="w-screen h-screen">
+        <div className="w-full h-full flex flex-col items-center">
 
             {/* Bikes Overview */}
             {catwalk ? (
                 <HeaderCatwalk catwalk={catwalk} />
             ) : null}
+
+            {/* Main Info */}
+            <MainInfo />
+
+            <hr className="w-full bg-teal-800 h-1 my-16" />
 
         </div>
     )
