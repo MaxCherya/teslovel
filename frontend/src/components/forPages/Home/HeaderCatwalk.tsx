@@ -62,7 +62,7 @@ const HeaderCatwalk: React.FC<Props> = ({ catwalk }) => {
 
                 <div className="flex flex-col items-center w-full max-w-6xl mx-auto gap-6 sm:gap-8 md:gap-10 lg:gap-12 text-center">
                     {/* Bike Name */}
-                    <h1 className="text-gray-200 text-2xl sm:text-4xl md:text-5xl lg:text-7xl font-semibold">
+                    <h1 className="text-white text-2xl sm:text-4xl md:text-5xl lg:text-7xl font-semibold">
                         {catwalk[activeIndex].name}
                     </h1>
 

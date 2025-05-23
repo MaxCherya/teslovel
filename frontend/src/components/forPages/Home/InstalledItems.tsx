@@ -6,13 +6,13 @@ import { GiFlatTire, GiStoneWheel } from "react-icons/gi";
 const InstalledItems: React.FC = () => {
     return (
         <div
-            className="w-full bg-gray-100 flex flex-col items-center py-16 mt-10 mb-10"
+            className="w-full bg-gray-100 flex flex-col items-center py-16 mt-10 mb-5"
             style={{
-                clipPath: 'polygon(50% 3%, 100% 0, 100% 100%, 50% 97%, 0 100%, 0 0)',
+                clipPath: 'polygon(50% 1%, 100% 0, 100% 100%, 50% 99%, 0 100%, 0 0)',
             }}
         >
             <motion.h1
-                className="text-2xl md:text-3xl lg:text-5xl font-bold text-black text-center mb-12 px-4 tracking-tight"
+                className="text-xl md:text-2xl lg:text-4xl font-bold text-black text-center mb-12 px-4 tracking-tight"
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1, delay: 0.2 }}
@@ -20,7 +20,7 @@ const InstalledItems: React.FC = () => {
                 На наших велосипедах встановлено
             </motion.h1>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6 w-full max-w-5xl">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6 w-full md:max-w-5xl lg:max-w-5xl max-w-[95%]">
                 {[
                     { icon: <FaBicycle />, text: 'Якісні рами формула', color: 'text-black' },
                     { icon: <FaShieldAlt />, text: 'Посилені ободи', color: 'text-black' },
@@ -41,10 +41,10 @@ const InstalledItems: React.FC = () => {
                         transition={{ duration: 0.6, delay: index * 0.1 }}
                         viewport={{ once: false, amount: 0.3 }}
                     >
-                        <div className={`text-4xl md:text-5xl ${feature.color} transition-transform duration-300 group-hover:scale-110`}>
+                        <div className={`text-3xl md:text-4xl ${feature.color} transition-transform duration-300 group-hover:scale-110`}>
                             {feature.icon}
                         </div>
-                        <p className="text-lg md:text-xl text-gray-900 font-medium group-hover:text-white transition-colors duration-300">
+                        <p className="text-base md:text-lg text-gray-900 font-medium group-hover:text-white transition-colors duration-300">
                             {feature.text}
                         </p>
                     </motion.div>

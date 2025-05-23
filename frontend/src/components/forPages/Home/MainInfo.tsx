@@ -15,7 +15,7 @@ const MainInfo: React.FC = () => {
     return (
         <MainContainer className="flex flex-col items-center mt-8 gap-6">
             <motion.h1
-                className="text-2xl md:text-3xl lg:text-5xl font-bold text-black text-center"
+                className="text-xl md:text-2xl lg:text-4xl font-bold text-black text-center"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 1, delay: 0.2 }}

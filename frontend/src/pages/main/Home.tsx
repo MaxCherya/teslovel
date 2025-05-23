@@ -5,6 +5,9 @@ import MainInfo from "../../components/forPages/Home/MainInfo";
 import InstalledItems from "../../components/forPages/Home/InstalledItems";
 import CardsSwiper from "../../components/ui/swipers/CardsSwiper";
 
+import { motion } from 'framer-motion';
+import FAQAccordion from "../../components/ui/accordions/FAQAccordion";
+
 const Home: React.FC = () => {
 
     const tempData = [
@@ -58,6 +61,15 @@ const Home: React.FC = () => {
             <InstalledItems />
 
             {catwalk && <CardsSwiper content={catwalk} />}
+
+            <div
+                className="w-full bg-gray-100 flex flex-col items-center py-16 mt-10 mb-10"
+                style={{
+                    clipPath: 'polygon(50% 1%, 100% 0, 100% 100%, 50% 100%, 0 100%, 0 0)',
+                }}
+            >
+                <FAQAccordion />
+            </div>
 
         </div>
     )

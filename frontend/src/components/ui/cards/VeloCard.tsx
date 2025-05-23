@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -14,6 +15,9 @@ interface Props {
 }
 
 const VeloCard: React.FC<Props> = ({ id, img, name, price_day }) => {
+
+    const { t } = useTranslation();
+
     return (
         <div>
             <div
@@ -29,7 +33,7 @@ const VeloCard: React.FC<Props> = ({ id, img, name, price_day }) => {
                     <div className='absolute bottom-20 left-1/12 flex flex-col'>
                         <h3 className='text-white text-lg md:text-xl font-semibold'>{name}</h3>
                         <p className='text-white text-base md:text-sm mb-3'>Від {price_day} грн за день оренди</p>
-                        <CTAButton type='order' label='Order' className='w-[7rem]' />
+                        <CTAButton type='order' label={t('homePage.catwalk.bookBtn')} />
                     </div>
                 </div>
             </div>

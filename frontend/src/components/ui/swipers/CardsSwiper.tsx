@@ -13,7 +13,7 @@ const CardsSwiper: React.FC<Props> = ({ content }) => {
     return (
         <div className="w-full max-w-5xl">
             <motion.h1
-                className="text-2xl md:text-3xl lg:text-5xl font-bold text-black text-center mb-12 px-4 tracking-tight"
+                className="text-xl md:text-2xl lg:text-4xl font-bold text-black text-center mb-12 px-4 tracking-tight"
                 initial={{ opacity: 0, y: -20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1, delay: 0.2 }}
