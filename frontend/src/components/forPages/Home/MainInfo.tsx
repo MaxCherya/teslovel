@@ -15,14 +15,14 @@ const MainInfo: React.FC = () => {
     return (
         <MainContainer className="flex flex-col items-center mt-8 gap-6">
             <motion.h1
-                className="text-xl md:text-2xl lg:text-4xl font-bold text-teal-800 text-center"
+                className="text-2xl md:text-3xl lg:text-5xl font-bold text-teal-800 text-center"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 1, delay: 0.2 }}
             >
                 {t('homePage.mainInfo.header')}
             </motion.h1>
-            <p className="max-w-[95%] text-sm">{t('homePage.mainInfo.description')}</p>
+            <p className="max-w-[95%] text-lg md:text-xl font-medium">{t('homePage.mainInfo.description')}</p>
             <div className="flex flex-col md:flex-row gap-6 lg:gap-8 justify-center">
                 <FeatureItem Icon={IoMdBicycle} text={t('homePage.mainInfo.feature_1')} />
                 <FeatureItem Icon={BiSolidPackage} text={t('homePage.mainInfo.feature_2')} />

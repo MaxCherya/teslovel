@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import type { catwalkContent } from "../../lib/types/product";
 import HeaderCatwalk from "../../components/forPages/Home/HeaderCatwalk";
 import MainInfo from "../../components/forPages/Home/MainInfo";
+import InstalledItems from "../../components/forPages/Home/InstalledItems";
 
 const Home: React.FC = () => {
 
@@ -49,7 +50,8 @@ const Home: React.FC = () => {
             {/* Main Info */}
             <MainInfo />
 
-            <hr className="w-full bg-teal-800 h-1 my-16" />
+            {/* Explicit features */}
+            <InstalledItems />
 
         </div>
     )

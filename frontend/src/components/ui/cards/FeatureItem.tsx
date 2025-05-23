@@ -18,7 +18,7 @@ const FeatureItem: React.FC<Props> = ({ Icon, text }) => (
         transition={{ duration: 0.5 }}
     >
         <Icon className="w-12 h-12 text-teal-600 mb-4" />
-        <p className="text-sm md:text-base lg:text-lg text-gray-700">{text}</p>
+        <p className="text-lg md:text-xl text-gray-700">{text}</p>
     </motion.div>
 );
 
