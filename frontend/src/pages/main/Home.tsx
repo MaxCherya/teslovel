@@ -3,6 +3,7 @@ import type { catwalkContent } from "../../lib/types/product";
 import HeaderCatwalk from "../../components/forPages/Home/HeaderCatwalk";
 import MainInfo from "../../components/forPages/Home/MainInfo";
 import InstalledItems from "../../components/forPages/Home/InstalledItems";
+import CardsSwiper from "../../components/ui/swipers/CardsSwiper";
 
 const Home: React.FC = () => {
 
@@ -13,6 +14,7 @@ const Home: React.FC = () => {
             max_speed: 45,
             range: 90,
             wheels_size: 27,
+            price_day: 150,
             landscape_img: 'https://i.ibb.co/YBJJGQ9N/teslovel-Landscape.png'
         },
         {
@@ -21,6 +23,7 @@ const Home: React.FC = () => {
             max_speed: 35,
             range: 150,
             wheels_size: 29,
+            price_day: 180,
             landscape_img: 'https://i.ibb.co/YBJJGQ9N/teslovel-Landscape.png'
         },
         {
@@ -29,6 +32,7 @@ const Home: React.FC = () => {
             max_speed: 45,
             range: 90,
             wheels_size: 29,
+            price_day: 130,
             landscape_img: 'https://i.ibb.co/YBJJGQ9N/teslovel-Landscape.png'
         }
     ]
@@ -52,6 +56,8 @@ const Home: React.FC = () => {
 
             {/* Explicit features */}
             <InstalledItems />
+
+            {catwalk && <CardsSwiper content={catwalk} />}
 
         </div>
     )

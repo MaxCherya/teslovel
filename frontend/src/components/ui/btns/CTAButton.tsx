@@ -10,14 +10,14 @@ interface Props {
 const CTAButton: React.FC<Props> = ({ label = '', type, className = '', onClick }) => {
 
     const styles = {
-        "order": "bg-white text-black hover:bg-teal-600 hover:text-white",
+        "order": "bg-white text-black hover:bg-blue-600 hover:text-white",
         "learn": "bg-gray-400 hover:bg-gray-700 text-gray-800 hover:text-white"
     }
 
     return (
         <button onClick={onClick}
             className={`${className} 
-                     rounded-full px-2 py-1 cursor-pointer
+                     rounded-sm px-2 py-1 cursor-pointer
                      transition-all duration-500 ${styles[type]}`}>{
                 label}
         </button>
