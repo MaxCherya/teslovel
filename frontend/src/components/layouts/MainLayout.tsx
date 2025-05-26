@@ -1,12 +1,28 @@
 import { Outlet } from 'react-router-dom'
+import { useState } from "react";
+import DesktopNav from '../forPages/Navs/DesktopNav';
+import MobileNav from '../forPages/Navs/MobileNav';
+import LanguageMenu from '../forPages/Navs/LanguageMenu';
 
 export default function MainLayout() {
+
+    const [showLanguageMenu, setShowLanguageMenu] = useState(false);
+
+    const toggleLanguageMenu = () => {
+        setShowLanguageMenu(!showLanguageMenu);
+    }
+
     return (
-        <div className='max-w-screen w-screen min-h-screen h-screen overflow-x-hidden'>
-            <header className='bg-white w-full'>
-                <h1>Teslovel</h1>
-                {/* Nav Bar will be added here */}
-            </header>
+        <div className='relative max-w-screen w-screen min-h-screen h-screen overflow-x-hidden'>
+
+            {/* Desktop Nav */}
+            <DesktopNav toggleLanguageMenu={toggleLanguageMenu} />
+
+            {/* Language Menu */}
+            <LanguageMenu showLanguageMenu={showLanguageMenu} />
+
+            {/* Mobile Nav */}
+            <MobileNav />
 
             <main>
                 <Outlet />

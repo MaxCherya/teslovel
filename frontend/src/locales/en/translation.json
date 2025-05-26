@@ -11,6 +11,10 @@
             "feature_1": "For awesome journeys",
             "feature_2": "For delivery service workers",
             "feature_3": "For exciting leisure"
+        },
+        "CTACallMe": {
+            "header": "Have questions? Leave a request!",
+            "btn": "Call me"
         }
     }
 }
