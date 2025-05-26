@@ -7,6 +7,12 @@ import LanguageMenu from '../forPages/Navs/LanguageMenu';
 export default function MainLayout() {
 
     const [showLanguageMenu, setShowLanguageMenu] = useState(false);
+    const [showMenu, setShowMenu] = useState(false);
+
+    const toggleMenu = () => {
+        setShowMenu(!showMenu);
+        setShowLanguageMenu(false);
+    }
 
     const toggleLanguageMenu = () => {
         setShowLanguageMenu(!showLanguageMenu);
@@ -19,10 +25,10 @@ export default function MainLayout() {
             <DesktopNav toggleLanguageMenu={toggleLanguageMenu} />
 
             {/* Language Menu */}
-            <LanguageMenu showLanguageMenu={showLanguageMenu} />
+            <LanguageMenu showLanguageMenu={showLanguageMenu} toggleLanguageMenu={toggleLanguageMenu} toggleMenu={toggleMenu} />
 
             {/* Mobile Nav */}
-            <MobileNav />
+            <MobileNav toggleLanguageMenu={toggleLanguageMenu} setShowLanguageMenu={setShowLanguageMenu} toggleMenu={toggleMenu} showMenu={showMenu} />
 
             <main>
                 <Outlet />
