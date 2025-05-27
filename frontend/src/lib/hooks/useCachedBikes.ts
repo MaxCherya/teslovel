@@ -4,21 +4,21 @@ const tempBikes = [
     {
         id: 0,
         name: 'Teslovel Model 1',
-        nav_photo: 'https://i.ibb.co/YBJJGQ9N/teslovel-Landscape.png',
+        nav_photo: 'https://media-public.canva.com/6mCgM/MAEO-X6mCgM/1/s.svg',
     },
     {
         id: 1,
         name: 'Teslovel Model 3',
-        nav_photo: 'https://i.ibb.co/YBJJGQ9N/teslovel-Landscape.png',
+        nav_photo: 'https://media-public.canva.com/6mCgM/MAEO-X6mCgM/1/s.svg',
     },
     {
         id: 2,
         name: 'Teslovel TV01-05',
-        nav_photo: 'https://i.ibb.co/YBJJGQ9N/teslovel-Landscape.png',
+        nav_photo: 'https://media-public.canva.com/6mCgM/MAEO-X6mCgM/1/s.svg',
     }
 ]
 
-export function useCachedBikes(limit = 3) {
+export function useCachedBikes() {
     const [bikes, setBikes] = useState<any[]>([]);
     const [loaded, setLoaded] = useState(false);
 
@@ -33,7 +33,7 @@ export function useCachedBikes(limit = 3) {
 
         fetchBikes();
 
-    }, [limit, loaded])
+    }, [loaded])
 
     return bikes;
 }

@@ -5,14 +5,15 @@ import Logo from '../../../assets/imgs/icon.png'
 
 interface DesktopNavProps {
     toggleLanguageMenu: () => void;
+    setShowBikes: (show: boolean) => void;
 }
 
-const DesktopNav: React.FC<DesktopNavProps> = ({ toggleLanguageMenu }) => {
+const DesktopNav: React.FC<DesktopNavProps> = ({ toggleLanguageMenu, setShowBikes }) => {
     return (
         <header className='bg-white sticky top-0 w-full p-4 flex-row justify-between align-middle items-center hidden lg:flex z-50'>
             <img src={Logo} className='h-[4svh]' />
             <div className='flex flex-row gap-4 font-semibold'>
-                <a href='/models' className='text-black hover:text-gray-700'>Моделі</a>
+                <a href='/models' onMouseEnter={() => setShowBikes(true)} className='text-black hover:text-gray-700'>Моделі</a>
                 <a href='/blog' className='text-black hover:text-gray-700'>Блог</a>
                 <a href='/about' className='text-black hover:text-gray-700'>Про нас</a>
                 <a href='/contact' className='text-black hover:text-gray-700'>Контакти</a>
