@@ -14,6 +14,7 @@ interface MobileNavProps {
     showMenu: boolean;
     showBikes: boolean;
     setShowBikes: (val: boolean) => void;
+    setShowContacts: (val: boolean) => void;
 }
 
 const MobileNav: React.FC<MobileNavProps> = ({
@@ -21,7 +22,8 @@ const MobileNav: React.FC<MobileNavProps> = ({
     toggleMenu,
     showMenu,
     showBikes,
-    setShowBikes
+    setShowBikes,
+    setShowContacts
 }) => {
 
     return (
@@ -90,10 +92,9 @@ const MobileNav: React.FC<MobileNavProps> = ({
                             </div>
                             <span>{">"}</span>
                         </div>
-                        <div className="w-full flex flex-row justify-between items-center p-4">
+                        <div className="w-full flex flex-row justify-between items-center p-4" onClick={() => setShowContacts(true)}>
                             <div className="flex flex-row gap-4 items-center align-middle font-semibold">
                                 <a
-                                    href="/login"
                                     className="text-black text-xl hover:text-gray-700"
                                 >
                                     <PiPhoneCall />

@@ -1,13 +1,226 @@
 <!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React + TS</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<html lang="uk">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Оренда електровелосипедів та велосипедів Teslovel — Дніпро</title>
+  <meta name="description"
+    content="Оренда електровелосипедів і звичайних велосипедів у Дніпрі. Прокат на добу, тиждень, безкоштовна доставка, договори, техпідтримка. Від 300 грн." />
+  <meta name="keywords"
+    content="оренда електровелосипедів, прокат електровелосипедів, оренда велосипедів Дніпро, прокат велосипедів Дніпро, Teslovel, велопрокат, електровелосипед, велосипед напрокат, електробайк, rent e-bike Dnipro, bicycle rental Dnipro, велотур Дніпро, доставка велосипеда, аренда электровелосипедов, прокат велосипедов Днепр, аренда e-bike Dnipro, Teslovel rental" />
+  <meta name="robots" content="index, follow" />
+  <meta name="author" content="Teslovel" />
+  <meta name="geo.region" content="UA-DP" />
+  <meta name="geo.placename" content="Дніпро" />
+  <meta name="geo.position" content="48.425328;35.021756" />
+  <meta name="ICBM" content="48.425328, 35.021756" />
+  <meta property="og:title" content="Оренда електровелосипедів Teslovel — Дніпро" />
+  <meta property="og:description"
+    content="Прокат електро- та звичайних велосипедів з безкоштовною доставкою по Дніпру. Зручні умови, гарантія якості, техпідтримка." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://teslovel.com" />
+  <meta property="og:image" content="https://teslovel.com/logo.png" />
+  <meta property="og:locale" content="uk_UA" />
+  <meta property="og:locale:alternate" content="ru_UA" />
+  <meta property="og:locale:alternate" content="en_UA" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Оренда електровелосипедів Teslovel — Дніпро" />
+  <meta name="twitter:description"
+    content="Прокат електро- та звичайних велосипедів з безкоштовною доставкою по Дніпру. Зручні умови, гарантія якості, техпідтримка." />
+  <meta name="twitter:image" content="https://teslovel.com/logo.png" />
+  <link rel="canonical" href="https://teslovel.com" />
+  <link rel="alternate" hreflang="uk" href="https://teslovel.com" />
+  <link rel="alternate" hreflang="ru" href="https://teslovel.com" />
+  <link rel="alternate" hreflang="en" href="https://teslovel.com" />
+  <link rel="icon" type="image/png" href="/icon.png" />
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "Teslovel",
+      "image": "https://teslovel.com/logo.png",
+      "@id": "https://teslovel.com",
+      "url": "https://teslovel.com",
+      "telephone": "+380630231663",
+      "email": "Chergyk.m@gmail.com",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "м. Дніпро",
+        "addressLocality": "Дніпро",
+        "addressRegion": "Дніпропетровська область",
+        "addressCountry": "UA"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 48.425328,
+        "longitude": 35.021756
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+            "Sunday"
+          ],
+          "opens": "07:00",
+          "closes": "21:00"
+        }
+      ],
+      "sameAs": [
+        "https://www.instagram.com/teslovel",
+        "https://g.co/kgs/byR8Ne3"
+      ],
+      "description": "Прокат електровелосипедів і звичайних велосипедів у Дніпрі з безкоштовною доставкою, технічною підтримкою та гнучкими тарифами."
+    }
+  </script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Чи можна замовити доставку велосипеда додому?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Так, ми доставляємо у всі райони Дніпра безкоштовно."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Скільки часу потрібно для оформлення?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Процес займає до 10 хвилин — зручний і швидкий."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Чи можу я орендувати велосипед на кілька днів?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Так, ми пропонуємо гнучкі пакети знижок при тривалому прокаті."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Що робити в разі несправності?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Наша технічна команда виїде на місце або оперативно замінить велосипед."
+          }
+        }
+      ]
+    }
+  </script>
+</head>
+
+<body>
+  <div id="preload-content" style="position:absolute;left:-9999px;">
+    <h1>Оренда електровелосипедів та велосипедів у Дніпрі — Teslovel</h1>
+    <p>Teslovel — ваш надійний сервіс прокату електровелосипедів і звичайних велосипедів у Дніпрі. Ми пропонуємо
+      безкоштовну доставку, технічне обслуговування, прозорі умови та гнучкі тарифи.</p>
+
+    <h2>Наші переваги</h2>
+    <ul>
+      <li>Оренда електровелосипедів та звичайних велосипедів у Дніпрі</li>
+      <li>Безкоштовна доставка по всьому місту</li>
+      <li>Тест-драйв до 30 хвилин безкоштовно</li>
+      <li>Безкоштовний шолом до кожного велосипеда</li>
+      <li>Цілодобова технічна підтримка та швидкий ремонт</li>
+      <li>Акції та знижки на довготривалу оренду</li>
+    </ul>
+
+    <h2>Для кого підходить</h2>
+    <ul>
+      <li>Щоденні поїздки на роботу чи навчання</li>
+      <li>Міські прогулянки, велотури та подорожі</li>
+      <li>Кур’єри для доставки їжі та посилок</li>
+      <li>Туристи та гості міста Дніпро</li>
+    </ul>
+
+    <h2>Тарифи</h2>
+    <ul>
+      <li>Електровелосипед: від 300 грн/доба</li>
+      <li>Тижнева оренда: від 1500 грн</li>
+      <li>Погодинна оренда: за запитом</li>
+    </ul>
+
+    <h2>Моделі електровелосипедів</h2>
+    <ul>
+      <li><strong>TV 01‑05:</strong> 500W, запас ходу 80–90 км, швидкість до 45 км/год</li>
+      <li><strong>MODEL 1:</strong> 500W, 90 км, 36V, швидкість до 45 км/год</li>
+      <li><strong>MODEL 2:</strong> 48V Li-Ion, 80–100 км, колеса 26''</li>
+      <li><strong>MODEL 3:</strong> 120 км, швидкість до 35 км/год, ідеально для кур’єрів</li>
+    </ul>
+
+    <h2>Умови прокату</h2>
+    <ul>
+      <li>Необхідний паспорт або посвідчення водія</li>
+      <li>Застава: 500 грн</li>
+      <li>Вік орендаря: від 18 років</li>
+      <li>Підписання договору оренди</li>
+    </ul>
+
+    <h2>Контакти</h2>
+    <p><strong>Телефон:</strong> <a href="tel:+380630231663">+380 63 023 1663</a></p>
+    <p><strong>Email:</strong> <a href="mailto:Chergyk.m@gmail.com">Chergyk.m@gmail.com</a></p>
+    <p><strong>Instagram:</strong> <a href="https://www.instagram.com/teslovel">@teslovel</a></p>
+    <p><strong>Адреса:</strong> м. Дніпро, Дніпропетровська область, Україна</p>
+
+    <h2>FAQ — Часті запитання</h2>
+    <h3>Чи можна замовити доставку велосипеда додому?</h3>
+    <p>Так, ми здійснюємо безкоштовну доставку у всі райони Дніпра.</p>
+    <h3>Скільки часу потрібно для оформлення оренди?</h3>
+    <p>Оформлення займає до 10 хвилин — швидко та зручно.</p>
+    <h3>Чи можу я орендувати велосипед на кілька днів?</h3>
+    <p>Так, доступні гнучкі тарифи зі знижками для тривалої оренди.</p>
+    <h3>Що робити в разі несправності велосипеда?</h3>
+    <p>Наша технічна команда оперативно виїде на місце або замінить велосипед.</p>
+
+    <h2>Покриття</h2>
+    <p>Працюємо у всіх районах Дніпра: Центральний, Новокодацький, Шевченківський, Індустріальний, Самарський.</p>
+
+    <h2>Прокат велосипедів російською</h2>
+    <p>Аренда электровелосипедов и велосипедов в Днепре. Прокат с бесплатной доставкой по городу, технической поддержкой
+      и прозрачными условиями. Стоимость от 300 грн/сутки.</p>
+    <h3>Популярные запросы:</h3>
+    <ul>
+      <li>аренда электровелосипедов Днепр</li>
+      <li>прокат велосипедов Днепр</li>
+      <li>электробайк напрокат</li>
+      <li>велосипед для доставки Днепр</li>
+      <li>доставка велосипеда Днепр</li>
+    </ul>
+
+    <h2>Bicycle Rental in English</h2>
+    <p>Electric bike and bicycle rental in Dnipro. Rent by day or week with free delivery across the city.
+      Contract-based rentals with full technical support. Starting from 300 UAH/day.</p>
+    <h3>Popular searches:</h3>
+    <ul>
+      <li>bicycle rental Dnipro</li>
+      <li>rent e-bike Dnipro</li>
+      <li>electric bike hire Dnipro</li>
+      <li>bike for delivery Dnipro</li>
+      <li>city bike rental Dnipro</li>
+    </ul>
+  </div>
+
+  <div style="position:absolute;left:-9999px;width:0;height:0;overflow:hidden;">
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2647.6258064872986!2d35.0217563!3d48.4253278!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40dbe3a0ef94a23d%3A0xdf05da9a587c9a68!2steslovel!5e0!3m2!1sen!2sua!4v1749480525225!5m2!1sen!2sua"
+      width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade"></iframe>
+  </div>
+
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
+
 </html>

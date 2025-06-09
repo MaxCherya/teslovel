@@ -8,8 +8,17 @@ import NotFound from './pages/main/NotFound'
 import About from './pages/main/About'
 import Models from './pages/main/Models'
 import Feedbacks from './pages/main/Feedbacks'
+import { useEffect } from 'react'
 
 function App() {
+
+  useEffect(() => {
+    const preload = document.getElementById("preload-content");
+    if (preload) {
+      preload.remove();
+    }
+  }, []);
+
   return (
     <BrowserRouter>
 

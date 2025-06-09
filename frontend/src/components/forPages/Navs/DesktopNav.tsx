@@ -6,9 +6,10 @@ import Logo from '../../../assets/imgs/icon.png'
 interface DesktopNavProps {
     toggleLanguageMenu: () => void;
     setShowBikes: (show: boolean) => void;
+    setShowContacts: (show: boolean) => void;
 }
 
-const DesktopNav: React.FC<DesktopNavProps> = ({ toggleLanguageMenu, setShowBikes }) => {
+const DesktopNav: React.FC<DesktopNavProps> = ({ toggleLanguageMenu, setShowBikes, setShowContacts }) => {
     return (
         <header className='bg-white sticky top-0 w-full p-4 flex-row justify-between align-middle items-center hidden lg:flex z-50'>
             <img src={Logo} className='h-[4svh]' />
@@ -20,8 +21,8 @@ const DesktopNav: React.FC<DesktopNavProps> = ({ toggleLanguageMenu, setShowBike
             </div>
             <div className='flex flex-row gap-4 font-semibold items-center'>
                 <p onClick={toggleLanguageMenu} className='text-black text-lg hover:text-gray-700 cursor-pointer'><GrLanguage /></p>
-                <a href='/login' className='text-black text-xl hover:text-gray-700'><CgProfile /></a>
-                <a href='/login' className='text-black text-xl hover:text-gray-700'><PiPhoneCall /></a>
+                <a href='/login' className='text-black text-xl hover:text-gray-700 cursor-pointer'><CgProfile /></a>
+                <a onClick={() => setShowContacts(true)} className='text-black text-xl hover:text-gray-700 cursor-pointer'><PiPhoneCall /></a>
             </div>
         </header>
     )
