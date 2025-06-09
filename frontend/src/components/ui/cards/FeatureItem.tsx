@@ -10,7 +10,7 @@ interface Props {
 const FeatureItem: React.FC<Props> = ({ Icon, text }) => (
 
     <motion.div
-        className="flex flex-col items-center text-center p-6 rounded-sm bg-gray-100 shadow-md hover:shadow-xl transition-shadow duration-300 max-w-xs"
+        className="flex flex-col items-center text-center p-6 rounded-sm bg-gray-100 shadow-md hover:shadow-xl transition-shadow duration-300 max-w-[95%] lg:max-w-none"
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         initial={{ opacity: 0, scale: 0.8 }}

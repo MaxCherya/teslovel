@@ -41,7 +41,8 @@ const InstalledItems: React.FC = () => {
             <motion.h1
                 className="text-xl md:text-2xl lg:text-4xl font-bold text-black text-center mb-12 px-4 tracking-tight"
                 initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: false, amount: 0.6 }}
                 transition={{ duration: 1, delay: 0.2 }}
             >
                 На наших велосипедах встановлено
