@@ -12,21 +12,26 @@ interface MobileNavProps {
     setShowLanguageMenu: (show: boolean) => void;
     toggleMenu: () => void;
     showMenu: boolean;
+    showBikes: boolean;
+    setShowBikes: (val: boolean) => void;
 }
 
 const MobileNav: React.FC<MobileNavProps> = ({
     toggleLanguageMenu,
     toggleMenu,
     showMenu,
+    showBikes,
+    setShowBikes
 }) => {
+
     return (
         <>
-            <header className="sticky bg-white w-full top-0 z-50 flex flex-row lg:hidden justify-between items-center align-middle p-4">
+            <div className="fixed bg-white w-full top-0 z-50 flex flex-row lg:hidden justify-between items-center align-middle p-4 overflow-hidden">
                 <img src={Logo} className="h-[4svh]" />
                 <p className="text-black text-2xl" onClick={toggleMenu}>
                     {showMenu ? <IoClose /> : <TiThMenu />}
                 </p>
-            </header>
+            </div>
 
             <AnimatePresence>
                 {showMenu && (
@@ -38,8 +43,8 @@ const MobileNav: React.FC<MobileNavProps> = ({
                         transition={{ duration: 0.3, ease: "easeInOut" }}
                         className="fixed inset-0 bg-white z-40 overflow-y-auto flex flex-col items-center pt-20"
                     >
-                        <div className="w-full flex flex-row justify-between items-center p-4">
-                            <a href="/models" className="text-black hover:text-gray-700">
+                        <div onClick={() => setShowBikes(!showBikes)} className="w-full flex flex-row justify-between items-center p-4">
+                            <a className="text-black hover:text-gray-700">
                                 Моделі
                             </a>
                             <span>{">"}</span>
@@ -62,9 +67,8 @@ const MobileNav: React.FC<MobileNavProps> = ({
                             </a>
                             <span>{">"}</span>
                         </div>
-                        <div className="w-full flex flex-row justify-between items-center p-4">
+                        <div onClick={toggleLanguageMenu} className="w-full flex flex-row justify-between items-center p-4">
                             <div
-                                onClick={toggleLanguageMenu}
                                 className="flex flex-row gap-4 items-center align-middle font-semibold"
                             >
                                 <p className="text-black text-lg hover:text-gray-700 cursor-pointer">
