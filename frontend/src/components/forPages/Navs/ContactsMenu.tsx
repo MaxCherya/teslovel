@@ -54,30 +54,45 @@ const ContactsMenu: React.FC<ContactsMenuProps> = ({
                     {/* Contact Options */}
                     <div className="flex flex-col gap-3 max-w-xs w-full">
                         <h2 className="text-black text-lg font-bold mb-4 self-center">Зв'яжіться з нами</h2>
+
+                        {/* Instagram */}
                         <a
                             href="https://www.instagram.com/teslovel/?igshid=MDM4ZDc5MmU%3D"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center w-full gap-3 border border-neutral-300 rounded-lg py-3 px-4 text-neutral-900 text-base font-medium hover:bg-neutral-100 transition-colors duration-200"
+                            className="flex items-center gap-4 border border-neutral-300 rounded-xl py-3 px-4 bg-white shadow-sm hover:bg-neutral-100 transition"
                         >
-                            <FaInstagram className="w-5 h-5 text-pink-500" />
-                            <span className="flex-1 text-left">Instagram</span>
+                            <FaInstagram className="w-6 h-6 text-pink-500" />
+                            <div className="flex flex-col">
+                                <span className="font-medium text-base text-black">Instagram</span>
+                                <span className="text-sm text-neutral-500">@teslovel</span>
+                            </div>
                         </a>
+
+                        {/* Phone */}
                         <a
                             href="tel:+380630231663"
-                            className="flex items-center w-full gap-3 border border-neutral-300 rounded-lg py-3 px-4 text-neutral-900 text-base font-medium hover:bg-neutral-100 transition-colors duration-200"
+                            className="flex items-center gap-4 border border-neutral-300 rounded-xl py-3 px-4 bg-white shadow-sm hover:bg-neutral-100 transition"
                         >
-                            <FiPhone className="w-5 h-5 text-blue-500" />
-                            <span className="flex-1 text-left">Зателефонувати</span>
+                            <FiPhone className="w-6 h-6 text-blue-500" />
+                            <div className="flex flex-col">
+                                <span className="font-medium text-base text-black">Зателефонувати</span>
+                                <span className="text-sm text-neutral-500">+380 63 023 1663</span>
+                            </div>
                         </a>
+
+                        {/* Telegram */}
                         <a
                             href="https://t.me/chergyk"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center w-full gap-3 border border-neutral-300 rounded-lg py-3 px-4 text-neutral-900 text-base font-medium hover:bg-neutral-100 transition-colors duration-200"
+                            className="flex items-center gap-4 border border-neutral-300 rounded-xl py-3 px-4 bg-white shadow-sm hover:bg-neutral-100 transition"
                         >
-                            <PiTelegramLogo className="w-5 h-5 text-teal-500" />
-                            <span className="flex-1 text-left">Написати в Telegram</span>
+                            <PiTelegramLogo className="w-6 h-6 text-teal-500" />
+                            <div className="flex flex-col">
+                                <span className="font-medium text-base text-black">Telegram</span>
+                                <span className="text-sm text-neutral-500">@chergyk</span>
+                            </div>
                         </a>
                     </div>
 
