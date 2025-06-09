@@ -2,7 +2,12 @@ import React from "react"
 import { GeneralButton } from "../../ui/btns"
 import { useTranslation } from "react-i18next"
 
-const CTACallMe: React.FC = () => {
+interface CTACallMeProps {
+    showContacts: any,
+    setShowContacts: any;
+}
+
+const CTACallMe: React.FC<CTACallMeProps> = ({ showContacts, setShowContacts }) => {
 
     const { t } = useTranslation();
 
@@ -23,7 +28,7 @@ const CTACallMe: React.FC = () => {
             <div className="bg-black/40 w-full h-full absolute" />
 
             <h1 className="text-white z-10 mb-5 text-center text-base sm:text-3xl">{t('homePage.CTACallMe.header')}</h1>
-            <GeneralButton type="show" label={t('homePage.CTACallMe.btn')} className="text-sm sm:text-lg" />
+            <GeneralButton type="show" label={t('homePage.CTACallMe.btn')} className="text-sm sm:text-lg" onClick={() => setShowContacts(!showContacts)} />
         </div>
     )
 }

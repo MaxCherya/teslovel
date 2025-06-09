@@ -31,7 +31,7 @@ const LanguageMenu: React.FC<LanguageMenuProps> = ({
                     transition={{ duration: 0.3, ease: "easeInOut" }}
                     className="fixed inset-0 bg-white z-50 flex flex-col items-center justify-center overflow-y-auto pt-12"
                 >
-                    <div className="fixed px-4 bottom-4 w-full bg-white flex flex-row justify-between items-center border-t pt-2">
+                    <div className="fixed px-4 bottom-0 lg:top-0 lg:bottom-auto w-full bg-white flex flex-row justify-between items-center border-t lg:border-b lg:border-t-0 pt-2 py-4">
                         <span
                             onClick={toggleLanguageMenu}
                             className="font-bold text-xl cursor-pointer"

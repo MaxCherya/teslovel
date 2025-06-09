@@ -18,6 +18,7 @@ Teslovel is a modern web application built with a powerful full-stack architectu
 - [usehooks-ts](https://usehooks-ts.com/) — TypeScript-first React utility hooks
 - [Swiper](https://swiperjs.com/react) — Modern touch slider for carousels and galleries
 - [React Icons](https://react-icons.github.io/react-icons/) — Popular icon packs as React components
+- [react-phone-input-2](https://github.com/bl00mber/react-phone-input-2) — International telephone input with flag dropdown
 
 ### Backend
 

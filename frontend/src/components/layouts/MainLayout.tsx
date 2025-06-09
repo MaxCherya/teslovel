@@ -50,7 +50,7 @@ export default function MainLayout() {
             <MobileNav setShowContacts={setShowContacts} setShowBikes={setShowBikes} showBikes={showBikes} toggleLanguageMenu={toggleLanguageMenu} setShowLanguageMenu={setShowLanguageMenu} toggleMenu={toggleMenu} showMenu={showMenu} />
 
             <main>
-                <Outlet />
+                <Outlet context={{ showContacts, setShowContacts }} />
             </main>
 
             <footer className='bg-white w-full'>

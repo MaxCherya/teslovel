@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaInstagram } from "react-icons/fa";
 import { PiTelegramLogo } from "react-icons/pi";
 import { FiPhone } from "react-icons/fi";
+import { PhoneInput } from "../../ui/inputs";
 
 interface ContactsMenuProps {
     showContactsMenu: boolean;
@@ -20,6 +21,8 @@ const ContactsMenu: React.FC<ContactsMenuProps> = ({
         alert("Contact form submitted! We'll reach out soon.");
     };
 
+    const [phone, setPhone] = useState('');
+
     return (
         <AnimatePresence>
             {showContactsMenu && (
@@ -32,7 +35,7 @@ const ContactsMenu: React.FC<ContactsMenuProps> = ({
                     className="fixed inset-0 bg-white z-50 flex flex-col items-center overflow-y-auto pt-30 lg:justify-center lg:pt-12"
                 >
                     {/* Bottom bar */}
-                    <div className="fixed px-4 bottom-0 w-full bg-white flex flex-row justify-between items-center border-t pt-2 py-4">
+                    <div className="fixed px-4 bottom-0 lg:top-0 lg:bottom-auto w-full bg-white flex flex-row justify-between items-center border-t lg:border-b lg:border-t-0 pt-2 py-4 z-50">
                         <span
                             onClick={toggleContactsMenu}
                             className="font-bold text-xl cursor-pointer"
@@ -88,24 +91,34 @@ const ContactsMenu: React.FC<ContactsMenuProps> = ({
                     <div className="flex flex-col items-center w-full max-w-xs lg:mb-0 mb-30">
                         <h2 className="text-black text-lg font-bold mb-4">Залиште свої контакти</h2>
                         <form onSubmit={handleFormSubmit} className="flex flex-col gap-4 w-full">
-                            <input
-                                type="text"
-                                placeholder="Ваше ім’я"
-                                className="text-black text-lg border-b border-gray-300 px-2 py-1 focus:outline-none focus:border-gray-700 transition-colors duration-200"
+                            <label className="text-sm text-black font-semibold">
+                                Ім’я <span className="text-red-500">*</span>
+                                <input
+                                    type="text"
+                                    placeholder="Ваше ім’я"
+                                    className="mt-1 w-full text-black text-lg border-b border-gray-300 px-2 py-1 focus:outline-none focus:border-gray-700 transition-colors duration-200"
+                                    required
+                                />
+                            </label>
+
+                            <PhoneInput
+                                label="Телефон"
+                                value={phone}
+                                onChange={setPhone}
                                 required
+                                className="mt-1"
                             />
-                            <input
-                                type="tel"
-                                placeholder="+380..."
-                                className="text-black text-lg border-b border-gray-300 px-2 py-1 focus:outline-none focus:border-gray-700 transition-colors duration-200"
-                                required
-                            />
-                            <textarea
-                                placeholder="Додаткова інформація"
-                                maxLength={300}
-                                rows={4}
-                                className="resize-none bg-transparent text-black text-base border-b border-gray-300 px-2 py-2 focus:outline-none focus:border-black transition-colors duration-200 placeholder:text-neutral-500"
-                            ></textarea>
+
+                            <label className="text-sm text-black font-semibold">
+                                Додаткова інформація
+                                <textarea
+                                    placeholder="Наприклад: бажаний час зв’язку, тип велосипеда, тощо…"
+                                    maxLength={300}
+                                    rows={4}
+                                    className="mt-1 w-full resize-none rounded-lg bg-white text-black text-base border border-gray-300 px-3 py-2 focus:outline-none focus:border-black focus:ring-1 focus:ring-black transition-all duration-200 placeholder:text-neutral-500"
+                                ></textarea>
+                            </label>
+
                             <button
                                 type="submit"
                                 className="mt-6 bg-black text-white text-sm tracking-widest font-semibold uppercase py-3 rounded-lg w-full transition-colors duration-300 hover:bg-neutral-800 cursor-pointer"
