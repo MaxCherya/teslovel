@@ -31,8 +31,8 @@ const ContactsMenu: React.FC<ContactsMenuProps> = ({
                     transition={{ duration: 0.3, ease: "easeInOut" }}
                     className="fixed inset-0 bg-white z-50 flex flex-col items-center overflow-y-auto pt-30 lg:justify-center lg:pt-12"
                 >
-                    {/* Bottom bar (unchanged) */}
-                    <div className="fixed px-4 bottom-4 w-full bg-white flex flex-row justify-between items-center border-t pt-2">
+                    {/* Bottom bar */}
+                    <div className="fixed px-4 bottom-0 w-full bg-white flex flex-row justify-between items-center border-t pt-2 py-4">
                         <span
                             onClick={toggleContactsMenu}
                             className="font-bold text-xl cursor-pointer"
