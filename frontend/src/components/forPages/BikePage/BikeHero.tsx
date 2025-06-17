@@ -1,15 +1,18 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
 interface BikeHeroProps {
+    id: any;
     name: string;
     price_day: number;
     landscape_img: string;
     status: string;
 }
 
-const BikeHero: React.FC<BikeHeroProps> = ({ name, price_day, landscape_img, status }) => {
+const BikeHero: React.FC<BikeHeroProps> = ({ id, name, price_day, landscape_img, status }) => {
     const { t } = useTranslation();
+    const navigate = useNavigate();
 
     return (
         <section
@@ -29,6 +32,7 @@ const BikeHero: React.FC<BikeHeroProps> = ({ name, price_day, landscape_img, sta
                 </p>
                 <button
                     disabled={status !== 'Available'}
+                    onClick={() => navigate(`/book/${id}`)}
                     className={`mt-6 py-3 px-6 rounded-lg font-semibold transition duration-300
                         ${status === 'Available'
                             ? 'bg-blue-600 hover:bg-blue-700 text-white cursor-pointer'

@@ -150,5 +150,20 @@
             "q": "How can I contact you?",
             "a": "Reach out via Instagram, fill out the form on our website, or call the provided number. We’ll call you back during the day."
         }
-    ]
+    ],
+    "bookPage": {
+        "title": "{{bikeName}} Booking",
+        "formTitle": "Book your ride",
+        "nameLabel": "Your name",
+        "namePlaceholder": "Enter your full name",
+        "commentsLabel": "Comments",
+        "commentsPlaceholder": "Additional notes (optional)",
+        "selectDateError": "Please select a date range before booking.",
+        "successMessage": "Your booking was successful!",
+        "submitButton": "Book Now",
+        "booked": "Booked",
+        "dateOverlapError": "Selected dates are already booked.",
+        "noDatesSelected": "No dates selected yet.",
+        "selectedDates": "Selected: {{start}} → {{end}}"
+    }
 }

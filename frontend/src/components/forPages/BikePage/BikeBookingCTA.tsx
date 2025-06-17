@@ -1,8 +1,10 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
-const BikeBookingCTA: React.FC<{ status: string; name: string }> = ({ status, name }) => {
+const BikeBookingCTA: React.FC<{ id: any; status: string; name: string }> = ({ id, status, name }) => {
     const { t } = useTranslation();
+    const navigate = useNavigate();
 
     const isAvailable = status === 'Available';
 
@@ -19,6 +21,7 @@ const BikeBookingCTA: React.FC<{ status: string; name: string }> = ({ status, na
                     ? 'bg-blue-600 hover:bg-blue-700 text-white cursor-pointer'
                     : 'bg-gray-400 text-gray-700 cursor-not-allowed'}`}
                 disabled={!isAvailable}
+                onClick={() => navigate(`/book/${id}`)}
             >
                 {isAvailable
                     ? t('bikeBooking.bookBtn')

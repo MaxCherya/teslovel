@@ -80,7 +80,7 @@ const BikePage: React.FC = () => {
 
     return (
         <div className="w-full min-h-screen bg-gray-100 text-gray-900">
-            <BikeHero status={bike.status} name={bike.name} price_day={bike.price_day} landscape_img={bike.landscape_img} />
+            <BikeHero id={bike.id} status={bike.status} name={bike.name} price_day={bike.price_day} landscape_img={bike.landscape_img} />
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
                 <BikeGallery
@@ -100,7 +100,7 @@ const BikePage: React.FC = () => {
                     wheels_size={bike.wheels_size}
                     engine_position={bike.engine_position}
                 />
-                <BikeBookingCTA status={bike.status} name={bike.name} />
+                <BikeBookingCTA id={bike.id} status={bike.status} name={bike.name} />
             </div>
         </div>
     );

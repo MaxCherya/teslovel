@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import './locales/index'
+import "react-datepicker/dist/react-datepicker.css";
 
 import MainLayout from './components/layouts/MainLayout'
 import Home from './pages/main/Home'
@@ -10,6 +11,7 @@ import Models from './pages/main/Models'
 import Feedbacks from './pages/main/Feedbacks'
 import { useEffect } from 'react'
 import BikePage from './pages/main/BikePage'
+import BookPage from './pages/main/BookPage'
 
 function App() {
 
@@ -32,6 +34,7 @@ function App() {
           <Route path='about' element={<About />} />
           <Route path='models' element={<Models />} />
           <Route path='models/:bikeId' element={<BikePage />} />
+          <Route path='book/:bikeId' element={<BookPage />} />
           <Route path='feedbacks' element={<Feedbacks />} />
           <Route path="*" element={<NotFound />} />
 
