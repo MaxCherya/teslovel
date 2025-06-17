@@ -4,12 +4,15 @@ import VeloCard from "../cards/VeloCard";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, A11y, Pagination } from "swiper/modules";
 import { motion } from 'framer-motion';
+import { useTranslation } from "react-i18next";
 
 interface Props {
     content: catwalkContent[]
 }
 
 const CardsSwiper: React.FC<Props> = ({ content }) => {
+    const { t } = useTranslation();
+
     return (
         <div className="w-full max-w-5xl">
             <motion.h1
@@ -19,7 +22,7 @@ const CardsSwiper: React.FC<Props> = ({ content }) => {
                 transition={{ duration: 1, delay: 0.2 }}
                 viewport={{ once: false, amount: 0.3 }}
             >
-                Останні моделі
+                {t("cardsSwiper.latestModels")}
             </motion.h1>
             <Swiper
                 modules={[Autoplay, A11y, Pagination]}
@@ -30,10 +33,10 @@ const CardsSwiper: React.FC<Props> = ({ content }) => {
                 autoplay={{ delay: 9000 }}
                 breakpoints={{
                     0: {
-                        slidesPerView: 1, // mobile
+                        slidesPerView: 1,
                     },
                     768: {
-                        slidesPerView: 2, // tablets and up
+                        slidesPerView: 2,
                     },
                 }}
             >

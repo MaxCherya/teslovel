@@ -6,6 +6,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import { CTAButton } from '../btns';
+import { useNavigate } from 'react-router-dom';
 
 interface Props {
     id: number;
@@ -17,6 +18,8 @@ interface Props {
 const VeloCard: React.FC<Props> = ({ id, img, name, price_day }) => {
 
     const { t } = useTranslation();
+
+    const navigate = useNavigate();
 
     return (
         <div>
@@ -32,8 +35,10 @@ const VeloCard: React.FC<Props> = ({ id, img, name, price_day }) => {
                 <div key={id} className='h-[360px]' style={{ backgroundColor: 'rgba(0,0,0,0.6)' }}>
                     <div className='absolute bottom-20 left-1/12 flex flex-col'>
                         <h3 className='text-white text-lg md:text-xl font-semibold'>{name}</h3>
-                        <p className='text-white text-base md:text-sm mb-3'>Від {price_day} грн за день оренди</p>
-                        <CTAButton type='order' label={t('homePage.catwalk.bookBtn')} />
+                        <p className='text-white text-base md:text-sm mb-3'>
+                            {t('homePage.catwalk.pricePerDay', { price: price_day })}
+                        </p>
+                        <CTAButton onClick={() => navigate(`/models/${id}`)} type='order' label={t('homePage.catwalk.bookBtn')} />
                     </div>
                 </div>
             </div>

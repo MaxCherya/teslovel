@@ -1,3 +1,4 @@
+import React from 'react';
 import { motion } from 'framer-motion';
 import {
     FaBicycle,
@@ -10,21 +11,23 @@ import {
 } from 'react-icons/fa';
 import { BsDisplayFill } from 'react-icons/bs';
 import { GiFlatTire, GiStoneWheel } from 'react-icons/gi';
-
-const features = [
-    { icon: <FaBicycle />, text: 'Якісні рами формула' },
-    { icon: <FaShieldAlt />, text: 'Посилені ободи' },
-    { icon: <GiFlatTire />, text: 'Антипрокольні покришки' },
-    { icon: <GiStoneWheel />, text: 'Якісні дискові гальма' },
-    { icon: <FaBolt />, text: 'Потужні електромотори' },
-    { icon: <FaCog />, text: 'PAS-система' },
-    { icon: <FaTachometerAlt />, text: 'Задній привод' },
-    { icon: <FaTools />, text: 'Підсилювачі дропаутів' },
-    { icon: <FaHandPaper />, text: 'Гальмівні електроручки' },
-    { icon: <BsDisplayFill />, text: 'Універсальний дисплей' },
-];
+import { useTranslation } from 'react-i18next';
 
 const InstalledItems: React.FC = () => {
+    const { t } = useTranslation();
+
+    const features = [
+        { icon: <FaBicycle />, text: t('installedItems.frame') },
+        { icon: <FaShieldAlt />, text: t('installedItems.rims') },
+        { icon: <GiFlatTire />, text: t('installedItems.antiPunctureTires') },
+        { icon: <GiStoneWheel />, text: t('installedItems.diskBrakes') },
+        { icon: <FaBolt />, text: t('installedItems.motors') },
+        { icon: <FaCog />, text: t('installedItems.pasSystem') },
+        { icon: <FaTachometerAlt />, text: t('installedItems.rearDrive') },
+        { icon: <FaTools />, text: t('installedItems.dropoutReinforcers') },
+        { icon: <FaHandPaper />, text: t('installedItems.brakeLevers') },
+        { icon: <BsDisplayFill />, text: t('installedItems.display') },
+    ];
 
     const groupedFeatures = [];
     for (let i = 0; i < features.length; i += 2) {
@@ -45,7 +48,7 @@ const InstalledItems: React.FC = () => {
                 viewport={{ once: false, amount: 0.6 }}
                 transition={{ duration: 1, delay: 0.2 }}
             >
-                На наших велосипедах встановлено
+                {t('installedItems.title')}
             </motion.h1>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6 w-full md:max-w-5xl lg:max-w-5xl max-w-[95%]">

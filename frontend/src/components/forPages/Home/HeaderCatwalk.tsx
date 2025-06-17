@@ -9,6 +9,7 @@ import type { catwalkContent } from "../../../lib/types/product";
 import { useState } from "react";
 import { motion } from "framer-motion"
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
     catwalk: catwalkContent[]
@@ -20,6 +21,7 @@ const HeaderCatwalk: React.FC<Props> = ({ catwalk }) => {
     const progressWidth = '8vw'
     const [activeIndex, setActiveIndex] = useState(0);
     const { t } = useTranslation();
+    const navigate = useNavigate();
 
     return (
         <div className="relative w-screen overflow-hidden">
@@ -71,6 +73,7 @@ const HeaderCatwalk: React.FC<Props> = ({ catwalk }) => {
                         <CTAButton
                             type="order"
                             label={t('homePage.catwalk.bookBtn')}
+                            onClick={() => navigate(`/models/${catwalk[activeIndex].id}`)}
                             className="text-sm sm:text-base md:text-xl lg:text-2xl px-6 sm:px-10 py-2 sm:py-3"
                         />
                     </div>

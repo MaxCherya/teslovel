@@ -3,7 +3,8 @@
         "catwalk": {
             "bookBtn": "Book Now",
             "kmH": "km/h",
-            "km": "km"
+            "km": "km",
+            "pricePerDay": "From {{price}} UAH per day"
         },
         "mainInfo": {
             "header": "Electric Bike Rental in Dnipro",
@@ -16,5 +17,138 @@
             "header": "Have questions? Leave a request!",
             "btn": "Call me"
         }
-    }
+    },
+    "bikeHero": {
+        "pricePerDay": "From {{price}} UAH/day",
+        "bookBtn": "Book Now",
+        "unavailableBtn": "Unavailable"
+    },
+    "bikeDescription": {
+        "title": "About the Bike"
+    },
+    "bikeSpecs": {
+        "title": "Specifications",
+        "performance": "Performance",
+        "maxSpeed": "Max Speed",
+        "range": "Range",
+        "power": "Power",
+        "components": "Components",
+        "batteryType": "Battery Type",
+        "brakes": "Brakes",
+        "wheelSize": "Wheel Size",
+        "enginePosition": "Engine Position"
+    },
+    "bikeBooking": {
+        "title": "Ready to ride?",
+        "available": "{{name}} is available for booking!",
+        "unavailable": "{{name}} is currently unavailable.",
+        "bookBtn": "Book Now",
+        "unavailableBtn": "Unavailable"
+    },
+    "bikeCard": {
+        "bookBtn": "Book Now",
+        "priceSuffix": "UAH / day",
+        "status": {
+            "available": "Available",
+            "onMaintenance": "On Maintenance",
+            "notAvailable": "Not Available"
+        }
+    },
+    "models": {
+        "title": "Our Bike Fleet",
+        "totalLabel": "Total models",
+        "availableLabel": "Available"
+    },
+    "nav": {
+        "models": "Models",
+        "blog": "Blog",
+        "about": "About Us",
+        "contacts": "Contacts",
+        "language": "Language",
+        "account": "Account",
+        "call": "Call Us"
+    },
+    "bikesMenu": {
+        "title": "Bike Models",
+        "allModels": "All Models"
+    },
+    "contactsMenu": {
+        "title": "Contacts",
+        "header": "Get in Touch",
+        "callBtn": "Call Us",
+        "or": "Or",
+        "leaveContact": "Leave Your Contact Info",
+        "nameLabel": "Name",
+        "namePlaceholder": "Your name",
+        "phoneLabel": "Phone",
+        "additionalInfo": "Additional Information",
+        "additionalPlaceholder": "e.g., preferred time, type of bike, etc.",
+        "sendBtn": "Send",
+        "successAlert": "Contact form submitted! We'll reach out soon."
+    },
+    "languageMenu": {
+        "title": "Choose Language"
+    },
+    "installedItems": {
+        "title": "Installed on our bikes",
+        "frame": "High-quality frame formula",
+        "rims": "Reinforced rims",
+        "antiPunctureTires": "Anti-puncture tires",
+        "diskBrakes": "High-performance disk brakes",
+        "motors": "Powerful electric motors",
+        "pasSystem": "PAS system",
+        "rearDrive": "Rear drive",
+        "dropoutReinforcers": "Dropout reinforcers",
+        "brakeLevers": "Electric brake levers",
+        "display": "Universal display"
+    },
+    "cardsSwiper": {
+        "latestModels": "Latest models"
+    },
+    "faq": [
+        {
+            "q": "What do I need to rent an electric bike?",
+            "a": "You need to present a passport, foreign passport, or driver's license. A formal rental agreement and handover act are also signed, outlining usage rules, liability, and return conditions. This ensures transparency and safety for both parties."
+        },
+        {
+            "q": "Is a deposit required?",
+            "a": "Yes, a deposit of 500 UAH per electric bike is required. It is refunded at the end of the rental if there is no damage."
+        },
+        {
+            "q": "What is the minimum age for renting a bike?",
+            "a": "Only individuals aged 18 and above can rent an electric bike."
+        },
+        {
+            "q": "What support service do you offer?",
+            "a": "We provide technical support, quick contact via phone, messengers, or social media, and fast response in case of breakdowns or other issues."
+        },
+        {
+            "q": "What features do your electric bikes have?",
+            "a": "Our bikes are equipped with powerful 500W hub motors, high-capacity batteries, PAS systems, quality disc brakes, puncture-resistant tires, and displays with indicators for a comfortable and safe ride."
+        },
+        {
+            "q": "What rental durations are available?",
+            "a": "You can rent a bike from 1 day up to the entire season. The rental season is valid when the temperature is between +5°C and +40°C."
+        },
+        {
+            "q": "Can I test the bike before renting?",
+            "a": "Yes, we offer a free test ride for up to 30 minutes after deposit payment so you can assess the comfort and quality."
+        },
+        {
+            "q": "Do you plan to sell bikes?",
+            "a": "Yes, in the future, there will be an option to purchase an electric bike with warranty service."
+        },
+        {
+            "q": "What are the advantages of an e-bike over other transport?",
+            "a": "It’s fast, eco-friendly, convenient, and cheap. You save time, avoid traffic, and enjoy your ride. They’re great for deliveries and daily commuting."
+        },
+        {
+            "q": "Why do people choose you?",
+            "a": "We are the only service of this kind in the city, offering full support, maintenance, a personal approach, and unique long-range batteries."
+        },
+        {
+            "q": "How can I contact you?",
+            "a": "Reach out via Instagram, fill out the form on our website, or call the provided number. We’ll call you back during the day."
+        }
+    ]
 }

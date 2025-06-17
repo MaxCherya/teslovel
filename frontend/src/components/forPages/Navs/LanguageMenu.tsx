@@ -1,5 +1,6 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 const Languages = [
     { value: "uk", Label: "Українська" },
@@ -18,7 +19,15 @@ const LanguageMenu: React.FC<LanguageMenuProps> = ({
     toggleLanguageMenu,
     toggleMenu,
 }) => {
-    const currentLanguage = localStorage.getItem("i18nextLng") || "uk";
+    const { i18n, t } = useTranslation();
+    const currentLanguage = i18n.language;
+
+    const changeLanguage = (lang: string) => {
+        if (lang !== currentLanguage) {
+            i18n.changeLanguage(lang);
+        }
+        toggleLanguageMenu(); // Optional: auto-close menu after selection
+    };
 
     return (
         <AnimatePresence>
@@ -38,7 +47,7 @@ const LanguageMenu: React.FC<LanguageMenuProps> = ({
                         >
                             {"<"}
                         </span>
-                        <p className="text-base">Вибір мови</p>
+                        <p className="text-base">{t("languageMenu.title")}</p>
                         <span
                             onClick={toggleMenu}
                             className="font-bold text-xl cursor-pointer lg:hidden"
@@ -47,15 +56,12 @@ const LanguageMenu: React.FC<LanguageMenuProps> = ({
                         </span>
                     </div>
 
-                    {Languages.map((lang, index) => (
+                    {Languages.map((lang) => (
                         <p
-                            key={index}
+                            key={lang.value}
                             className={`text-black text-lg cursor-pointer hover:text-gray-700 mb-4 ${currentLanguage === lang.value ? "font-bold" : ""
                                 }`}
-                            onClick={() => {
-                                localStorage.setItem("i18nextLng", lang.value);
-                                window.location.reload();
-                            }}
+                            onClick={() => changeLanguage(lang.value)}
                         >
                             {lang.Label}
                         </p>

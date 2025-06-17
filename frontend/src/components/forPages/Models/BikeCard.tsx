@@ -1,6 +1,7 @@
 import React from 'react';
 import { GeneralButton } from '../../ui/btns';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 interface BikeCardProps {
     id: number;
@@ -13,42 +14,44 @@ interface BikeCardProps {
 const getStatusStyle = (status: string): string => {
     switch (status.toLowerCase()) {
         case 'available':
-            return 'bg-green-500 text-white';
+            return 'bg-green-100 text-green-800';
         case 'on maintenance':
-            return 'bg-yellow-500 text-white';
+            return 'bg-yellow-100 text-yellow-800';
         case 'not available':
-            return 'bg-red-500 text-white';
+            return 'bg-red-100 text-red-800';
         default:
-            return 'bg-gray-500 text-white';
+            return 'bg-gray-100 text-gray-800';
     }
 };
 
 const BikeCard: React.FC<BikeCardProps> = ({ id, photo, header, price, status }) => {
-
     const navigate = useNavigate();
+    const { t } = useTranslation();
 
     return (
-        <div className="relative w-full max-w-sm mx-auto bg-white rounded-2xl shadow-xl hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-500 overflow-hidden">
-            <div className="relative w-full h-64 overflow-hidden rounded-t-2xl">
+        <div className="w-full max-w-xs mx-auto bg-white border border-gray-200 rounded-lg overflow-hidden transition-all duration-300 hover:shadow-lg">
+            <div className="relative">
                 <img
                     src={photo}
                     alt={header}
-                    className="w-full h-full object-cover transform transition-transform duration-700 hover:scale-110"
+                    className="w-full h-48 object-cover"
                 />
-                <div
-                    className={`absolute top-4 right-4 px-4 py-1 rounded-full text-sm font-semibold ${getStatusStyle(status)} shadow-md`}
+                <span
+                    className={`absolute top-2 left-2 px-2 py-1 text-xs font-semibold rounded-md ${getStatusStyle(status)}`}
                 >
                     {status}
-                </div>
+                </span>
             </div>
-            <div className="p-6">
-                <h3 className="text-2xl font-bold text-gray-900 truncate">{header}</h3>
-                <p className="text-lg text-gray-600 mt-2 mb-4">{price} грн / день</p>
+            <div className="p-4">
+                <h3 className="text-base font-semibold text-gray-900 truncate">{header}</h3>
+                <p className="text-sm text-gray-600 mt-1">
+                    {price} {t('bikeCard.priceSuffix')}
+                </p>
                 <GeneralButton
                     type="show"
-                    label="Забронювати"
-                    className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:text-stone-300 hover:from-blue-700 hover:to-indigo-700 shadow-lg text-lg py-3 rounded-lg"
-                    onClick={() => navigate(``)}
+                    label={t('bikeCard.bookBtn')}
+                    className="mt-3 w-full bg-blue-600 text-white text-sm font-medium py-2 rounded-md hover:bg-blue-700 transition-colors duration-200"
+                    onClick={() => navigate(`/models/${id}`)}
                 />
             </div>
         </div>

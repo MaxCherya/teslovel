@@ -6,6 +6,8 @@ import { PiPhoneCall } from "react-icons/pi";
 import { CgProfile } from "react-icons/cg";
 import { IoClose } from "react-icons/io5";
 import { motion, AnimatePresence } from "framer-motion";
+import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 interface MobileNavProps {
     toggleLanguageMenu: () => void;
@@ -25,11 +27,13 @@ const MobileNav: React.FC<MobileNavProps> = ({
     setShowBikes,
     setShowContacts
 }) => {
+    const navigate = useNavigate();
+    const { t } = useTranslation();
 
     return (
         <>
             <div className="fixed bg-white w-full top-0 z-50 flex flex-row lg:hidden justify-between items-center align-middle p-4 overflow-hidden">
-                <img src={Logo} className="h-[4svh]" />
+                <img src={Logo} className="h-[4svh] cursor-pointer" onClick={() => navigate(`/`)} />
                 <p className="text-black text-2xl" onClick={toggleMenu}>
                     {showMenu ? <IoClose /> : <TiThMenu />}
                 </p>
@@ -47,36 +51,34 @@ const MobileNav: React.FC<MobileNavProps> = ({
                     >
                         <div onClick={() => setShowBikes(!showBikes)} className="w-full flex flex-row justify-between items-center p-4">
                             <a className="text-black hover:text-gray-700">
-                                Моделі
+                                {t("nav.models")}
                             </a>
                             <span>{">"}</span>
                         </div>
                         <div className="w-full flex flex-row justify-between items-center p-4">
                             <a href="/blog" className="text-black hover:text-gray-700">
-                                Блог
+                                {t("nav.blog")}
                             </a>
                             <span>{">"}</span>
                         </div>
                         <div className="w-full flex flex-row justify-between items-center p-4">
                             <a href="/about" className="text-black hover:text-gray-700">
-                                Про нас
+                                {t("nav.about")}
                             </a>
                             <span>{">"}</span>
                         </div>
                         <div className="w-full flex flex-row justify-between items-center p-4">
                             <a href="/contact" className="text-black hover:text-gray-700">
-                                Контакти
+                                {t("nav.contacts")}
                             </a>
                             <span>{">"}</span>
                         </div>
                         <div onClick={toggleLanguageMenu} className="w-full flex flex-row justify-between items-center p-4">
-                            <div
-                                className="flex flex-row gap-4 items-center align-middle font-semibold"
-                            >
+                            <div className="flex flex-row gap-4 items-center align-middle font-semibold">
                                 <p className="text-black text-lg hover:text-gray-700 cursor-pointer">
                                     <GrLanguage />
                                 </p>
-                                <p>Мова</p>
+                                <p>{t("nav.language")}</p>
                             </div>
                             <span>{">"}</span>
                         </div>
@@ -88,18 +90,16 @@ const MobileNav: React.FC<MobileNavProps> = ({
                                 >
                                     <CgProfile />
                                 </a>
-                                <p>Аккаунт</p>
+                                <p>{t("nav.account")}</p>
                             </div>
                             <span>{">"}</span>
                         </div>
                         <div className="w-full flex flex-row justify-between items-center p-4" onClick={() => setShowContacts(true)}>
                             <div className="flex flex-row gap-4 items-center align-middle font-semibold">
-                                <a
-                                    className="text-black text-xl hover:text-gray-700"
-                                >
+                                <a className="text-black text-xl hover:text-gray-700">
                                     <PiPhoneCall />
                                 </a>
-                                <p>Зателефонувати</p>
+                                <p>{t("nav.call")}</p>
                             </div>
                             <span>{">"}</span>
                         </div>

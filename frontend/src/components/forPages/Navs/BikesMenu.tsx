@@ -1,14 +1,17 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 interface BikesMenuProps {
     showBikes: boolean;
     setShowBikes: (val: boolean) => void;
-    bikes: any
+    bikes: any;
     toggleMenu: () => void;
 }
 
 const BikesMenu: React.FC<BikesMenuProps> = ({ showBikes, setShowBikes, bikes, toggleMenu }) => {
+    const { t } = useTranslation();
+
     return (
         <AnimatePresence>
             {showBikes && (
@@ -29,7 +32,7 @@ const BikesMenu: React.FC<BikesMenuProps> = ({ showBikes, setShowBikes, bikes, t
                         >
                             {"<"}
                         </span>
-                        <p className="text-base">Моделі велосипедів</p>
+                        <p className="text-base">{t("bikesMenu.title")}</p>
                         <span
                             onClick={toggleMenu}
                             className="font-bold text-xl cursor-pointer"
@@ -65,10 +68,9 @@ const BikesMenu: React.FC<BikesMenuProps> = ({ showBikes, setShowBikes, bikes, t
                                 href="/models"
                                 className="block text-center text-blue-600 font-semibold text-lg hover:text-blue-800 transition-colors duration-200"
                             >
-                                Всі моделі
+                                {t("bikesMenu.allModels")}
                             </a>
                         </li>
-
                     </ul>
                 </motion.div>
             )}
