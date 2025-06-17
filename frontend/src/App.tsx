@@ -9,6 +9,7 @@ import About from './pages/main/About'
 import Models from './pages/main/Models'
 import Feedbacks from './pages/main/Feedbacks'
 import { useEffect } from 'react'
+import BikePage from './pages/main/BikePage'
 
 function App() {
 
@@ -30,6 +31,7 @@ function App() {
           <Route index element={<Home />} />
           <Route path='about' element={<About />} />
           <Route path='models' element={<Models />} />
+          <Route path='models/:bikeId' element={<BikePage />} />
           <Route path='feedbacks' element={<Feedbacks />} />
           <Route path="*" element={<NotFound />} />
 

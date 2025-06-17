@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import banner1 from '../../assets/imgs/test-blog-banner-1.png';
 import banner2 from '../../assets/imgs/test-blog-banner-2.png';
@@ -38,7 +38,7 @@ const tempBikes = [
 ];
 
 const Models: React.FC = () => {
-    const [bikes, setBikes] = useState(tempBikes);
+    const [bikes, _setBikes] = useState(tempBikes);
 
     return (
         <div className="w-full min-h-screen text-gray-900 bg-gray-50">
