@@ -164,6 +164,7 @@
         "booked": "Заброньовано",
         "dateOverlapError": "Вибрані дати вже зайняті.",
         "noDatesSelected": "Дата ще не вибрана.",
-        "selectedDates": "Вибрано: {{start}} → {{end}}"
+        "selectedDates": "Вибрано: {{start}} → {{end}}",
+        "nameAndPhoneError": "Будь ласка, введіть своє ім'я та номер телефону."
     }
 }

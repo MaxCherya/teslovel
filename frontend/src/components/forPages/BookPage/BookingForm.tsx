@@ -36,14 +36,13 @@ const BookingForm: React.FC<Props> = ({
 
         <label className="flex flex-col gap-1">
             <span className="text-sm font-medium text-gray-700">
-                {t("bookPage.phoneLabel")} <span className="text-red-500">*</span>
+                {t("contactsMenu.phoneLabel")} <span className="text-red-500">*</span>
             </span>
             <PhoneInput
-                country={"us"}
+                country={"ua"}
                 value={formData.phone}
                 onChange={onPhoneChange}
-                inputClass="!w-full !text-base !border !border-gray-300 !rounded-lg !px-4 !py-2.5 focus:!ring-2 focus:!ring-blue-500 focus:!border-blue-500"
-                buttonClass="!border !border-gray-300 !rounded-l-lg"
+                inputClass="!w-full"
             />
         </label>
 
@@ -77,7 +76,7 @@ const BookingForm: React.FC<Props> = ({
 
         <button
             type="submit"
-            className="mt-2 bg-blue-600 text-white text-base font-semibold py-3 rounded-lg hover:bg-blue-700 transition-colors duration-200 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            className="mt-2 cursor-pointer bg-blue-600 text-white text-base font-semibold py-3 rounded-lg hover:bg-blue-700 transition-colors duration-200 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
         >
             {t("bookPage.submitButton")}
         </button>

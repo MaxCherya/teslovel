@@ -164,6 +164,7 @@
         "booked": "Booked",
         "dateOverlapError": "Selected dates are already booked.",
         "noDatesSelected": "No dates selected yet.",
-        "selectedDates": "Selected: {{start}} → {{end}}"
+        "selectedDates": "Selected: {{start}} → {{end}}",
+        "nameAndPhoneError": "Please, enter your name and phone number."
     }
 }

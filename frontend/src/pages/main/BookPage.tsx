@@ -116,6 +116,11 @@ const BookPage: React.FC = () => {
             return;
         }
 
+        if (!formData.name || !formData.phone || formData.phone.replace(/\D/g, "").length < 10) {
+            toast.error(t("bookPage.nameAndPhoneError"));
+            return;
+        }
+
         console.log("Booking Data:", {
             bikeId,
             ...formData,
@@ -134,39 +139,33 @@ const BookPage: React.FC = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="min-h-screen bg-gray-100 flex flex-col"
+            className="min-h-screen w-screen bg-gray-100 flex flex-col items-center justify-center py-4"
         >
 
-            <div className="flex-grow flex flex-col max-w-5xl mx-auto px-4 sm:px-6 pt-20 pb-10">
-                <motion.div
-                    initial={{ y: 20, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    transition={{ delay: 0.2 }}
-                    className="w-full bg-white rounded-2xl shadow-lg p-8 space-y-8"
-                >
+            <div className="w-full max-w-[95%] lg:max-w-7xl flex flex-col items-center bg-white rounded-2xl shadow-2xl p-8 mt-20">
+                <div className="w-full mb-8 border-b-2 py-2 border-gray-200">
                     <BookingHeader title={t("bookPage.title", { bikeName: tempData.name })} />
-
-                    <div className="flex flex-col lg:flex-row gap-8">
-                        <div className="lg:w-1/2 w-full lg:min-w-0">
-                            <BookingCalendar
-                                selectedRange={formData.dateRange}
-                                onChange={handleDateRangeChange}
-                                disabledDates={disabledDates}
-                            />
-                        </div>
-
-                        <div className="lg:w-1/2 w-full">
-                            <BookingForm
-                                formData={formData}
-                                onChange={handleInputChange}
-                                onPhoneChange={handlePhoneChange}
-                                onSubmit={handleSubmit}
-                                t={t}
-                            />
-                        </div>
+                </div>
+                <div className="flex flex-col w-full items-center lg:flex-row lg:gap-8">
+                    <div className="flex flex-col gap-4 items-center">
+                        <BookingCalendar
+                            selectedRange={formData.dateRange}
+                            onChange={handleDateRangeChange}
+                            disabledDates={disabledDates}
+                        />
                     </div>
-                </motion.div>
+                    <div className="w-full">
+                        <BookingForm
+                            formData={formData}
+                            onChange={handleInputChange}
+                            onPhoneChange={handlePhoneChange}
+                            onSubmit={handleSubmit}
+                            t={t}
+                        />
+                    </div>
+                </div>
             </div>
+
         </motion.div>
     );
 };

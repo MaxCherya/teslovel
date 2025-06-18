@@ -6,10 +6,12 @@ import LanguageMenu from '../forPages/Navs/LanguageMenu';
 import { useCachedBikes } from '../../lib/hooks/useCachedBikes';
 import BikesMenu from '../forPages/Navs/BikesMenu';
 import ContactsMenu from '../forPages/Navs/ContactsMenu';
+import { useTranslation } from 'react-i18next';
 
 export default function MainLayout() {
 
     const bikes = useCachedBikes();
+    const { t } = useTranslation();
 
     const [showLanguageMenu, setShowLanguageMenu] = useState(false);
     const [showMenu, setShowMenu] = useState(false);
@@ -53,9 +55,17 @@ export default function MainLayout() {
                 <Outlet context={{ showContacts, setShowContacts }} />
             </main>
 
-            <footer className='bg-white w-full'>
-                {/* Footer will be added here */}
-                <p>© 2025 Teslovel</p>
+            <footer className="bg-white w-full border-t">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
+                    <p className="mb-4 md:mb-0">© 2025 Teslovel. All rights reserved.</p>
+
+                    <div className="flex space-x-6">
+                        <a href="/models" className="hover:text-gray-800 transition">{t('nav.models')}</a>
+                        <a href="/blog" className="hover:text-gray-800 transition">{t('nav.blog')}</a>
+                        <a href="/about" className="hover:text-gray-800 transition">{t('nav.about')}</a>
+                        <a href="/contact" className="hover:text-gray-800 transition">{t('nav.contacts')}</a>
+                    </div>
+                </div>
             </footer>
         </div>
     )
