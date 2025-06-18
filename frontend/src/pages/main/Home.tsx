@@ -9,6 +9,8 @@ import FAQAccordion from "../../components/ui/accordions/FAQAccordion";
 import CTACallMe from "../../components/forPages/Home/CTACallMe";
 import { FiPhoneCall } from 'react-icons/fi';
 import { motion } from 'framer-motion';
+import { fetchCatwalkBikes } from "../../endpoints/HomePage";
+import FullScreenLoader from "../../components/ui/loaders/FullScreenLoader";
 
 type ContextType = {
     showContacts?: boolean;
@@ -17,47 +19,31 @@ type ContextType = {
 
 const Home: React.FC = () => {
 
-    const tempData = [
-        {
-            id: 0,
-            name: 'Teslovel Model 1',
-            max_speed: 45,
-            range: 90,
-            wheels_size: 27,
-            price_day: 150,
-            landscape_img: 'https://i.ibb.co/YBJJGQ9N/teslovel-Landscape.png'
-        },
-        {
-            id: 1,
-            name: 'Teslovel Model 3',
-            max_speed: 35,
-            range: 150,
-            wheels_size: 29,
-            price_day: 180,
-            landscape_img: 'https://i.ibb.co/YBJJGQ9N/teslovel-Landscape.png'
-        },
-        {
-            id: 2,
-            name: 'Teslovel TV01-05',
-            max_speed: 45,
-            range: 90,
-            wheels_size: 29,
-            price_day: 130,
-            landscape_img: 'https://i.ibb.co/YBJJGQ9N/teslovel-Landscape.png'
-        }
-    ]
-
     const [catwalk, setCatwalk] = useState<catwalkContent[]>()
 
     useEffect(() => {
-        setCatwalk(tempData)
-    }, [])
+        const loadBikes = async () => {
+            try {
+                setIsLoading(true);
+                const data = await fetchCatwalkBikes();
+                if (data) setCatwalk(data);
+            } catch (err) {
+                console.error(err)
+            } finally {
+                setIsLoading(false);
+            }
+        };
+        loadBikes();
+    }, []);
 
 
     const { showContacts, setShowContacts } = useOutletContext<ContextType>();
+    const [isLoading, setIsLoading] = useState(true);
 
     return (
         <div className="w-full h-full flex flex-col items-center">
+
+            {isLoading && <FullScreenLoader />}
 
             {/* Bikes Overview */}
             {catwalk ? (

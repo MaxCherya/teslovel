@@ -15,6 +15,8 @@ Teslovel is a modern web application built with a powerful full-stack architectu
 - [React Router](https://reactrouter.com/) — Client-side routing
 - [Framer Motion](https://www.framer.com/motion/) — Animation and transitions
 - [React Toastify](https://fkhadra.github.io/react-toastify/) — Toast notifications
+- [react-datepicker](https://github.com/Hacker0x01/react-datepicker) — Date picker for range and single selection
+- [yet-another-react-lightbox](https://yet-another-react-lightbox.com/) — Lightweight and customizable image lightbox
 - [usehooks-ts](https://usehooks-ts.com/) — TypeScript-first React utility hooks
 - [Swiper](https://swiperjs.com/react) — Modern touch slider for carousels and galleries
 - [React Icons](https://react-icons.github.io/react-icons/) — Popular icon packs as React components
@@ -23,7 +25,7 @@ Teslovel is a modern web application built with a powerful full-stack architectu
 ### Backend
 
 - [Django](https://www.djangoproject.com/) — Python web framework
-- [Django REST Framework](https://www.django-rest-framework.org/) _Planned_
+- [Django REST Framework](https://www.django-rest-framework.org/) — A powerful and flexible toolkit for building Web APIs. DRF simplifies serialization, request validation, authentication, permissions, pagination, and more — enabling clean and maintainable API endpoints to power the React frontend.
 
 ### Dev & Build Tools
 

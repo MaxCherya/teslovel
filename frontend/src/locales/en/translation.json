@@ -166,5 +166,8 @@
         "noDatesSelected": "No dates selected yet.",
         "selectedDates": "Selected: {{start}} → {{end}}",
         "nameAndPhoneError": "Please, enter your name and phone number."
+    },
+    "loading": {
+        "title": "Powering your e-bike journey..."
     }
 }
