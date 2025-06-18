@@ -9,6 +9,7 @@ interface BikeCardProps {
     header: string;
     price: number;
     status: string;
+    status_original: string;
 }
 
 const getStatusStyle = (status: string): string => {
@@ -24,7 +25,7 @@ const getStatusStyle = (status: string): string => {
     }
 };
 
-const BikeCard: React.FC<BikeCardProps> = ({ id, photo, header, price, status }) => {
+const BikeCard: React.FC<BikeCardProps> = ({ id, photo, header, price, status, status_original }) => {
     const navigate = useNavigate();
     const { t } = useTranslation();
 
@@ -37,7 +38,7 @@ const BikeCard: React.FC<BikeCardProps> = ({ id, photo, header, price, status })
                     className="w-full h-48 object-cover"
                 />
                 <span
-                    className={`absolute top-2 left-2 px-2 py-1 text-xs font-semibold rounded-md ${getStatusStyle(status)}`}
+                    className={`absolute top-2 left-2 px-2 py-1 text-xs font-semibold rounded-md ${getStatusStyle(status_original)}`}
                 >
                     {status}
                 </span>

@@ -31,17 +31,17 @@ const BikeSpecs: React.FC<BikeSpecsProps> = ({
                 <div className="bg-white p-6 rounded-lg shadow-md">
                     <h3 className="text-lg font-medium text-gray-900">{t('bikeSpecs.performance')}</h3>
                     <ul className="mt-4 space-y-2 text-gray-700">
-                        <li><strong>{t('bikeSpecs.maxSpeed')}:</strong> {max_speed} км/год</li>
-                        <li><strong>{t('bikeSpecs.range')}:</strong> {range} км</li>
-                        <li><strong>{t('bikeSpecs.power')}:</strong> {power} W</li>
+                        <li><strong>{t('bikeSpecs.maxSpeed')}:</strong> {max_speed} {t('units.kmh')}</li>
+                        <li><strong>{t('bikeSpecs.range')}:</strong> {range} {t('units.km')}</li>
+                        <li><strong>{t('bikeSpecs.power')}:</strong> {power} {t('units.watt')}</li>
                     </ul>
                 </div>
                 <div className="bg-white p-6 rounded-lg shadow-md">
                     <h3 className="text-lg font-medium text-gray-900">{t('bikeSpecs.components')}</h3>
                     <ul className="mt-4 space-y-2 text-gray-700">
-                        <li><strong>{t('bikeSpecs.batteryType')}:</strong> {battery_type} {battery_current}V</li>
+                        <li><strong>{t('bikeSpecs.batteryType')}:</strong> {battery_type} {battery_current}{t('units.volt')}</li>
                         <li><strong>{t('bikeSpecs.brakes')}:</strong> {brakes_type}</li>
-                        <li><strong>{t('bikeSpecs.wheelSize')}:</strong> {wheels_size} inches</li>
+                        <li><strong>{t('bikeSpecs.wheelSize')}:</strong> {wheels_size} {t('units.inch')}</li>
                         <li><strong>{t('bikeSpecs.enginePosition')}:</strong> {engine_position}</li>
                     </ul>
                 </div>

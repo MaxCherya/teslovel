@@ -169,5 +169,12 @@
     },
     "loading": {
         "title": "Powering your e-bike journey..."
+    },
+    "units": {
+        "kmh": "km/h",
+        "km": "km",
+        "watt": "W",
+        "volt": "V",
+        "inch": "inches"
     }
 }
