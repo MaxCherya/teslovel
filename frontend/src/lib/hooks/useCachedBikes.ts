@@ -12,8 +12,10 @@ export function useCachedBikes() {
         const fetchBikes = async () => {
             try {
                 const bikes = await fetchNavBarBikes();
-                setBikes(bikes)
-                setLoaded(true);
+                if (bikes) {
+                    setBikes(bikes)
+                    setLoaded(true);
+                }
             } catch (err) {
                 console.error(err)
             }

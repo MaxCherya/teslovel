@@ -176,5 +176,34 @@
         "watt": "W",
         "volt": "V",
         "inch": "inches"
+    },
+    "login": {
+        "title": "Login",
+        "phonePlaceholder": "Phone Number",
+        "passwordPlaceholder": "Password",
+        "loginBtn": "Login",
+        "noAccount": "Don't have an account?",
+        "signUp": "Sign up",
+        "errors": {
+            "required": "Please fill in all fields"
+        }
+    },
+    "signup": {
+        "title": "Sign Up",
+        "phonePlaceholder": "Phone Number (e.g., +1234567890)",
+        "passwordPlaceholder": "Password",
+        "confirmPasswordPlaceholder": "Confirm Password",
+        "signupBtn": "Sign Up",
+        "hasAccount": "Already have an account?",
+        "loginLink": "Login",
+        "errors": {
+            "requiredPhone": "Phone number is required",
+            "invalidPhone": "Invalid phone number format",
+            "requiredPassword": "Password is required",
+            "passwordLength": "Password must be at least 8 characters",
+            "passwordFormat": "Password must contain letters and numbers",
+            "requiredConfirm": "Confirm password is required",
+            "passwordMismatch": "Passwords do not match"
+        }
     }
 }

@@ -12,6 +12,8 @@ import Feedbacks from './pages/main/Feedbacks'
 import { useEffect } from 'react'
 import BikePage from './pages/main/BikePage'
 import BookPage from './pages/main/BookPage'
+import Login from './pages/main/Login';
+import Signup from './pages/main/Signup';
 
 function App() {
 
@@ -36,6 +38,8 @@ function App() {
           <Route path='models/:bikeId' element={<BikePage />} />
           <Route path='book/:bikeId' element={<BookPage />} />
           <Route path='feedbacks' element={<Feedbacks />} />
+          <Route path='login' element={<Login />} />
+          <Route path='signup' element={<Signup />} />
           <Route path="*" element={<NotFound />} />
 
         </Route>

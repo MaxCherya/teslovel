@@ -176,5 +176,34 @@
         "watt": "Вт",
         "volt": "В",
         "inch": "дюймов"
+    },
+    "login": {
+        "title": "Вход",
+        "phonePlaceholder": "Номер телефона",
+        "passwordPlaceholder": "Пароль",
+        "loginBtn": "Войти",
+        "noAccount": "Нет аккаунта?",
+        "signUp": "Зарегистрироваться",
+        "errors": {
+            "required": "Пожалуйста, заполните все поля"
+        }
+    },
+    "signup": {
+        "title": "Регистрация",
+        "phonePlaceholder": "Номер телефона (например, +380971234567)",
+        "passwordPlaceholder": "Пароль",
+        "confirmPasswordPlaceholder": "Подтверждение пароля",
+        "signupBtn": "Зарегистрироваться",
+        "hasAccount": "Уже есть аккаунт?",
+        "loginLink": "Войти",
+        "errors": {
+            "requiredPhone": "Необходимо ввести номер телефона",
+            "invalidPhone": "Неверный формат номера телефона",
+            "requiredPassword": "Необходимо ввести пароль",
+            "passwordLength": "Пароль должен быть не менее 8 символов",
+            "passwordFormat": "Пароль должен содержать буквы и цифры",
+            "requiredConfirm": "Необходимо подтвердить пароль",
+            "passwordMismatch": "Пароли не совпадают"
+        }
     }
 }
