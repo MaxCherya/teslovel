@@ -6,7 +6,7 @@ export interface BikeNavBar {
 
 export const fetchNavBarBikes = async (): Promise<BikeNavBar[] | null> => {
     try {
-        const response = await fetch("/api/navbar-bikes/");
+        const response = await fetch("/api/catalog/navbar-bikes/");
         if (!response.ok) throw new Error("Failed to fetch navbar bikes");
         const data: BikeNavBar[] = await response.json();
         return data

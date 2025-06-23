@@ -11,7 +11,7 @@ export interface BikeModels {
 
 export const fetchModelsBikes = async (): Promise<BikeModels[] | null> => {
     try {
-        const response = await fetch("/api/models-bikes/", {
+        const response = await fetch("/api/catalog/models-bikes/", {
             headers: {
                 "X-Language": i18next.language || "en",
             }

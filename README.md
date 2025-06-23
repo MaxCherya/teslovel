@@ -26,6 +26,7 @@ Teslovel is a modern web application built with a powerful full-stack architectu
 
 - [Django](https://www.djangoproject.com/) — Python web framework
 - [Django REST Framework](https://www.django-rest-framework.org/) — A powerful and flexible toolkit for building Web APIs. DRF simplifies serialization, request validation, authentication, permissions, pagination, and more — enabling clean and maintainable API endpoints to power the React frontend.
+- [requests](https://pypi.org/project/requests/) — Elegant and simple HTTP library for Python (used for Telegram bot messaging and other external API integrations)
 
 ### Dev & Build Tools
 

@@ -23,7 +23,8 @@ from django.views.static import serve
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('backendApps.catalog.urls')),
+    path('api/catalog/', include('backendApps.catalog.urls')),
+    path('api/support/', include('backendApps.customer_support.urls')),
 
     # Serves React index.html for frontend routes
     path("", CSRFAwareIndexView.as_view(), name="home"),

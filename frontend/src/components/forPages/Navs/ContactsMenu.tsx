@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaInstagram } from "react-icons/fa";
 import { PiTelegramLogo } from "react-icons/pi";
 import { FiPhone } from "react-icons/fi";
 import { PhoneInput } from "../../ui/inputs";
 import { useTranslation } from "react-i18next";
+import { toast } from "react-toastify";
+import { uploadContactRequest } from "../../../endpoints/ContactsMenu";
 
 interface ContactsMenuProps {
     showContactsMenu: boolean;
@@ -18,12 +20,69 @@ const ContactsMenu: React.FC<ContactsMenuProps> = ({
     toggleMenu,
 }) => {
     const { t } = useTranslation();
+    const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
+    const [notes, setNotes] = useState('');
+    const [formRenderedAt, setFormRenderedAt] = useState<number>(0);
 
-    const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    useEffect(() => {
+        setFormRenderedAt(Date.now() / 1000);
+    }, []);
+
+    const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        alert(t("contactsMenu.successAlert"));
+
+        const form = e.currentTarget;
+        const trap = (form.elements.namedItem('user_email') as HTMLInputElement)?.value;
+        const renderedAt = parseFloat((form.elements.namedItem('formRenderedAt') as HTMLInputElement)?.value || "0");
+
+        if (trap && trap.trim() !== '') {
+            console.warn("🛑 Bot detected.");
+            return;
+        }
+
+        const now = Date.now() / 1000;
+        if (now - renderedAt < 3) {
+            console.warn("⚠️ Submitted too quickly — possible bot.");
+            toast.error(t("contactsMenu.tooFast"));
+            return;
+        }
+
+        if (name.trim().length < 2) {
+            toast.error(t("contactsMenu.invalidName") || "Please enter your name.");
+            return;
+        }
+
+        if (phone.trim().length < 5) {
+            toast.error(t("contactsMenu.invalidPhone") || "Please enter a valid phone number.");
+            return;
+        }
+
+        const payload = {
+            name: name.trim(),
+            phone_number: phone.trim(),
+            notes: notes.trim(),
+            formRenderedAt: renderedAt.toString(),
+        };
+
+        try {
+            const result = await uploadContactRequest({ payload });
+
+            if (result?.success) {
+                toast.success(t("contactsMenu.successAlert"));
+                setName('');
+                setPhone('');
+                setNotes('');
+                toggleContactsMenu();
+            } else {
+                toast.error(t("contactsMenu.errorAlert"));
+            }
+        } catch (error) {
+            toast.error(t("contactsMenu.errorAlert"));
+            console.error("❌ Upload error:", error);
+        }
     };
+
 
     return (
         <AnimatePresence>
@@ -88,6 +147,22 @@ const ContactsMenu: React.FC<ContactsMenuProps> = ({
                         <div className="flex flex-col items-center w-full mb-8">
                             <h2 className="text-black text-lg font-bold mb-4 text-center">{t("contactsMenu.leaveContact")}</h2>
                             <form onSubmit={handleFormSubmit} className="flex flex-col gap-4 w-full">
+
+                                <input
+                                    type="text"
+                                    name="user_email"
+                                    className="sr-only"
+                                    tabIndex={-1}
+                                    autoComplete="off"
+                                    defaultValue=""
+                                />
+
+                                <input
+                                    type="hidden"
+                                    name="formRenderedAt"
+                                    value={formRenderedAt}
+                                />
+
                                 <label className="text-sm text-black font-semibold">
                                     {t("contactsMenu.nameLabel")} <span className="text-red-500">*</span>
                                     <input
@@ -95,6 +170,7 @@ const ContactsMenu: React.FC<ContactsMenuProps> = ({
                                         placeholder={t("contactsMenu.namePlaceholder")}
                                         className="mt-1 w-full text-black text-lg border-b border-gray-300 px-2 py-1 focus:outline-none focus:border-gray-700 transition-colors duration-200"
                                         required
+                                        onChange={(e) => setName(e.target.value)}
                                     />
                                 </label>
 
@@ -111,6 +187,7 @@ const ContactsMenu: React.FC<ContactsMenuProps> = ({
                                     <textarea
                                         placeholder={t("contactsMenu.additionalPlaceholder")}
                                         maxLength={300}
+                                        onChange={(e) => setNotes(e.target.value)}
                                         rows={4}
                                         className="mt-1 w-full resize-none rounded-lg bg-white text-black text-base border border-gray-300 px-3 py-2 focus:outline-none focus:border-black focus:ring-1 focus:ring-black transition-all duration-200 placeholder:text-neutral-500"
                                     ></textarea>

@@ -10,7 +10,7 @@ export interface BikeCatwalk {
 
 export const fetchCatwalkBikes = async (): Promise<BikeCatwalk[] | null> => {
     try {
-        const response = await fetch("/api/home-bikes/");
+        const response = await fetch("/api/catalog/home-bikes/");
         if (!response.ok) {
             throw new Error("Failed to fetch catwalk bikes");
         }

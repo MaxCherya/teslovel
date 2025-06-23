@@ -84,7 +84,11 @@
         "additionalInfo": "Additional Information",
         "additionalPlaceholder": "e.g., preferred time, type of bike, etc.",
         "sendBtn": "Send",
-        "successAlert": "Contact form submitted! We'll reach out soon."
+        "successAlert": "Contact form submitted! We'll reach out soon.",
+        "invalidName": "Please enter your name.",
+        "invalidPhone": "Please enter a valid phone number.",
+        "tooFast": "The form was submitted too quickly. Please try again.",
+        "errorAlert": "Something went wrong. Please try again later."
     },
     "languageMenu": {
         "title": "Choose Language"
