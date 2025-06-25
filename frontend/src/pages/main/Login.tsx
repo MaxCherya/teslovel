@@ -3,12 +3,13 @@ import { motion } from "framer-motion";
 import { FiPhoneCall, FiLock } from "react-icons/fi";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { login } from "../../endpoints/auth";
 import { toast } from "react-toastify";
+import { useAuth } from "../../lib/hooks/useAuth";
 
 const Login: React.FC = () => {
     const { t } = useTranslation();
     const navigate = useNavigate();
+    const { login } = useAuth();
     const [phone, setPhone] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
@@ -21,7 +22,7 @@ const Login: React.FC = () => {
         }
 
         setError("");
-        const success = await login({ phone, password });
+        const success = await login(phone, password);
 
         if (success) {
             toast.success(t("login.success"));

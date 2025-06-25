@@ -4,7 +4,7 @@ import { FiPhoneCall, FiLock } from "react-icons/fi";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { register } from "../../endpoints/auth";
+import { useAuth } from "../../lib/hooks/useAuth";
 
 const Signup: React.FC = () => {
     const { t } = useTranslation();
@@ -18,6 +18,7 @@ const Signup: React.FC = () => {
     }>({});
 
     const navigate = useNavigate();
+    const { register } = useAuth();
 
     const validatePhone = (phone: string): string | undefined => {
         const phoneRegex = /^\+?[1-9]\d{1,14}$/;
@@ -54,7 +55,7 @@ const Signup: React.FC = () => {
         });
 
         if (!phoneError && !passwordError && !confirmPasswordError) {
-            const success = await register({ phone, password });
+            const success = await register(phone, password);
 
             if (success) {
                 toast.success(t("signup.successMessage"));
