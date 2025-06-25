@@ -41,9 +41,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'rest_framework_simplejwt',
     'backendApps.catalog',
     'backendApps.specs_types',
-    'backendApps.customer_support'
+    'backendApps.customer_support',
+    'backendApps.accounts'
 ]
 
 MIDDLEWARE = [
@@ -95,7 +98,10 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_THROTTLE_RATES': {
         'anon': '10/minute',  # or '100/day', '5/second', etc.
-    }
+    },
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
 }
 
 
@@ -138,6 +144,13 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [ BASE_DIR / "frontend" / "dist" ]
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+
+AUTH_USER_MODEL = 'accounts.CustomUser'
+
+
+CSRF_COOKIE_SECURE = not IS_DEV
+SESSION_COOKIE_SECURE = not IS_DEV
 
 
 # Default primary key field type

@@ -41,28 +41,30 @@ const BikesMenu: React.FC<BikesMenuProps> = ({ showBikes, setShowBikes, bikes, t
                         </span>
                     </div>
                     <ul className="flex flex-col gap-4 px-4 py-6 w-full max-w-7xl mx-auto overflow-y-auto lg:px-6">
-                        {bikes.map((bike: any) => (
-                            <li
-                                key={bike.id}
-                                className="w-full bg-gray-50 lg:bg-transparent lg:shadow-none rounded-lg shadow-sm hover:shadow-md transition-all duration-200"
-                            >
-                                <a
-                                    href={`/models/${bike.id}`}
-                                    className="flex flex-row justify-evenly w-full items-center gap-4 p-4 group"
+                        {bikes &&
+                            bikes.map((bike: any) => (
+                                <li
+                                    key={bike.id}
+                                    className="w-full bg-gray-50 lg:bg-transparent lg:shadow-none rounded-lg shadow-sm hover:shadow-md transition-all duration-200"
                                 >
-                                    <img
-                                        src={bike.nav_photo}
-                                        alt={bike.name}
-                                        className="w-20 object-cover rounded-md flex-shrink-0 group-hover:scale-105 transition-transform duration-200"
-                                    />
-                                    <div className="flex flex-col items-center">
-                                        <span className="text-gray-800 font-medium text-base group-hover:text-blue-600 transition-colors duration-200">
-                                            {bike.name}
-                                        </span>
-                                    </div>
-                                </a>
-                            </li>
-                        ))}
+                                    <a
+                                        href={`/models/${bike.id}`}
+                                        className="flex flex-row justify-evenly w-full items-center gap-4 p-4 group"
+                                    >
+                                        <img
+                                            src={bike.nav_photo}
+                                            alt={bike.name}
+                                            className="w-20 object-cover rounded-md flex-shrink-0 group-hover:scale-105 transition-transform duration-200"
+                                        />
+                                        <div className="flex flex-col items-center">
+                                            <span className="text-gray-800 font-medium text-base group-hover:text-blue-600 transition-colors duration-200">
+                                                {bike.name}
+                                            </span>
+                                        </div>
+                                    </a>
+                                </li>
+                            ))
+                        }
                         <li className="py-3 px-4 rounded-lg hover:bg-gray-50 transition-colors duration-200">
                             <a
                                 href="/models"

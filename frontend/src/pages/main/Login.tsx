@@ -2,21 +2,33 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { FiPhoneCall, FiLock } from "react-icons/fi";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
+import { login } from "../../endpoints/auth";
+import { toast } from "react-toastify";
 
 const Login: React.FC = () => {
     const { t } = useTranslation();
+    const navigate = useNavigate();
     const [phone, setPhone] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!phone || !password) {
             setError(t("login.errors.required"));
             return;
         }
+
         setError("");
-        console.log("Login attempted with:", { phone, password });
+        const success = await login({ phone, password });
+
+        if (success) {
+            toast.success(t("login.success"));
+            navigate("/");
+        } else {
+            toast.error(t("login.failure"));
+        }
     };
 
     return (

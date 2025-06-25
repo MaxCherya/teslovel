@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { FiPhoneCall, FiLock } from "react-icons/fi";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { register } from "../../endpoints/auth";
 
 const Signup: React.FC = () => {
     const { t } = useTranslation();
@@ -13,6 +16,8 @@ const Signup: React.FC = () => {
         password?: string;
         confirmPassword?: string;
     }>({});
+
+    const navigate = useNavigate();
 
     const validatePhone = (phone: string): string | undefined => {
         const phoneRegex = /^\+?[1-9]\d{1,14}$/;
@@ -35,7 +40,7 @@ const Signup: React.FC = () => {
         return undefined;
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
         const phoneError = validatePhone(phone);
@@ -49,7 +54,14 @@ const Signup: React.FC = () => {
         });
 
         if (!phoneError && !passwordError && !confirmPasswordError) {
-            console.log("Signup attempted with:", { phone, password });
+            const success = await register({ phone, password });
+
+            if (success) {
+                toast.success(t("signup.successMessage"));
+                navigate("/login");
+            } else {
+                toast.error(t("signup.failureMessage"));
+            }
         }
     };
 

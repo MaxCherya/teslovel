@@ -46,9 +46,9 @@ const Home: React.FC = () => {
             {isLoading && <FullScreenLoader />}
 
             {/* Bikes Overview */}
-            {catwalk ? (
+            {catwalk && catwalk.length > 0 && (
                 <HeaderCatwalk catwalk={catwalk} />
-            ) : null}
+            )}
 
             {/* Main Info */}
             <MainInfo />
@@ -59,7 +59,7 @@ const Home: React.FC = () => {
             {/* Explicit features */}
             <InstalledItems />
 
-            {catwalk && <CardsSwiper content={catwalk} />}
+            {catwalk && catwalk.length > 0 && <CardsSwiper content={catwalk} />}
 
             <div
                 className="w-full bg-gray-100 flex flex-col items-center py-16 mt-10"
