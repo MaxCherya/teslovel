@@ -1,3 +1,5 @@
+import i18n from "../../locales";
+
 export type Method = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
 interface FetcherOptions extends RequestInit {
@@ -29,6 +31,7 @@ export const fetcher = async (
 
     const headers: Record<string, string> = {
         'Content-Type': 'application/json',
+        'X-Language': i18n.language,
         ...normalizeHeaders(options.headers),
     };
 

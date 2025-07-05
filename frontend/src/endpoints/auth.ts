@@ -1,3 +1,5 @@
+import i18n from "../locales";
+
 const BASE_URL = "/api/accounts";
 
 export interface AuthCredentials {
@@ -11,6 +13,7 @@ export const register = async (credentials: AuthCredentials): Promise<boolean> =
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
+                'X-Language': i18n.language || "uk",
             },
             body: JSON.stringify(credentials),
         });
@@ -29,6 +32,7 @@ export const login = async (credentials: AuthCredentials): Promise<boolean> => {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
+                'X-Language': i18n.language || "uk",
             },
             credentials: "include",
             body: JSON.stringify(credentials),
@@ -45,6 +49,9 @@ export const login = async (credentials: AuthCredentials): Promise<boolean> => {
 export const logout = async (): Promise<void> => {
     try {
         await fetch(`${BASE_URL}/logout/`, {
+            headers: {
+                'X-Language': i18n.language || "uk",
+            },
             method: "POST",
             credentials: "include",
         });
@@ -56,6 +63,9 @@ export const logout = async (): Promise<void> => {
 export const refreshToken = async (): Promise<boolean> => {
     try {
         const res = await fetch(`${BASE_URL}/token/refresh/`, {
+            headers: {
+                'X-Language': i18n.language || "uk",
+            },
             method: "POST",
             credentials: "include",
         });

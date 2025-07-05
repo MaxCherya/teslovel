@@ -1,7 +1,7 @@
 import React from "react";
 import PhoneInput from "react-phone-input-2";
-import moment from "moment";
 import "react-phone-input-2/lib/style.css";
+import i18n from "../../../locales";
 
 interface Props {
     formData: any;
@@ -10,6 +10,14 @@ interface Props {
     onSubmit: (e: React.FormEvent) => void;
     t: (key: string, options?: any) => string;
 }
+
+const formatDate = (date: Date) => {
+    return new Intl.DateTimeFormat(i18n.language, {
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+    }).format(date);
+};
 
 const BookingForm: React.FC<Props> = ({
     formData,
@@ -20,12 +28,28 @@ const BookingForm: React.FC<Props> = ({
 }) => (
     <form onSubmit={onSubmit} className="flex flex-col gap-5">
         <label className="flex flex-col gap-1">
+            <input
+                type="text"
+                name="user_email"
+                value={formData.user_email || ""}
+                onChange={onChange}
+                className="hidden"
+                autoComplete="off"
+                tabIndex={-1}
+            />
+
+            <input
+                type="hidden"
+                name="formRenderedAt"
+                value={formData.formRenderedAt || ""}
+            />
             <span className="text-sm font-medium text-gray-700">
                 {t("bookPage.nameLabel")} <span className="text-red-500">*</span>
             </span>
             <input
                 type="text"
                 name="name"
+                maxLength={235}
                 value={formData.name}
                 onChange={onChange}
                 placeholder={t("bookPage.namePlaceholder")}
@@ -55,7 +79,7 @@ const BookingForm: React.FC<Props> = ({
                 value={formData.comments}
                 onChange={onChange}
                 placeholder={t("bookPage.commentsPlaceholder")}
-                maxLength={300}
+                maxLength={800}
                 rows={4}
                 className="w-full text-base border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-none transition-all"
             />
@@ -65,8 +89,8 @@ const BookingForm: React.FC<Props> = ({
             {formData.dateRange.start && formData.dateRange.end ? (
                 <p className="font-medium">
                     {t("bookPage.selectedDates", {
-                        start: moment(formData.dateRange.start).format("MMM D, YYYY"),
-                        end: moment(formData.dateRange.end).format("MMM D, YYYY"),
+                        start: formatDate(formData.dateRange.start),
+                        end: formatDate(formData.dateRange.end),
                     })}
                 </p>
             ) : (

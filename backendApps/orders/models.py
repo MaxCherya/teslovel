@@ -1,0 +1,11 @@
+from django.db import models
+from backendApps.catalog.models import Bike
+
+class Order(models.Model):
+    bike = models.ForeignKey(Bike, on_delete=models.CASCADE)
+    name = models.CharField(max_length=240)
+    phone = models.CharField(max_length=15)
+    comments = models.TextField(blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    start_date = models.DateField()
+    end_date = models.DateField()

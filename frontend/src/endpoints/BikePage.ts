@@ -33,7 +33,7 @@ export const fetchBike = async ({ bike_id }: { bike_id: number }): Promise<BikeP
     try {
         const response = await fetch(`/api/catalog/bike/${bike_id}/`, {
             headers: {
-                "X-Language": i18next.language || "en",
+                "X-Language": i18next.language || "uk",
             }
         });
         if (!response.ok) {

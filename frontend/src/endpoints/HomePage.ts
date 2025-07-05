@@ -1,3 +1,5 @@
+import i18n from "../locales";
+
 export interface BikeCatwalk {
     id: number;
     name: string;
@@ -10,7 +12,11 @@ export interface BikeCatwalk {
 
 export const fetchCatwalkBikes = async (): Promise<BikeCatwalk[] | null> => {
     try {
-        const response = await fetch("/api/catalog/home-bikes/");
+        const response = await fetch("/api/catalog/home-bikes/", {
+            headers: {
+                'X-Language': i18n.language || "uk",
+            }
+        });
         if (!response.ok) {
             throw new Error("Failed to fetch catwalk bikes");
         }

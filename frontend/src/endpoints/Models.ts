@@ -13,7 +13,7 @@ export const fetchModelsBikes = async (): Promise<BikeModels[] | null> => {
     try {
         const response = await fetch("/api/catalog/models-bikes/", {
             headers: {
-                "X-Language": i18next.language || "en",
+                "X-Language": i18next.language || "uk",
             }
         });
         if (!response.ok) {

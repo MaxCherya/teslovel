@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
-import DatePicker from "react-datepicker";
+import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { useTranslation } from "react-i18next";
+import en from "date-fns/locale/en-US";
+import uk from "date-fns/locale/uk";
+import ru from "date-fns/locale/ru";
 
 interface Props {
     selectedRange: { start: Date | null; end: Date | null };
@@ -8,20 +12,25 @@ interface Props {
     disabledDates: Date[];
 }
 
+const localeMap: { [key: string]: Locale } = {
+    en,
+    uk,
+    ua: uk,
+    ru,
+};
+
 const BookingCalendar: React.FC<Props> = ({ selectedRange, onChange, disabledDates }) => {
-    const [key, setKey] = useState(0);
+    const [key, _setKey] = useState(0);
+    const today = new Date();
+    const { i18n } = useTranslation();
+    const currentLocale = localeMap[i18n.language] || en;
 
     useEffect(() => {
-        // When range is fully cleared, increment key to force remount
-        if (!selectedRange.start && !selectedRange.end) {
-            setKey((prev) => prev + 1);
-        }
-    }, [selectedRange.start, selectedRange.end]);
+        registerLocale(i18n.language, currentLocale);
+    }, [i18n.language]);
 
     const handleChange = (update: [Date | null, Date | null]) => {
         const [start, end] = update;
-
-        // If both start and end are set, next click should clear
         if (selectedRange.start && selectedRange.end && start) {
             onChange({ startDate: null, endDate: null });
         } else {
@@ -29,11 +38,19 @@ const BookingCalendar: React.FC<Props> = ({ selectedRange, onChange, disabledDat
         }
     };
 
+    const isSameDay = (a: Date, b: Date) => a.toDateString() === b.toDateString();
+
+    const dayClassName = (date: Date) => {
+        if (date < today) return "custom-day past-day";
+        if (disabledDates.some((d) => isSameDay(d, date))) return "custom-day busy-day";
+        return "custom-day available-day";
+    };
+
     return (
         <div className="w-full max-w-md">
             <DatePicker
-                key={key} // Force remount when range is cleared
-                selected={selectedRange.start || null} // Explicitly null when no selection
+                key={key}
+                selected={selectedRange.start || null}
                 onChange={handleChange}
                 startDate={selectedRange.start}
                 endDate={selectedRange.end}
@@ -43,8 +60,10 @@ const BookingCalendar: React.FC<Props> = ({ selectedRange, onChange, disabledDat
                 minDate={new Date()}
                 monthsShown={1}
                 calendarStartDay={1}
-                highlightDates={[]} // Prevent default highlighting of today
-                openToDate={selectedRange.start || undefined} // Focus on start date or nothing
+                highlightDates={[]}
+                openToDate={selectedRange.start || undefined}
+                dayClassName={dayClassName}
+                locale={i18n.language}
             />
         </div>
     );

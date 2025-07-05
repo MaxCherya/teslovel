@@ -153,6 +153,7 @@ const ContactsMenu: React.FC<ContactsMenuProps> = ({
                                     name="user_email"
                                     className="sr-only"
                                     tabIndex={-1}
+                                    maxLength={235}
                                     autoComplete="off"
                                     defaultValue=""
                                 />
@@ -167,6 +168,7 @@ const ContactsMenu: React.FC<ContactsMenuProps> = ({
                                     {t("contactsMenu.nameLabel")} <span className="text-red-500">*</span>
                                     <input
                                         type="text"
+                                        maxLength={235}
                                         placeholder={t("contactsMenu.namePlaceholder")}
                                         className="mt-1 w-full text-black text-lg border-b border-gray-300 px-2 py-1 focus:outline-none focus:border-gray-700 transition-colors duration-200"
                                         required
@@ -186,7 +188,7 @@ const ContactsMenu: React.FC<ContactsMenuProps> = ({
                                     {t("contactsMenu.additionalInfo")}
                                     <textarea
                                         placeholder={t("contactsMenu.additionalPlaceholder")}
-                                        maxLength={300}
+                                        maxLength={800}
                                         onChange={(e) => setNotes(e.target.value)}
                                         rows={4}
                                         className="mt-1 w-full resize-none rounded-lg bg-white text-black text-base border border-gray-300 px-3 py-2 focus:outline-none focus:border-black focus:ring-1 focus:ring-black transition-all duration-200 placeholder:text-neutral-500"

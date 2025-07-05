@@ -2,6 +2,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from .serializers import *
+from django.utils.timezone import localtime
 from .utils import send_to_admins, get_client_ip, get_ip_location
 import time
 
@@ -36,7 +37,7 @@ def upload_contact_request(request):
             f"<b>📞 Телефон:</b> {contact.phone_number}\n"
             f"<b>📝 Додаткові нотатки:</b> {contact.notes or '—'}\n"
             f"<b>🌍 Локація:</b> {location if location != 'Unknown' else 'невідомо'}\n"
-            f"<b>⏱️ Відправлено:</b> {contact.created_at.strftime('%d.%m.%Y %H:%M:%S')}"
+            f"<b>⏱️ Відправлено:</b> {localtime(contact.created_at).strftime('%d.%m.%Y %H:%M:%S')}"
         )
 
         send_to_admins(message)

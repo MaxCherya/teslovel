@@ -1,3 +1,5 @@
+import i18n from "../locales";
+
 interface ContactsRequestUploadPayload {
     name: string;
     phone_number: string;
@@ -15,6 +17,7 @@ export const uploadContactRequest = async ({
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
+                'X-Language': i18n.language || "uk",
             },
             body: JSON.stringify(payload),
         });
