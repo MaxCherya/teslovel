@@ -4,6 +4,7 @@ import { useAuth } from "../../../lib/hooks/useAuth";
 
 interface DesktopDropdownUserProps {
     user: {
+        id: number;
         username: string;
         phone: string;
     };
@@ -32,7 +33,7 @@ const DesktopDropdownUser: React.FC<DesktopDropdownUserProps> = ({ user }) => {
                 <div className="absolute right-0 mt-2 flex flex-col bg-white shadow-lg rounded-lg p-4 w-64 border border-gray-200 z-50">
                     <p className="text-gray-800 font-medium">{t("nav.welcome")}, {user.username}!</p>
                     <p className="text-gray-600 text-sm">{t("nav.phone")}: {user.phone}</p>
-                    <a href="/profile" className="text-blue-500 hover:text-blue-700 text-sm font-medium">{t("nav.view_profile")}</a>
+                    <a href={`/user/${user.id}`} className="text-blue-500 hover:text-blue-700 text-sm font-medium">{t("nav.view_profile")}</a>
                     <a onClick={() => logout()} className="text-red-500 cursor-pointer hover:text-red-700 text-sm font-medium">{t("nav.logout")}</a>
                 </div>
             )}

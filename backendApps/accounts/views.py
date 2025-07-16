@@ -5,6 +5,8 @@ from rest_framework_simplejwt.tokens import RefreshToken, TokenError
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.views import APIView
 from rest_framework import status
@@ -46,6 +48,7 @@ class CookieTokenObtainPairView(TokenObtainPairView):
     
 class CookieTokenRefreshView(APIView):
     permission_classes = [AllowAny]
+    throttle_classes = []
 
     def post(self, request, *args, **kwargs):
         refresh_token = request.COOKIES.get("refresh_token")
@@ -103,3 +106,16 @@ def logout(request):
     response.delete_cookie("access_token")
     response.delete_cookie("refresh_token")
     return response
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_user(request, pk):
+    try:
+        user = CustomUser.objects.get(id=pk)
+    except Exception:
+        return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+    
+    is_user = user.id == request.user.id
+
+    serialized = UserProfileSerializer(instance=user, context={'is_user': is_user})
+    return Response(serialized.data)

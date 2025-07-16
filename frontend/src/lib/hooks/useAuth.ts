@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
 
 interface AuthUser {
+    id: number;
     username: string;
     phone: string;
 }

@@ -15,4 +15,15 @@ class RegistrationSerializer(serializers.ModelSerializer):
 class UserAuthSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
-        fields = ['phone', 'username']
+        fields = ['id', 'phone', 'username']
+
+
+class UserProfileSerializer(serializers.ModelSerializer):
+    is_user = serializers.SerializerMethodField()
+
+    class Meta:
+        model = CustomUser
+        fields = ['id', 'phone', 'username', 'is_user']
+
+    def get_is_user(self, obj):
+        return self.context.get('is_user', False)

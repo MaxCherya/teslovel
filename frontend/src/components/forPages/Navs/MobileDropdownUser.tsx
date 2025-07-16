@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 
 interface MobileDropdownUserProps {
     user: {
+        id: number;
         username: string;
         phone: string;
     };
@@ -18,7 +19,7 @@ const MobileDropdownUser: React.FC<MobileDropdownUserProps> = ({ user }) => {
             </p>
             <p className="text-gray-600 text-sm mb-3">{t("nav.phone")}: {user.phone}</p>
             <a
-                href="/profile"
+                href={`/user/${user.id}`}
                 className="text-blue-500 hover:text-blue-700 text-sm font-medium mb-2"
             >
                 {t("nav.view_profile")}

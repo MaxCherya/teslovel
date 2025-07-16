@@ -18,8 +18,6 @@ const DesktopNav: React.FC<DesktopNavProps> = ({ toggleLanguageMenu, setShowBike
     const { t } = useTranslation();
     const { user } = useAuth()
 
-    console.log(user)
-
     return (
         <header className='bg-white sticky top-0 w-full p-4 flex-row justify-between align-middle items-center hidden lg:flex z-50'>
             <img src={Logo} className='h-[4svh] cursor-pointer' onClick={() => navigate(`/`)} />

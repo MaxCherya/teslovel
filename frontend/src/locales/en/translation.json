@@ -1,4 +1,9 @@
 {
+    "profile": {
+        "title": "Your Profile",
+        "username": "Username",
+        "phone": "Phone Number"
+    },
     "homePage": {
         "catwalk": {
             "bookBtn": "Book Now",

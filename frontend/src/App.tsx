@@ -14,6 +14,7 @@ import BikePage from './pages/main/BikePage'
 import BookPage from './pages/main/BookPage'
 import Login from './pages/main/Login';
 import Signup from './pages/main/Signup';
+import UserProfile from './pages/protected/UserProfile';
 
 function App() {
 
@@ -40,6 +41,7 @@ function App() {
           <Route path='feedbacks' element={<Feedbacks />} />
           <Route path='login' element={<Login />} />
           <Route path='signup' element={<Signup />} />
+          <Route path='/user/:userId' element={<UserProfile />} />
           <Route path="*" element={<NotFound />} />
 
         </Route>

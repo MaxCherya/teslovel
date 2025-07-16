@@ -1,4 +1,9 @@
 {
+    "profile": {
+        "title": "Ваш профіль",
+        "username": "Ім'я користувача",
+        "phone": "Номер телефону"
+    },
     "homePage": {
         "catwalk": {
             "bookBtn": "Забронювати",

@@ -101,6 +101,8 @@ REST_FRAMEWORK = {
         'anon': '10/minute',  # or '100/day', '5/second', etc.
     },
     'DEFAULT_AUTHENTICATION_CLASSES': [
+        'backendApps.accounts.authentication.CookieJWTAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
 }
