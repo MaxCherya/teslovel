@@ -26,7 +26,7 @@ export const register = async (credentials: AuthCredentials): Promise<boolean> =
     }
 };
 
-export const login = async (credentials: AuthCredentials): Promise<boolean> => {
+export const login = async (credentials: AuthCredentials): Promise<any> => {
     try {
         const response = await fetch(`${BASE_URL}/login/`, {
             method: "POST",
@@ -39,14 +39,14 @@ export const login = async (credentials: AuthCredentials): Promise<boolean> => {
         });
 
         if (!response.ok) throw new Error("Login failed");
-        return true;
+        return await response.json();
     } catch (error) {
         console.error("Login error:", error);
         return false;
     }
 };
 
-export const logout = async (): Promise<void> => {
+export const logout = async (): Promise<boolean> => {
     try {
         await fetch(`${BASE_URL}/logout/`, {
             headers: {
@@ -55,12 +55,14 @@ export const logout = async (): Promise<void> => {
             method: "POST",
             credentials: "include",
         });
+        return true;
     } catch (error) {
         console.error("Logout error:", error);
+        return false;
     }
 };
 
-export const refreshToken = async (): Promise<boolean> => {
+export const refreshToken = async (): Promise<any> => {
     try {
         const res = await fetch(`${BASE_URL}/token/refresh/`, {
             headers: {
@@ -71,7 +73,7 @@ export const refreshToken = async (): Promise<boolean> => {
         });
 
         if (!res.ok) throw new Error("Token refresh failed");
-        return true;
+        return await res.json();
     } catch (error) {
         console.error("Token refresh error:", error);
         return false;

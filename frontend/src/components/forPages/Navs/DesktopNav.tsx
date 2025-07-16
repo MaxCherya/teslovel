@@ -4,6 +4,8 @@ import { CgProfile } from "react-icons/cg";
 import Logo from '../../../assets/imgs/icon.png';
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useAuth } from "../../../lib/hooks/useAuth";
+import DesktopDropdownUser from "./DesktopDropdownUser";
 
 interface DesktopNavProps {
     toggleLanguageMenu: () => void;
@@ -14,6 +16,9 @@ interface DesktopNavProps {
 const DesktopNav: React.FC<DesktopNavProps> = ({ toggleLanguageMenu, setShowBikes, setShowContacts }) => {
     const navigate = useNavigate();
     const { t } = useTranslation();
+    const { user } = useAuth()
+
+    console.log(user)
 
     return (
         <header className='bg-white sticky top-0 w-full p-4 flex-row justify-between align-middle items-center hidden lg:flex z-50'>
@@ -36,9 +41,13 @@ const DesktopNav: React.FC<DesktopNavProps> = ({ toggleLanguageMenu, setShowBike
                 <p onClick={toggleLanguageMenu} className='text-black text-lg hover:text-gray-700 cursor-pointer'>
                     <GrLanguage />
                 </p>
-                <a href='/login' className='text-black text-xl hover:text-gray-700 cursor-pointer'>
-                    <CgProfile />
-                </a>
+                {user?.username && user?.username !== 'na' && user?.phone && user?.phone !== 'na' ? (
+                    <DesktopDropdownUser user={user} />
+                ) : (
+                    <a href='/login' className='text-black text-xl hover:text-gray-700 cursor-pointer'>
+                        <CgProfile />
+                    </a>
+                )}
                 <a onClick={() => setShowContacts(true)} className='text-black text-xl hover:text-gray-700 cursor-pointer'>
                     <PiPhoneCall />
                 </a>

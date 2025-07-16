@@ -1,7 +1,7 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework_simplejwt.tokens import RefreshToken, AccessToken, TokenError
+from rest_framework_simplejwt.tokens import RefreshToken, TokenError
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.response import Response
@@ -35,7 +35,12 @@ class CookieTokenObtainPairView(TokenObtainPairView):
                 samesite='Lax' if settings.IS_DEV else 'Strict',
             )
 
-            response.data = { "message": "Login successful" }
+            try:
+                user = CustomUser.objects.get(phone=request.data['phone'])
+                serialized = UserAuthSerializer(instance=user)
+                response.data = serialized.data
+            except CustomUser.DoesNotExist:
+                pass
 
         return response
     
@@ -52,7 +57,16 @@ class CookieTokenRefreshView(APIView):
             refresh = RefreshToken(refresh_token)
             access = str(refresh.access_token)
 
-            response = Response({"message": "Token refreshed"}, status=status.HTTP_200_OK)
+            try:
+                user = CustomUser.objects.get(id=refresh["user_id"])
+                serialized = UserAuthSerializer(instance=user)
+                data = serialized.data
+            except CustomUser.DoesNotExist:
+                data = {"detail": "User not found."}
+
+            response = Response(data, status=status.HTTP_200_OK)
+
+            # Set new access token cookie
             response.set_cookie(
                 key="access_token",
                 value=access,
@@ -60,9 +74,10 @@ class CookieTokenRefreshView(APIView):
                 secure=not settings.IS_DEV,
                 samesite='Lax' if settings.IS_DEV else 'Strict',
             )
+
             return response
 
-        except TokenError as e:
+        except TokenError:
             return Response({"detail": "Invalid or expired token."}, status=status.HTTP_401_UNAUTHORIZED)
 
 @api_view(['POST'])
@@ -70,11 +85,16 @@ def register(request):
     serializer = RegistrationSerializer(data=request.data)
     if serializer.is_valid():
         user = serializer.save()
+
+        user.username = f"user-{user.id}"
+        user.save(update_fields=["username"])
+
         refresh = RefreshToken.for_user(user)
         return Response({
             'refresh': str(refresh),
             'access': str(refresh.access_token),
         }, status=status.HTTP_201_CREATED)
+
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(["POST"])

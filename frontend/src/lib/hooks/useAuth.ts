@@ -1,20 +1,23 @@
 import { useCallback, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import * as authApi from "../../endpoints/auth";
+import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 interface AuthUser {
+    username: string;
     phone: string;
 }
 
 export const useAuth = () => {
     const [user, setUser] = useState<AuthUser | null>(null);
     const [loading, setLoading] = useState(true);
-    const navigate = useNavigate();
+
+    const { t } = useTranslation();
 
     const login = useCallback(async (phone: string, password: string) => {
         const success = await authApi.login({ phone, password });
         if (success) {
-            setUser({ phone });
+            setUser(success);
         }
         return success;
     }, []);
@@ -25,25 +28,29 @@ export const useAuth = () => {
     }, []);
 
     const logout = useCallback(async () => {
-        await authApi.logout();
+        const ok = await authApi.logout();
         setUser(null);
-        navigate("/login");
-    }, [navigate]);
+        if (ok) {
+            window.location.href = "/";
+        }
+        else toast.error(t("logout.failure"));
+    }, []);
 
     const refreshSession = useCallback(async () => {
         const refreshed = await authApi.refreshToken();
         if (!refreshed) {
             setUser(null);
-            navigate("/login");
+            window.location.href = "/login";
+        } else {
+            setUser(refreshed);
         }
-    }, [navigate]);
+    }, []);
 
     useEffect(() => {
         const tryRefresh = async () => {
             const ok = await authApi.refreshToken();
             if (ok) {
-                // Optionally, fetch actual user info from API
-                setUser({ phone: "unknown" }); // Replace with actual fetch if needed
+                setUser(ok);
             }
             setLoading(false);
         };

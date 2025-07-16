@@ -8,6 +8,8 @@ import { IoClose } from "react-icons/io5";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import MobileDropdownUser from "./MobileDropdownUser";
+import { useAuth } from "../../../lib/hooks/useAuth";
 
 interface MobileNavProps {
     toggleLanguageMenu: () => void;
@@ -29,6 +31,7 @@ const MobileNav: React.FC<MobileNavProps> = ({
 }) => {
     const navigate = useNavigate();
     const { t } = useTranslation();
+    const { user } = useAuth()
 
     return (
         <>
@@ -82,18 +85,6 @@ const MobileNav: React.FC<MobileNavProps> = ({
                             </div>
                             <span>{">"}</span>
                         </div>
-                        <div className="w-full flex flex-row justify-between items-center p-4">
-                            <div className="flex flex-row gap-4 items-center align-middle font-semibold">
-                                <a
-                                    href="/login"
-                                    className="text-black text-xl hover:text-gray-700"
-                                >
-                                    <CgProfile />
-                                </a>
-                                <p>{t("nav.account")}</p>
-                            </div>
-                            <span>{">"}</span>
-                        </div>
                         <div className="w-full flex flex-row justify-between items-center p-4" onClick={() => setShowContacts(true)}>
                             <div className="flex flex-row gap-4 items-center align-middle font-semibold">
                                 <a className="text-black text-xl hover:text-gray-700">
@@ -103,6 +94,20 @@ const MobileNav: React.FC<MobileNavProps> = ({
                             </div>
                             <span>{">"}</span>
                         </div>
+                        {user ? <MobileDropdownUser user={user} /> : (
+                            <div className="w-full flex flex-row justify-between items-center p-4">
+                                <div className="flex flex-row gap-4 items-center align-middle font-semibold">
+                                    <a
+                                        href="/login"
+                                        className="text-black text-xl hover:text-gray-700"
+                                    >
+                                        <CgProfile />
+                                    </a>
+                                    <p>{t("nav.account")}</p>
+                                </div>
+                                <span>{">"}</span>
+                            </div>
+                        )}
                     </motion.div>
                 )}
             </AnimatePresence>

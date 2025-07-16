@@ -66,7 +66,11 @@
         "contacts": "Contacts",
         "language": "Language",
         "account": "Account",
-        "call": "Call Us"
+        "call": "Call Us",
+        "welcome": "Welcome",
+        "phone": "Phone",
+        "view_profile": "View Profile",
+        "logout": "Logout"
     },
     "bikesMenu": {
         "title": "Bike Models",
@@ -188,9 +192,13 @@
         "loginBtn": "Login",
         "noAccount": "Don't have an account?",
         "signUp": "Sign up",
+        "failure": "Login failed. Please check your credentials.",
         "errors": {
             "required": "Please fill in all fields"
         }
+    },
+    "logout": {
+        "failure": "Logout failed. Please try again."
     },
     "signup": {
         "title": "Sign Up",
