@@ -2,7 +2,15 @@
     "profile": {
         "title": "Your Profile",
         "username": "Username",
-        "phone": "Phone Number"
+        "phone": "Phone Number",
+        "enable2fa": "Включить двухфакторную аутентификацию",
+        "scan_qr": "Отсканируйте этот QR-код в вашем приложении аутентификации",
+        "otp_placeholder": "Введите 6-значный код",
+        "confirm": "Подтвердить",
+        "cancel": "Отмена",
+        "invalid_otp": "Введённый код недействителен. Пожалуйста, попробуйте снова.",
+        "disable2fa": "Отключить двухфакторную аутентификацию",
+        "enter_otp_to_disable": "Введите OTP-код, чтобы отключить двухфакторную аутентификацию"
     },
     "homePage": {
         "catwalk": {
@@ -194,12 +202,16 @@
         "title": "Вход",
         "phonePlaceholder": "Номер телефона",
         "passwordPlaceholder": "Пароль",
+        "otpPlaceholder": "Введите OTP код",
         "loginBtn": "Войти",
+        "confirmOtpBtn": "Подтвердить OTP",
         "noAccount": "Нет аккаунта?",
         "signUp": "Зарегистрироваться",
-        "failure": "Не удалось войти. Проверьте свои данные.",
+        "failure": "Ошибка входа. Проверьте данные.",
         "errors": {
-            "required": "Пожалуйста, заполните все поля"
+            "required": "Необходимо ввести телефон и пароль.",
+            "otp_required": "Требуется ввести OTP код.",
+            "invalid_otp": "Неверный OTP код."
         }
     },
     "logout": {
@@ -213,6 +225,8 @@
         "signupBtn": "Зарегистрироваться",
         "hasAccount": "Уже есть аккаунт?",
         "loginLink": "Войти",
+        "successMessage": "Аккаунт успешно создан. Пожалуйста, войдите.",
+        "failureMessage": "Ошибка регистрации. Попробуйте позже.",
         "errors": {
             "requiredPhone": "Необходимо ввести номер телефона",
             "invalidPhone": "Неверный формат номера телефона",

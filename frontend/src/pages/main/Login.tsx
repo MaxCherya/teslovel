@@ -1,16 +1,18 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { FiPhoneCall, FiLock } from "react-icons/fi";
+import { FiPhoneCall, FiLock, FiKey } from "react-icons/fi";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 import { useAuth } from "../../lib/hooks/useAuth";
 
 const Login: React.FC = () => {
     const { t } = useTranslation();
-    const { login } = useAuth();
+    const { login, loginWithOtp } = useAuth();
     const [phone, setPhone] = useState("");
     const [password, setPassword] = useState("");
+    const [otp, setOtp] = useState("");
     const [error, setError] = useState("");
+    const [otpRequired, setOtpRequired] = useState(false);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -20,12 +22,31 @@ const Login: React.FC = () => {
         }
 
         setError("");
-        const success = await login(phone, password);
+        const result = await login(phone, password);
 
-        if (success) {
+        if (result?.require_2fa) {
+            setOtpRequired(true);
+            return;
+        }
+
+        if (result) {
             window.location.href = "/";
         } else {
             toast.error(t("login.failure"));
+        }
+    };
+
+    const handleOtpConfirm = async () => {
+        if (!otp) {
+            setError(t("login.errors.otp_required"));
+            return;
+        }
+
+        const result = await loginWithOtp(phone, password, otp);
+        if (result) {
+            window.location.href = "/";
+        } else {
+            setError(t("login.errors.invalid_otp"));
         }
     };
 
@@ -62,14 +83,37 @@ const Login: React.FC = () => {
                             className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-black text-sm"
                         />
                     </div>
-                    <motion.button
-                        whileHover={{ scale: 1.01 }}
-                        whileTap={{ scale: 0.95 }}
-                        onClick={handleSubmit}
-                        className="w-full cursor-pointer py-3 bg-black text-white rounded-full font-medium text-sm hover:bg-gray-800 transition-colors"
-                    >
-                        {t("login.loginBtn")}
-                    </motion.button>
+                    {!otpRequired ? (
+                        <motion.button
+                            whileHover={{ scale: 1.01 }}
+                            whileTap={{ scale: 0.95 }}
+                            onClick={handleSubmit}
+                            className="w-full cursor-pointer py-3 bg-black text-white rounded-full font-medium text-sm hover:bg-gray-800 transition-colors"
+                        >
+                            {t("login.loginBtn")}
+                        </motion.button>
+                    ) : (
+                        <>
+                            <div className="relative">
+                                <FiKey className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                                <input
+                                    type="text"
+                                    value={otp}
+                                    onChange={(e) => setOtp(e.target.value)}
+                                    placeholder={t("login.otpPlaceholder")}
+                                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-black text-sm"
+                                />
+                            </div>
+                            <motion.button
+                                whileHover={{ scale: 1.01 }}
+                                whileTap={{ scale: 0.95 }}
+                                onClick={handleOtpConfirm}
+                                className="w-full cursor-pointer py-3 bg-black text-white rounded-full font-medium text-sm hover:bg-gray-800 transition-colors"
+                            >
+                                {t("login.confirmOtpBtn")}
+                            </motion.button>
+                        </>
+                    )}
                 </div>
                 <p className="text-center text-sm mt-6 text-gray-600">
                     {t("login.noAccount")}{" "}

@@ -16,16 +16,31 @@ export const useAuth = () => {
     const { t } = useTranslation();
 
     const login = useCallback(async (phone: string, password: string) => {
-        const success = await authApi.login({ phone, password });
-        if (success) {
-            setUser(success);
+        const res = await authApi.login({ phone, password });
+
+        if (res?.otp_required) {
+            return { otp_required: true };
         }
-        return success;
+
+        if (res) {
+            setUser(res);
+            return res;
+        }
+
+        return false;
+    }, []);
+
+    const loginWithOtp = useCallback(async (phone: string, password: string, otp_code: string) => {
+        const res = await authApi.verifyOtpLogin({ phone, password, otp_code });
+        if (res) {
+            setUser(res);
+            return true;
+        }
+        return false;
     }, []);
 
     const register = useCallback(async (phone: string, password: string) => {
-        const success = await authApi.register({ phone, password });
-        return success;
+        return await authApi.register({ phone, password });
     }, []);
 
     const logout = useCallback(async () => {
@@ -33,8 +48,9 @@ export const useAuth = () => {
         setUser(null);
         if (ok) {
             window.location.href = "/";
+        } else {
+            toast.error(t("logout.failure"));
         }
-        else toast.error(t("logout.failure"));
     }, []);
 
     const refreshSession = useCallback(async () => {
@@ -64,6 +80,7 @@ export const useAuth = () => {
         loading,
         isAuthenticated: !!user,
         login,
+        loginWithOtp,
         register,
         logout,
         refreshSession,

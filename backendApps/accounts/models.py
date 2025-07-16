@@ -24,6 +24,7 @@ class CustomUserManager(BaseUserManager):
 class CustomUser(AbstractUser):
     username = models.CharField(max_length=150)
     phone = models.CharField(max_length=20, unique=True)
+    has_2fa_enabled = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'phone'
     REQUIRED_FIELDS = []

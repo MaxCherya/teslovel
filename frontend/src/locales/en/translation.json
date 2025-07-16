@@ -2,7 +2,15 @@
     "profile": {
         "title": "Your Profile",
         "username": "Username",
-        "phone": "Phone Number"
+        "phone": "Phone Number",
+        "enable2fa": "Enable Two-Factor Authentication",
+        "scan_qr": "Scan this QR Code in your Authenticator App",
+        "otp_placeholder": "Enter the 6-digit code",
+        "confirm": "Confirm",
+        "cancel": "Cancel",
+        "invalid_otp": "The OTP you entered is invalid. Please try again.",
+        "disable2fa": "Disable 2FA",
+        "enter_otp_to_disable": "Enter OTP to disable 2FA"
     },
     "homePage": {
         "catwalk": {
@@ -194,12 +202,16 @@
         "title": "Login",
         "phonePlaceholder": "Phone Number",
         "passwordPlaceholder": "Password",
+        "otpPlaceholder": "Enter OTP code",
+        "confirmOtpBtn": "Confirm OTP",
         "loginBtn": "Login",
         "noAccount": "Don't have an account?",
         "signUp": "Sign up",
         "failure": "Login failed. Please check your credentials.",
         "errors": {
-            "required": "Please fill in all fields"
+            "required": "Please fill in all fields",
+            "otp_required": "OTP code is required.",
+            "invalid_otp": "Invalid OTP code."
         }
     },
     "logout": {
@@ -213,6 +225,8 @@
         "signupBtn": "Sign Up",
         "hasAccount": "Already have an account?",
         "loginLink": "Login",
+        "successMessage": "Account created successfully. Please log in.",
+        "failureMessage": "Registration failed. Please try again later.",
         "errors": {
             "requiredPhone": "Phone number is required",
             "invalidPhone": "Invalid phone number format",

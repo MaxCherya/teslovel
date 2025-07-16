@@ -5,8 +5,11 @@ from .serializers import *
 from django.utils.timezone import localtime
 from .utils import send_to_admins, get_client_ip, get_ip_location
 import time
+from rest_framework.permissions import AllowAny
+from rest_framework.decorators import permission_classes
 
 @api_view(['POST'])
+@permission_classes([AllowAny])
 def upload_contact_request(request):
     data = request.data
 

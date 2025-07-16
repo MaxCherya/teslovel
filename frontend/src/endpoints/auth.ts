@@ -7,6 +7,45 @@ export interface AuthCredentials {
     password: string;
 }
 
+export const setupOtp = async (): Promise<{ qr_code_base64: string; otp_uri: string } | false> => {
+    try {
+        const response = await fetch(`${BASE_URL}/2fa/setup/`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-Language": i18n.language || "uk",
+            },
+            credentials: "include",
+        });
+
+        if (!response.ok) throw new Error("OTP setup failed");
+        return await response.json();
+    } catch (error) {
+        console.error("OTP setup error:", error);
+        return false;
+    }
+};
+
+export const confirmOtp = async (otp_code: string): Promise<boolean> => {
+    try {
+        const response = await fetch(`${BASE_URL}/2fa/confirm/`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-Language": i18n.language || "uk",
+            },
+            credentials: "include",
+            body: JSON.stringify({ otp_code }),
+        });
+
+        if (!response.ok) throw new Error("OTP confirmation failed");
+        return true;
+    } catch (error) {
+        console.error("OTP confirmation error:", error);
+        return false;
+    }
+};
+
 export const register = async (credentials: AuthCredentials): Promise<boolean> => {
     try {
         const response = await fetch(`${BASE_URL}/register/`, {
@@ -76,6 +115,46 @@ export const refreshToken = async (): Promise<any> => {
         return await res.json();
     } catch (error) {
         console.error("Token refresh error:", error);
+        return false;
+    }
+};
+
+export const verifyOtpLogin = async (credentials: AuthCredentials & { otp_code: string }): Promise<any> => {
+    try {
+        const response = await fetch(`${BASE_URL}/2fa/verify-login/`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-Language": i18n.language || "uk",
+            },
+            credentials: "include",
+            body: JSON.stringify(credentials),
+        });
+
+        if (!response.ok) throw new Error("OTP login failed");
+        return await response.json();
+    } catch (error) {
+        console.error("OTP login error:", error);
+        return false;
+    }
+};
+
+export const disableOtp = async (otp_code: string): Promise<boolean> => {
+    try {
+        const response = await fetch(`${BASE_URL}/2fa/disable/`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-Language": i18n.language || "uk",
+            },
+            credentials: "include",
+            body: JSON.stringify({ otp_code }),
+        });
+
+        if (!response.ok) throw new Error("OTP disable failed");
+        return true;
+    } catch (error) {
+        console.error("OTP disable error:", error);
         return false;
     }
 };

@@ -83,10 +83,17 @@ const Signup: React.FC = () => {
                                 type="tel"
                                 value={phone}
                                 onChange={(e) => {
-                                    setPhone(e.target.value);
+                                    let val = e.target.value;
+
+                                    // Always starts with +
+                                    if (!val.startsWith("+")) {
+                                        val = "+" + val.replace(/[^0-9]/g, "");
+                                    }
+
+                                    setPhone(val);
                                     setErrors((prev) => ({
                                         ...prev,
-                                        phone: validatePhone(e.target.value),
+                                        phone: validatePhone(val),
                                     }));
                                 }}
                                 placeholder={t("signup.phonePlaceholder")}

@@ -6,8 +6,11 @@ from .models import *
 from django.utils.timezone import localtime
 from backendApps.customer_support.utils import send_to_admins, get_client_ip, get_ip_location
 import time
+from rest_framework.permissions import AllowAny
+from rest_framework.decorators import permission_classes
 
 @api_view(['POST'])
+@permission_classes([AllowAny])
 def upload_order_request(request):
     data = request.data
 
@@ -70,6 +73,7 @@ def upload_order_request(request):
     return Response({'success': True}, status=status.HTTP_201_CREATED)
 
 @api_view(['GET'])
+@permission_classes([AllowAny])
 def get_bike_busy_days(request, bike_id):
     try:
         bike = Bike.objects.get(id=bike_id)

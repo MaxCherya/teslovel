@@ -8,4 +8,8 @@ urlpatterns = [
     path("logout/", logout, name="logout"),
 
     path('user/<int:pk>', get_user, name='get_user'),
+    path("2fa/setup/", setup_otp, name="setup-otp"),
+    path('2fa/confirm/', confirm_otp, name='confirm-otp'),
+    path('2fa/verify-login/', verify_otp_login, name='verify-otp-login'),
+    path('2fa/disable/', disable_otp, name='disable-otp'),
 ]
