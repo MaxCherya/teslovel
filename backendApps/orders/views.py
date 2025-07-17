@@ -8,6 +8,8 @@ from backendApps.customer_support.utils import send_to_admins, get_client_ip, ge
 import time
 from rest_framework.permissions import AllowAny
 from rest_framework.decorators import permission_classes
+from rest_framework.permissions import IsAdminUser
+from rest_framework.pagination import PageNumberPagination
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
@@ -38,6 +40,7 @@ def upload_order_request(request):
     # Overlapping date check
     conflict = Order.objects.filter(
         bike=bike,
+        is_validated=True,
         start_date__lte=end_date,
         end_date__gte=start_date,
     ).exists()
@@ -82,3 +85,48 @@ def get_bike_busy_days(request, bike_id):
 
     serializer = BikeBusyDaysSerializer(bike)
     return Response(serializer.data, status=status.HTTP_200_OK)
+
+@api_view(["GET"])
+@permission_classes([IsAdminUser])
+def list_orders(request):
+    paginator = PageNumberPagination()
+    paginator.page_size = 10
+    orders = Order.objects.select_related("bike").order_by("-created_at")
+    result_page = paginator.paginate_queryset(orders, request)
+    serializer = OrderSerializer(result_page, many=True)
+    return paginator.get_paginated_response(serializer.data)
+
+@api_view(["PATCH"])
+@permission_classes([IsAdminUser])
+def update_order_status(request, order_id):
+    action = request.data.get("action")
+    if action not in ["validate", "reject"]:
+        return Response({"detail": "Invalid action."}, status=status.HTTP_400_BAD_REQUEST)
+
+    try:
+        order = Order.objects.get(id=order_id)
+    except Order.DoesNotExist:
+        return Response({"detail": "Order not found."}, status=status.HTTP_404_NOT_FOUND)
+
+    if action == "validate":
+        # Check for overlapping validated orders
+        conflict = Order.objects.filter(
+            bike=order.bike,
+            is_validated=True,
+            start_date__lte=order.end_date,
+            end_date__gte=order.start_date
+        ).exclude(id=order.id).exists()
+
+        if conflict:
+            return Response({"detail": "Conflict: another validated order exists for the selected period."},
+                            status=status.HTTP_409_CONFLICT)
+
+        order.is_validated = True
+        order.is_rejected = False
+
+    elif action == "reject":
+        order.is_validated = False
+        order.is_rejected = True
+
+    order.save()
+    return Response({"detail": f"Order {action}d successfully."})

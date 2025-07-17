@@ -26,6 +26,7 @@ import AddBatteryType from './pages/admin/AddBatteryType';
 import AddBrakesType from './pages/admin/AddBrakesType';
 import AddEnginePosition from './pages/admin/AddEnginePosition';
 import BikePageAdmin from './pages/admin/BikePageAdmin';
+import OrderRequests from './pages/admin/OrderRequests';
 
 function App() {
 
@@ -61,6 +62,7 @@ function App() {
           <Route path='/main-admin/' element={<MainAdminPage />} />
           <Route path='/catalog-admin/' element={<CatalogAdmin />} />
           <Route path='/bike-page-admin/:bikeId' element={<BikePageAdmin />} />
+          <Route path='/orders-admin/' element={<OrderRequests />} />
 
           <Route path='/add-new-bike-admin/' element={<AddNewBike />} />
           <Route path='/add-battery-type-admin/' element={<AddBatteryType />} />

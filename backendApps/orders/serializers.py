@@ -17,5 +17,12 @@ class BikeBusyDaysSerializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'busy_days']
 
     def get_busy_days(self, bike):
-        orders = Order.objects.filter(bike=bike).values('start_date', 'end_date')
+        orders = Order.objects.filter(bike=bike, is_validated=True).values('start_date', 'end_date')
         return [{'start': o['start_date'], 'end': o['end_date']} for o in orders]
+    
+class OrderSerializer(serializers.ModelSerializer):
+    bike = serializers.StringRelatedField()
+
+    class Meta:
+        model = Order
+        fields = "__all__"

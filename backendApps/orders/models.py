@@ -5,6 +5,8 @@ class Order(models.Model):
     bike = models.ForeignKey(Bike, on_delete=models.CASCADE)
     name = models.CharField(max_length=240)
     phone = models.CharField(max_length=15)
+    is_validated = models.BooleanField(default=False)
+    is_rejected = models.BooleanField(default=False)
     comments = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     start_date = models.DateField()
