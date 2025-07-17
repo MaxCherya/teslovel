@@ -5,6 +5,10 @@ interface Option {
     name: string;
 }
 
+interface ImageError {
+    [key: string]: string;
+}
+
 const AddNewBike: React.FC = () => {
     const [formData, setFormData] = useState({
         name: "",
@@ -21,7 +25,6 @@ const AddNewBike: React.FC = () => {
         battery_type: "",
         brakes_type: "",
         engine_position: "",
-        // Image fields will be handled as files, not URLs
         main_img: null as File | null,
         nav_photo: null as File | null,
         landscape_img: null as File | null,
@@ -37,6 +40,7 @@ const AddNewBike: React.FC = () => {
         serial_number_or_branding_photo: null as File | null,
     });
 
+    const [imageErrors, setImageErrors] = useState<ImageError>({});
     const [statusOptions, setStatusOptions] = useState<Option[]>([]);
     const [batteryOptions, setBatteryOptions] = useState<Option[]>([]);
     const [brakesOptions, setBrakesOptions] = useState<Option[]>([]);
@@ -55,24 +59,73 @@ const AddNewBike: React.FC = () => {
         setFormData((prev) => ({ ...prev, [name]: value }));
     };
 
-    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const validateImageDimensions = (file: File, requiredWidth: number, requiredHeight: number): Promise<boolean> => {
+        return new Promise((resolve) => {
+            const img = new Image();
+            img.src = URL.createObjectURL(file);
+            img.onload = () => {
+                const isValid = img.width === requiredWidth && img.height === requiredHeight;
+                URL.revokeObjectURL(img.src);
+                resolve(isValid);
+            };
+            img.onerror = () => {
+                URL.revokeObjectURL(img.src);
+                resolve(false);
+            };
+        });
+    };
+
+    const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, files } = e.target;
         if (files && files[0]) {
-            setFormData((prev) => ({ ...prev, [name]: files[0] }));
+            const file = files[0];
+            let requiredWidth: number, requiredHeight: number;
+
+            switch (name) {
+                case "nav_photo":
+                    requiredWidth = 160;
+                    requiredHeight = 160;
+                    break;
+                case "landscape_img":
+                    requiredWidth = 640;
+                    requiredHeight = 360;
+                    break;
+                default:
+                    requiredWidth = 1920;
+                    requiredHeight = 1080;
+                    break;
+            }
+
+            const isValid = await validateImageDimensions(file, requiredWidth, requiredHeight);
+
+            if (isValid) {
+                setFormData((prev) => ({ ...prev, [name]: file }));
+                setImageErrors((prev) => ({ ...prev, [name]: "" }));
+            } else {
+                setImageErrors((prev) => ({
+                    ...prev,
+                    [name]: `Image must be exactly ${requiredWidth}×${requiredHeight} pixels.`,
+                }));
+                e.target.value = ""; // Clear the input
+            }
         }
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        // Check for any image errors before submitting
+        if (Object.values(imageErrors).some((error) => error !== "")) {
+            console.log("Cannot submit: Invalid image dimensions.");
+            return;
+        }
         // POST to API (e.g., /api/bikes/)
         console.log("Submitting:", formData);
     };
 
     return (
-        <div className="w-full min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 text-gray-900 flex items-center justify-center py-8">
-
+        <div className="w-full min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 text-gray-900">
             {/* Main Content */}
-            <main className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8 pb-8 lg:mt-0 mt-18">
+            <main className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8 pb-8 pt-23 lg:pt-10">
                 <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow-2xl p-4 sm:p-6 lg:p-8 max-w-2xl mx-auto border border-gray-100 space-y-6">
                     <h2 className="text-lg sm:text-2xl font-semibold text-gray-800 mb-6 tracking-tight">Create a New Bike</h2>
 
@@ -300,23 +353,23 @@ const AddNewBike: React.FC = () => {
                         </select>
                     </div>
 
-                    {/* Image Inputs with Previews */}
+                    {/* Image Inputs with Previews and Dimension Requirements */}
                     <div>
                         <h3 className="text-lg font-semibold text-gray-800 mb-4">Bike Images</h3>
                         {[
-                            { name: "main_img", label: "Main Image", preview: "https://res.cloudinary.com/duqbc4nyo/image/upload/v1750243967/Main_Photo_e9deoc.png" },
-                            { name: "nav_photo", label: "Navigation Photo", preview: "https://res.cloudinary.com/duqbc4nyo/image/upload/v1750244143/Nav_Photo_l2f1xf.png" },
-                            { name: "landscape_img", label: "Landscape Image", preview: "https://res.cloudinary.com/duqbc4nyo/image/upload/v1750244140/Landscape_xfgp9q.png" },
-                            { name: "side_photo_left", label: "Side Photo (Left)", preview: "https://res.cloudinary.com/duqbc4nyo/image/upload/v1750243965/Left_View_xq71fr.png" },
-                            { name: "side_photo_right", label: "Side Photo (Right)", preview: "https://res.cloudinary.com/duqbc4nyo/image/upload/v1750243971/Right_View_p6ndy3.png" },
-                            { name: "front_photo_view", label: "Front Photo View", preview: "https://res.cloudinary.com/duqbc4nyo/image/upload/v1750243958/Front_View_y6pjvv.png" },
-                            { name: "rear_photo_view", label: "Rear Photo View", preview: "https://res.cloudinary.com/duqbc4nyo/image/upload/v1750243969/Rear_View_dfvsqz.png" },
-                            { name: "top_photo_view", label: "Top Photo View", preview: "https://res.cloudinary.com/duqbc4nyo/image/upload/v1750243976/Top_View_nw7dfc.png" },
-                            { name: "drive_train_closeup_photo", label: "Drive Train Closeup Photo", preview: "https://res.cloudinary.com/duqbc4nyo/image/upload/v1750243943/Drivetrain_closeup_pes5wf.png" },
-                            { name: "handlebar_controls_photo", label: "Handlebar Controls Photo", preview: "https://res.cloudinary.com/duqbc4nyo/image/upload/v1750243943/Drivetrain_closeup_pes5wf.png" },
-                            { name: "suspension_fork_photo", label: "Suspension Fork Photo", preview: "https://res.cloudinary.com/duqbc4nyo/image/upload/v1750243975/Suspension_fork_c5ztgj.png" },
-                            { name: "wheel_tire_condition_photo", label: "Wheel/Tire Condition Photo", preview: "https://res.cloudinary.com/duqbc4nyo/image/upload/v1750243979/Wheel_tire_condition_kial5t.png" },
-                            { name: "serial_number_or_branding_photo", label: "Serial Number/Branding Photo", preview: "https://res.cloudinary.com/duqbc4nyo/image/upload/v1750243972/Serial_number_or_branding_mtztg5.png" },
+                            { name: "main_img", label: "Main Image", preview: "https://res.cloudinary.com/duqbc4nyo/image/upload/v1750243967/Main_Photo_e9deoc.png", dimensions: "1920×1080" },
+                            { name: "nav_photo", label: "Navigation Photo", preview: "https://res.cloudinary.com/duqbc4nyo/image/upload/v1750244143/Nav_Photo_l2f1xf.png", dimensions: "160×160" },
+                            { name: "landscape_img", label: "Landscape Image", preview: "https://res.cloudinary.com/duqbc4nyo/image/upload/v1750244140/Landscape_xfgp9q.png", dimensions: "640×360" },
+                            { name: "side_photo_left", label: "Side Photo (Left)", preview: "https://res.cloudinary.com/duqbc4nyo/image/upload/v1750243965/Left_View_xq71fr.png", dimensions: "1920×1080" },
+                            { name: "side_photo_right", label: "Side Photo (Right)", preview: "https://res.cloudinary.com/duqbc4nyo/image/upload/v1750243971/Right_View_p6ndy3.png", dimensions: "1920×1080" },
+                            { name: "front_photo_view", label: "Front Photo View", preview: "https://res.cloudinary.com/duqbc4nyo/image/upload/v1750243958/Front_View_y6pjvv.png", dimensions: "1920×1080" },
+                            { name: "rear_photo_view", label: "Rear Photo View", preview: "https://res.cloudinary.com/duqbc4nyo/image/upload/v1750243969/Rear_View_dfvsqz.png", dimensions: "1920×1080" },
+                            { name: "top_photo_view", label: "Top Photo View", preview: "https://res.cloudinary.com/duqbc4nyo/image/upload/v1750243976/Top_View_nw7dfc.png", dimensions: "1920×1080" },
+                            { name: "drive_train_closeup_photo", label: "Drive Train Closeup Photo", preview: "https://res.cloudinary.com/duqbc4nyo/image/upload/v1750243943/Drivetrain_closeup_pes5wf.png", dimensions: "1920×1080" },
+                            { name: "handlebar_controls_photo", label: "Handlebar Controls Photo", preview: "https://res.cloudinary.com/duqbc4nyo/image/upload/v1750243943/Drivetrain_closeup_pes5wf.png", dimensions: "1920×1080" },
+                            { name: "suspension_fork_photo", label: "Suspension Fork Photo", preview: "https://res.cloudinary.com/duqbc4nyo/image/upload/v1750243975/Suspension_fork_c5ztgj.png", dimensions: "1920×1080" },
+                            { name: "wheel_tire_condition_photo", label: "Wheel/Tire Condition Photo", preview: "https://res.cloudinary.com/duqbc4nyo/image/upload/v1750243979/Wheel_tire_condition_kial5t.png", dimensions: "1920×1080" },
+                            { name: "serial_number_or_branding_photo", label: "Serial Number/Branding Photo", preview: "https://res.cloudinary.com/duqbc4nyo/image/upload/v1750243972/Serial_number_or_branding_mtztg5.png", dimensions: "1920×1080" },
                         ].map((field) => (
                             <div key={field.name} className="mt-6">
                                 <label htmlFor={field.name} className="block text-sm font-medium text-gray-700 mb-2">
@@ -330,6 +383,10 @@ const AddNewBike: React.FC = () => {
                                     onChange={handleFileChange}
                                     className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200 bg-gray-50 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:bg-indigo-100 file:text-indigo-600 file:cursor-pointer hover:file:bg-indigo-200"
                                 />
+                                <p className="text-xs text-gray-500 mt-1">Required: {field.dimensions}</p>
+                                {imageErrors[field.name] && (
+                                    <p className="text-xs text-red-600 mt-1">{imageErrors[field.name]}</p>
+                                )}
                                 <div className="mt-2">
                                     <img
                                         src={field.preview}
@@ -346,7 +403,7 @@ const AddNewBike: React.FC = () => {
                     <div className="mt-8 flex justify-center space-x-3">
                         <button
                             type="submit"
-                            className="cursor-pointer px-4 sm:px-6 py-2 sm:py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-all duration-200 shadow-md font-medium text-sm sm:text-base"
+                            className="px-4 sm:px-6 py-2 sm:py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-all duration-200 shadow-md font-medium text-sm sm:text-base"
                         >
                             Add Bike
                         </button>
