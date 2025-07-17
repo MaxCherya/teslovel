@@ -1,29 +1,39 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom"; // Assuming react-router-dom is used for navigation
-
-interface BatteryType {
-    id: number;
-    name_uk: string;
-    name_en: string;
-    name_ru: string;
-}
+import { Link } from "react-router-dom";
+import { fetchBatteryTypes, deleteBatteryType } from "../../endpoints/specs";
+import { toast } from "react-toastify";
 
 const BatteryTypeAdmin: React.FC = () => {
-    const [batteryTypes, setBatteryTypes] = useState<BatteryType[]>([]);
+    const [batteryTypes, setBatteryTypes] = useState<any[]>([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        // Fetch battery types (replace with real API call, e.g., /api/battery-types/)
-        setBatteryTypes([
-            { id: 1, name_uk: "Літій-іонний", name_en: "Li-Ion", name_ru: "Литий-ионный" },
-            { id: 2, name_uk: "Нікель-метал-гідридний", name_en: "NiMH", name_ru: "Никель-металлогидридный" },
-        ]);
+        const loadData = async () => {
+            try {
+                const data = await fetchBatteryTypes();
+                setBatteryTypes(data);
+            } catch (err) {
+                toast.error("Failed to load battery types");
+            } finally {
+                setLoading(false);
+            }
+        };
+        loadData();
     }, []);
 
-    const handleRemove = (id: number) => {
-        // Remove battery type (replace with real API call)
-        setBatteryTypes((prev) => prev.filter((type) => type.id !== id));
-        console.log(`Removing battery type with id: ${id}`);
+    const handleRemove = async (id: number) => {
+        try {
+            await deleteBatteryType(id);
+            setBatteryTypes((prev) => prev.filter((type) => type.id !== id));
+            toast.success("Battery type removed");
+        } catch (err) {
+            toast.error("Failed to remove battery type");
+        }
     };
+
+    if (loading) {
+        return <div className="text-center py-20 text-gray-600">Loading battery types...</div>;
+    }
 
     return (
         <div className="w-full min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 text-gray-900 lg:mt-0 mt-18">

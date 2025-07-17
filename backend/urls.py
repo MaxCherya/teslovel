@@ -28,6 +28,7 @@ urlpatterns = [
     path('api/support/', include('backendApps.customer_support.urls')),
     path('api/accounts/', include('backendApps.accounts.urls')),
     path('api/orders/', include('backendApps.orders.urls')),
+    path('api/specs/', include('backendApps.specs_types.urls')),
 
     # Serves React index.html for frontend routes
     path("", CSRFAwareIndexView.as_view(), name="home"),
