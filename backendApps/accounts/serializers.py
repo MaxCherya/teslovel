@@ -21,13 +21,17 @@ class UserAuthSerializer(serializers.ModelSerializer):
 class UserProfileSerializer(serializers.ModelSerializer):
     is_user = serializers.SerializerMethodField()
     has_2fa = serializers.SerializerMethodField()
+    is_user_admin = serializers.SerializerMethodField()
 
     class Meta:
         model = CustomUser
-        fields = ['id', 'phone', 'username', 'is_user', 'has_2fa']
+        fields = ['id', 'phone', 'username', 'is_user', 'has_2fa', 'is_user_admin']
 
     def get_is_user(self, obj):
         return self.context.get('is_user', False)
     
     def get_has_2fa(self, obj):
         return self.context.get('has_2fa', False)
+    
+    def get_is_user_admin(self, obj):
+        return self.context.get('is_user_admin', False)

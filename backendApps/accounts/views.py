@@ -259,5 +259,7 @@ def get_user(request, pk):
     is_user = user.id == request.user.id
     has_2fa = requested_user.has_2fa_enabled
 
-    serialized = UserProfileSerializer(instance=user, context={'is_user': is_user, 'has_2fa': has_2fa})
+    is_user_admin = requested_user.is_superuser
+
+    serialized = UserProfileSerializer(instance=user, context={'is_user': is_user, 'has_2fa': has_2fa, 'is_user_admin': is_user_admin})
     return Response(serialized.data)

@@ -42,7 +42,7 @@ const Enable2FA: React.FC<{ onFinish: () => void }> = ({ onFinish }) => {
 
             {loading && <FullScreenLoader />}
 
-            <GeneralButton type="show" label={t("profile.enable2fa")} onClick={handleSetup} />
+            <GeneralButton type="show" label={t("profile.enable2fa")} onClick={handleSetup} className="px-4" />
 
             {showModal && qrData && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">

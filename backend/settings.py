@@ -70,7 +70,10 @@ ROOT_URLCONF = 'backend.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'frontend' / 'dist'],
+        'DIRS': [
+            BASE_DIR / 'frontend' / 'dist',   # for serving React index.html
+            BASE_DIR / 'templates',           # for Django templates like admin/login
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

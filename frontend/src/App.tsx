@@ -15,6 +15,10 @@ import BookPage from './pages/main/BookPage'
 import Login from './pages/main/Login';
 import Signup from './pages/main/Signup';
 import UserProfile from './pages/protected/UserProfile';
+import ProtectedRoute from './lib/routes/ProtectedRoute';
+import MainAdminPage from './pages/admin/MainAdminPage';
+import CatalogAdmin from './pages/admin/CatalogAdmin';
+import AddNewBike from './pages/admin/AddNewBike';
 
 function App() {
 
@@ -41,8 +45,15 @@ function App() {
           <Route path='feedbacks' element={<Feedbacks />} />
           <Route path='login' element={<Login />} />
           <Route path='signup' element={<Signup />} />
-          <Route path='/user/:userId' element={<UserProfile />} />
           <Route path="*" element={<NotFound />} />
+
+          {/* User Protected Pages */}
+          <Route path='/user/:userId' element={<ProtectedRoute><UserProfile /></ProtectedRoute>} />
+
+          {/* Admin Pages */}
+          <Route path='/main-admin/' element={<MainAdminPage />} />
+          <Route path='/catalog-admin/' element={<CatalogAdmin />} />
+          <Route path='/add-new-bike-admin/' element={<AddNewBike />} />
 
         </Route>
       </Routes>

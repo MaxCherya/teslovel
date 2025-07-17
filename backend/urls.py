@@ -19,10 +19,11 @@ from django.urls import path, re_path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from frontend.views import CSRFAwareIndexView
-from django.views.static import serve
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('accounts/login/', auth_views.LoginView.as_view(), name='login'),
     path('api/catalog/', include('backendApps.catalog.urls')),
     path('api/support/', include('backendApps.customer_support.urls')),
     path('api/accounts/', include('backendApps.accounts.urls')),
@@ -30,7 +31,7 @@ urlpatterns = [
 
     # Serves React index.html for frontend routes
     path("", CSRFAwareIndexView.as_view(), name="home"),
-    re_path(r"^(?!admin/|api/).*", CSRFAwareIndexView.as_view()),
+    re_path(r"^(?!admin/|api/|accounts/).*", CSRFAwareIndexView.as_view()),
 ]
 
 if settings.DEBUG:

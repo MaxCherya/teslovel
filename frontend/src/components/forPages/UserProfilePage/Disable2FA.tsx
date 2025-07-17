@@ -28,7 +28,7 @@ const Disable2FA: React.FC<{ onFinish: () => void }> = ({ onFinish }) => {
     return (
         <div className="mt-6 flex">
             {loading && <FullScreenLoader />}
-            <GeneralButton type="cancel" label={t("profile.disable2fa")} onClick={() => setShowModal(true)} />
+            <GeneralButton type="cancel" label={t("profile.disable2fa")} onClick={() => setShowModal(true)} className="px-4" />
 
             {showModal && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">

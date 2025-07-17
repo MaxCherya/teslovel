@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { getUser } from "../../endpoints/UserProfilePage";
 
 import Enable2FA from "../../components/forPages/UserProfilePage/Enable2FA";
 import Header from "../../components/forPages/UserProfilePage/HeaderComp";
 import Disable2FA from "../../components/forPages/UserProfilePage/Disable2FA";
+import { GeneralButton } from "../../components/ui/btns";
 
 const UserProfile: React.FC = () => {
     const { userId } = useParams<{ userId: string }>();
+
+    const navigate = useNavigate();
 
     const [currentUser, setCurrentUser] = useState<any>([]);
 
@@ -41,7 +44,7 @@ const UserProfile: React.FC = () => {
             {currentUser.is_user && (
                 <div className="flex flex-col sm:flex-row sm:items-start sm:gap-8 lg:max-w-4xl mx-auto justify-center align-middle items-center">
                     {currentUser.has_2fa ? <Disable2FA onFinish={onFinishDisable} /> : <Enable2FA onFinish={onFinishEnable} />}
-
+                    {currentUser.is_user_admin && <GeneralButton type="show" label='Admin Panel' onClick={() => navigate(`/main-admin/`)} className="mt-6 px-4" />}
                 </div>
             )}
         </div>
