@@ -34,7 +34,6 @@ export const fetcher = async (
         ...normalizeHeaders(options.headers),
     };
 
-    // Only sets JSON content-type when NOT using FormData
     if (!isFormData && !headers['Content-Type']) {
         headers['Content-Type'] = 'application/json';
     }
@@ -48,21 +47,35 @@ export const fetcher = async (
         });
     };
 
-    // First attempt
     let res = await fetchWithCookies();
 
-    // If unauthorized, tries refresh once
-    if (res.status === 401 && url !== '/api/accounts/refresh/') {
-        const refreshRes = await fetch('/api/accounts/refresh/', {
-            method: 'POST',
-            credentials: 'include',
-        });
+    // Refresh logic (only if it's really an auth issue)
+    if ((res.status === 401 || res.status === 403) && url !== '/api/accounts/token/refresh/') {
+        let errorText: string | null = null;
 
-        if (refreshRes.ok) {
-            res = await fetchWithCookies();
-        } else {
-            window.location.href = '/login';
-            throw new Error('Unauthorized: Token refresh failed');
+        try {
+            const json = await res.clone().json();
+            errorText = json.detail;
+        } catch {
+            errorText = await res.clone().text();
+        }
+
+        const needsRefresh =
+            res.status === 401 ||
+            (res.status === 403 && errorText?.includes("Authentication credentials were not provided"));
+
+        if (needsRefresh) {
+            const refreshRes = await fetch('/api/accounts/token/refresh/', {
+                method: 'POST',
+                credentials: 'include',
+            });
+
+            if (refreshRes.ok) {
+                res = await fetchWithCookies();
+            } else {
+                window.location.href = '/login';
+                throw new Error('Unauthorized: Token refresh failed');
+            }
         }
     }
 

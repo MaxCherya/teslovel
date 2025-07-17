@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { fetchAdminBikePreviews, type BikeAdminPreview } from "../../endpoints/adminBikes";
+import FullScreenLoader from "../../components/ui/loaders/FullScreenLoader";
 
 const CatalogAdmin: React.FC = () => {
     const [bikes, setBikes] = useState<BikeAdminPreview[]>([]);
     const [loading, setLoading] = useState(true);
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         const loadBikes = async () => {
@@ -55,21 +58,18 @@ const CatalogAdmin: React.FC = () => {
 
                 {/* Bike Catalog Grid */}
                 {loading ? (
-                    <p className="text-gray-600 text-sm">Loading bikes...</p>
+                    <FullScreenLoader />
                 ) : (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div className="grid cursor-pointer grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                         {bikes.map((bike) => (
-                            <div key={bike.id} className="bg-white rounded-lg shadow-md overflow-hidden">
+                            <div key={bike.id} onClick={() => navigate(`/bike-page-admin/${bike.id}`)} className="bg-white rounded-lg shadow-md overflow-hidden">
                                 <img
                                     src={bike.main_img}
                                     alt={bike.name}
                                     className="w-full h-48 object-cover"
                                 />
-                                <div className="p-4">
+                                <div className="p-4 flex flex-col items-center justify-center w-full">
                                     <h3 className="text-lg font-semibold text-gray-800">{bike.name}</h3>
-                                    <button className="mt-2 px-4 py-2 bg-gray-100 text-gray-600 rounded-md hover:bg-gray-200 transition-colors">
-                                        Edit
-                                    </button>
                                 </div>
                             </div>
                         ))}

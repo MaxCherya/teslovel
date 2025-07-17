@@ -158,3 +158,15 @@ export const disableOtp = async (otp_code: string): Promise<boolean> => {
         return false;
     }
 };
+
+export const check2FAStatus = async (): Promise<boolean> => {
+    const res = await fetch(`${BASE_URL}/2fa-status/`, {
+        method: "GET",
+        credentials: "include",
+    });
+
+    if (!res.ok) throw new Error("Failed to fetch 2FA status");
+
+    const data = await res.json();
+    return data.has_2fa_enabled === true;
+};

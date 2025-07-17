@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { createEnginePosition } from "../../endpoints/specs"; // adjust path as needed
 import { toast } from "react-toastify";
+import FullScreenLoader from "../../components/ui/loaders/FullScreenLoader";
 
 const AddEnginePosition: React.FC = () => {
     const [formData, setFormData] = useState({
@@ -33,6 +34,7 @@ const AddEnginePosition: React.FC = () => {
 
     return (
         <div className="w-full min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 text-gray-900 flex items-center justify-center py-8">
+            {isSubmitting && <FullScreenLoader />}
             <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
                 <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow-2xl p-8 max-w-lg mx-auto border border-gray-100 space-y-6">
                     <h2 className="text-2xl font-semibold text-gray-800 mb-6 tracking-tight">Create a New Engine Position</h2>

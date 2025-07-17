@@ -12,4 +12,5 @@ urlpatterns = [
     path('2fa/confirm/', confirm_otp, name='confirm-otp'),
     path('2fa/verify-login/', verify_otp_login, name='verify-otp-login'),
     path('2fa/disable/', disable_otp, name='disable-otp'),
+    path("2fa-status/", get_2fa_status, name="get-2fa-status"),
 ]

@@ -2,6 +2,13 @@ from rest_framework import serializers
 from .models import *
 from .utils import get_cloudinary_url
 
+
+class BikeStatusUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Bike
+        fields = ['status']
+
+
 class BikeHomeCatwalkSerializer(serializers.ModelSerializer):
     landscape_img = serializers.SerializerMethodField()
     main_img = serializers.SerializerMethodField()

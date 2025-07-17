@@ -263,3 +263,11 @@ def get_user(request, pk):
 
     serialized = UserProfileSerializer(instance=user, context={'is_user': is_user, 'has_2fa': has_2fa, 'is_user_admin': is_user_admin})
     return Response(serialized.data)
+
+
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def get_2fa_status(request):
+    return Response({
+        "has_2fa_enabled": request.user.has_2fa_enabled
+    })

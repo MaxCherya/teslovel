@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { fetchBatteryTypes, deleteBatteryType } from "../../endpoints/specs";
 import { toast } from "react-toastify";
+import FullScreenLoader from "../../components/ui/loaders/FullScreenLoader";
 
 const BatteryTypeAdmin: React.FC = () => {
     const [batteryTypes, setBatteryTypes] = useState<any[]>([]);
@@ -31,22 +32,9 @@ const BatteryTypeAdmin: React.FC = () => {
         }
     };
 
-    if (loading) {
-        return <div className="text-center py-20 text-gray-600">Loading battery types...</div>;
-    }
-
     return (
         <div className="w-full min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 text-gray-900 lg:mt-0 mt-18">
-            {/* Header */}
-            <header className="bg-white shadow-lg rounded-b-lg fixed top-0 w-full z-10">
-                <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8 py-3 flex flex-col sm:flex-row justify-between items-center">
-                    <h1 className="text-xl sm:text-2xl font-bold text-indigo-600 tracking-tight">Manage Battery Types</h1>
-                    <div className="flex items-center space-x-2 mt-2 sm:mt-0">
-                        <img src="https://via.placeholder.com/32" alt="Profile" className="w-7 h-7 sm:w-8 sm:h-8 rounded-full border-2 border-indigo-100" />
-                        <span className="text-gray-600 font-medium hidden sm:inline text-sm sm:text-base">Admin</span>
-                    </div>
-                </div>
-            </header>
+            {loading && <FullScreenLoader />}
 
             {/* Main Content */}
             <main className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8 pt-20 sm:pt-24 pb-8">

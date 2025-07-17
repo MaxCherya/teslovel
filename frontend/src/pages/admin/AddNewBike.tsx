@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { createBike } from "../../endpoints/adminBikes";
 import { fetchBatteryTypes, fetchBrakesTypes, fetchEnginePositions } from "../../endpoints/specs";
 import i18n from "../../locales";
+import FullScreenLoader from "../../components/ui/loaders/FullScreenLoader";
 
 interface Option {
     id: number;
@@ -54,9 +55,12 @@ const AddNewBike: React.FC = () => {
     const [brakesOptions, setBrakesOptions] = useState<Option[]>([]);
     const [engineOptions, setEngineOptions] = useState<Option[]>([]);
 
+    const [loading, setLoading] = useState(false);
+
     useEffect(() => {
         const loadOptions = async () => {
             try {
+                setLoading(true);
                 const [batteries, brakes, engines] = await Promise.all([
                     fetchBatteryTypes(),
                     fetchBrakesTypes(),
@@ -86,6 +90,8 @@ const AddNewBike: React.FC = () => {
                 );
             } catch (err) {
                 console.error("Failed to load select options:", err);
+            } finally {
+                setLoading(false);
             }
         };
 
@@ -158,6 +164,9 @@ const AddNewBike: React.FC = () => {
         }
 
         try {
+
+            setLoading(true);
+
             const data = new FormData();
 
             for (const key in formData) {
@@ -174,11 +183,16 @@ const AddNewBike: React.FC = () => {
         } catch (error: any) {
             console.error("Error creating bike:", error);
             alert("Failed to create bike: " + error.message);
+        } finally {
+            setLoading(false);
         }
     };
 
     return (
         <div className="w-full min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 text-gray-900">
+
+            {loading && <FullScreenLoader />}
+
             {/* Main Content */}
             <main className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8 pb-8 pt-23 lg:pt-10">
                 <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow-2xl p-4 sm:p-6 lg:p-8 max-w-2xl mx-auto border border-gray-100 space-y-6">
