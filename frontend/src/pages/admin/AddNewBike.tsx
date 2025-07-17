@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom"; // Assuming react-router-dom is used for navigation
 
 interface Option {
     id: number;
@@ -71,21 +70,11 @@ const AddNewBike: React.FC = () => {
 
     return (
         <div className="w-full min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 text-gray-900 flex items-center justify-center py-8">
-            {/* Header */}
-            <header className="bg-white shadow-lg rounded-lg absolute top-0 w-full">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-                    <h1 className="text-2xl font-bold text-indigo-600 tracking-tight">Add New Bike</h1>
-                    <div className="flex items-center space-x-2">
-                        <img src="https://via.placeholder.com/32" alt="Profile" className="w-8 h-8 rounded-full border-2 border-indigo-100" />
-                        <span className="text-gray-600 font-medium hidden sm:inline">Admin</span>
-                    </div>
-                </div>
-            </header>
 
             {/* Main Content */}
-            <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-                <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow-2xl p-8 max-w-2xl mx-auto border border-gray-100 space-y-6">
-                    <h2 className="text-2xl font-semibold text-gray-800 mb-6 tracking-tight">Create a New Bike</h2>
+            <main className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8 pb-8 lg:mt-0 mt-18">
+                <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow-2xl p-4 sm:p-6 lg:p-8 max-w-2xl mx-auto border border-gray-100 space-y-6">
+                    <h2 className="text-lg sm:text-2xl font-semibold text-gray-800 mb-6 tracking-tight">Create a New Bike</h2>
 
                     {/* Bike Name */}
                     <div>
@@ -150,7 +139,7 @@ const AddNewBike: React.FC = () => {
                     {/* Numeric Fields */}
                     <div>
                         <label htmlFor="price_day" className="block text-sm font-medium text-gray-700 mb-2">
-                            Price per Day ($)
+                            Price per Day (uah)
                         </label>
                         <input
                             type="number"
@@ -311,23 +300,23 @@ const AddNewBike: React.FC = () => {
                         </select>
                     </div>
 
-                    {/* Image Inputs */}
+                    {/* Image Inputs with Previews */}
                     <div>
                         <h3 className="text-lg font-semibold text-gray-800 mb-4">Bike Images</h3>
                         {[
-                            { name: "main_img", label: "Main Image" },
-                            { name: "nav_photo", label: "Navigation Photo" },
-                            { name: "landscape_img", label: "Landscape Image" },
-                            { name: "side_photo_left", label: "Side Photo (Left)" },
-                            { name: "side_photo_right", label: "Side Photo (Right)" },
-                            { name: "front_photo_view", label: "Front Photo View" },
-                            { name: "rear_photo_view", label: "Rear Photo View" },
-                            { name: "top_photo_view", label: "Top Photo View" },
-                            { name: "drive_train_closeup_photo", label: "Drive Train Closeup Photo" },
-                            { name: "handlebar_controls_photo", label: "Handlebar Controls Photo" },
-                            { name: "suspension_fork_photo", label: "Suspension Fork Photo" },
-                            { name: "wheel_tire_condition_photo", label: "Wheel/Tire Condition Photo" },
-                            { name: "serial_number_or_branding_photo", label: "Serial Number/Branding Photo" },
+                            { name: "main_img", label: "Main Image", preview: "https://res.cloudinary.com/duqbc4nyo/image/upload/v1750243967/Main_Photo_e9deoc.png" },
+                            { name: "nav_photo", label: "Navigation Photo", preview: "https://res.cloudinary.com/duqbc4nyo/image/upload/v1750244143/Nav_Photo_l2f1xf.png" },
+                            { name: "landscape_img", label: "Landscape Image", preview: "https://res.cloudinary.com/duqbc4nyo/image/upload/v1750244140/Landscape_xfgp9q.png" },
+                            { name: "side_photo_left", label: "Side Photo (Left)", preview: "https://res.cloudinary.com/duqbc4nyo/image/upload/v1750243965/Left_View_xq71fr.png" },
+                            { name: "side_photo_right", label: "Side Photo (Right)", preview: "https://res.cloudinary.com/duqbc4nyo/image/upload/v1750243971/Right_View_p6ndy3.png" },
+                            { name: "front_photo_view", label: "Front Photo View", preview: "https://res.cloudinary.com/duqbc4nyo/image/upload/v1750243958/Front_View_y6pjvv.png" },
+                            { name: "rear_photo_view", label: "Rear Photo View", preview: "https://res.cloudinary.com/duqbc4nyo/image/upload/v1750243969/Rear_View_dfvsqz.png" },
+                            { name: "top_photo_view", label: "Top Photo View", preview: "https://res.cloudinary.com/duqbc4nyo/image/upload/v1750243976/Top_View_nw7dfc.png" },
+                            { name: "drive_train_closeup_photo", label: "Drive Train Closeup Photo", preview: "https://res.cloudinary.com/duqbc4nyo/image/upload/v1750243943/Drivetrain_closeup_pes5wf.png" },
+                            { name: "handlebar_controls_photo", label: "Handlebar Controls Photo", preview: "https://res.cloudinary.com/duqbc4nyo/image/upload/v1750243943/Drivetrain_closeup_pes5wf.png" },
+                            { name: "suspension_fork_photo", label: "Suspension Fork Photo", preview: "https://res.cloudinary.com/duqbc4nyo/image/upload/v1750243975/Suspension_fork_c5ztgj.png" },
+                            { name: "wheel_tire_condition_photo", label: "Wheel/Tire Condition Photo", preview: "https://res.cloudinary.com/duqbc4nyo/image/upload/v1750243979/Wheel_tire_condition_kial5t.png" },
+                            { name: "serial_number_or_branding_photo", label: "Serial Number/Branding Photo", preview: "https://res.cloudinary.com/duqbc4nyo/image/upload/v1750243972/Serial_number_or_branding_mtztg5.png" },
                         ].map((field) => (
                             <div key={field.name} className="mt-6">
                                 <label htmlFor={field.name} className="block text-sm font-medium text-gray-700 mb-2">
@@ -341,21 +330,23 @@ const AddNewBike: React.FC = () => {
                                     onChange={handleFileChange}
                                     className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200 bg-gray-50 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:bg-indigo-100 file:text-indigo-600 file:cursor-pointer hover:file:bg-indigo-200"
                                 />
+                                <div className="mt-2">
+                                    <img
+                                        src={field.preview}
+                                        alt={`${field.label} preview`}
+                                        className="w-full max-w-xs sm:max-w-sm rounded-lg border border-gray-200 shadow-sm object-cover"
+                                    />
+                                    <p className="text-xs text-gray-500 mt-1">Example: {field.label}</p>
+                                </div>
                             </div>
                         ))}
                     </div>
 
                     {/* Form Actions */}
-                    <div className="mt-8 flex justify-end space-x-3">
-                        <Link
-                            to="/admin/catalog"
-                            className="px-6 py-3 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-all duration-200 shadow-md font-medium"
-                        >
-                            Cancel
-                        </Link>
+                    <div className="mt-8 flex justify-center space-x-3">
                         <button
                             type="submit"
-                            className="px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-all duration-200 shadow-md font-medium"
+                            className="cursor-pointer px-4 sm:px-6 py-2 sm:py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-all duration-200 shadow-md font-medium text-sm sm:text-base"
                         >
                             Add Bike
                         </button>

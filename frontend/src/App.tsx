@@ -19,6 +19,12 @@ import ProtectedRoute from './lib/routes/ProtectedRoute';
 import MainAdminPage from './pages/admin/MainAdminPage';
 import CatalogAdmin from './pages/admin/CatalogAdmin';
 import AddNewBike from './pages/admin/AddNewBike';
+import EnginePositionAdmin from './pages/admin/EnginePositionAdmin';
+import BrakesTypeAdmin from './pages/admin/BrakesTypeAdmin';
+import BatteryTypeAdmin from './pages/admin/BatteryTypeAdmin';
+import AddBatteryType from './pages/admin/AddBatteryType';
+import AddBrakesType from './pages/admin/AddBrakesType';
+import AddEnginePosition from './pages/admin/AddEnginePosition';
 
 function App() {
 
@@ -53,7 +59,15 @@ function App() {
           {/* Admin Pages */}
           <Route path='/main-admin/' element={<MainAdminPage />} />
           <Route path='/catalog-admin/' element={<CatalogAdmin />} />
+
           <Route path='/add-new-bike-admin/' element={<AddNewBike />} />
+          <Route path='/add-battery-type-admin/' element={<AddBatteryType />} />
+          <Route path='/add-brake-type-admin/' element={<AddBrakesType />} />
+          <Route path='/add-engine-position-admin/' element={<AddEnginePosition />} />
+
+          <Route path='/motor-positions-admin/' element={<EnginePositionAdmin />} />
+          <Route path='/brake-types-admin/' element={<BrakesTypeAdmin />} />
+          <Route path='/battery-types-admin/' element={<BatteryTypeAdmin />} />
 
         </Route>
       </Routes>

@@ -30,16 +30,22 @@ const CatalogAdmin: React.FC = () => {
                         Add New Bike
                     </Link>
                     <Link
-                        to="/admin/motor-positions"
+                        to="/motor-positions-admin/"
                         className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors"
                     >
                         Manage Motor Positions
                     </Link>
                     <Link
-                        to="/admin/brake-types"
+                        to="/brake-types-admin/"
                         className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors"
                     >
                         Manage Brake Types
+                    </Link>
+                    <Link
+                        to="/battery-types-admin/"
+                        className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors"
+                    >
+                        Manage Battery Types
                     </Link>
                 </div>
 
