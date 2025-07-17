@@ -44,7 +44,7 @@ const CardsSwiper: React.FC<Props> = ({ content }) => {
                     >
                         {content.map((vel) => (
                             <SwiperSlide key={vel.id}>
-                                <VeloCard id={vel.id} img={vel.landscape_img} name={vel.name} price_day={vel.price_day} />
+                                <VeloCard id={vel.id} img={vel.main_img} name={vel.name} price_day={vel.price_day} />
                             </SwiperSlide>
                         ))}
                     </Swiper>

@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { createBike } from "../../endpoints/adminBikes";
+import { fetchBatteryTypes, fetchBrakesTypes, fetchEnginePositions } from "../../endpoints/specs";
+import i18n from "../../locales";
 
 interface Option {
     id: number;
@@ -40,18 +43,53 @@ const AddNewBike: React.FC = () => {
         serial_number_or_branding_photo: null as File | null,
     });
 
+    const [statusOptions] = useState<any[]>([
+        { id: 1, name: "1", label: i18n.t("status.available") },
+        { id: 2, name: "2", label: i18n.t("status.maintenance") },
+        { id: 3, name: "3", label: i18n.t("status.unavailable") },
+    ]);
+
     const [imageErrors, setImageErrors] = useState<ImageError>({});
-    const [statusOptions, setStatusOptions] = useState<Option[]>([]);
     const [batteryOptions, setBatteryOptions] = useState<Option[]>([]);
     const [brakesOptions, setBrakesOptions] = useState<Option[]>([]);
     const [engineOptions, setEngineOptions] = useState<Option[]>([]);
 
     useEffect(() => {
-        // Fetch options for selects (replace with real API calls)
-        setStatusOptions([{ id: 1, name: "Available" }, { id: 2, name: "Maintenance" }]);
-        setBatteryOptions([{ id: 1, name: "Li-Ion" }, { id: 2, name: "NiMH" }]);
-        setBrakesOptions([{ id: 1, name: "Disc" }, { id: 2, name: "Drum" }]);
-        setEngineOptions([{ id: 1, name: "Rear" }, { id: 2, name: "Front" }]);
+        const loadOptions = async () => {
+            try {
+                const [batteries, brakes, engines] = await Promise.all([
+                    fetchBatteryTypes(),
+                    fetchBrakesTypes(),
+                    fetchEnginePositions(),
+                ]);
+
+                const lang = i18n.language || "en";
+                const nameKey = `name_${lang}`;
+
+                setBatteryOptions(
+                    batteries.map((b: any) => ({
+                        id: b.id,
+                        name: b[nameKey] || b.name_en,
+                    }))
+                );
+                setBrakesOptions(
+                    brakes.map((b: any) => ({
+                        id: b.id,
+                        name: b[nameKey] || b.name_en,
+                    }))
+                );
+                setEngineOptions(
+                    engines.map((e: any) => ({
+                        id: e.id,
+                        name: e[nameKey] || e.name_en,
+                    }))
+                );
+            } catch (err) {
+                console.error("Failed to load select options:", err);
+            }
+        };
+
+        loadOptions();
     }, []);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -106,20 +144,37 @@ const AddNewBike: React.FC = () => {
                     ...prev,
                     [name]: `Image must be exactly ${requiredWidth}×${requiredHeight} pixels.`,
                 }));
-                e.target.value = ""; // Clear the input
+                e.target.value = "";
             }
         }
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        // Check for any image errors before submitting
+
         if (Object.values(imageErrors).some((error) => error !== "")) {
-            console.log("Cannot submit: Invalid image dimensions.");
+            console.warn("Cannot submit: Invalid image dimensions.");
             return;
         }
-        // POST to API (e.g., /api/bikes/)
-        console.log("Submitting:", formData);
+
+        try {
+            const data = new FormData();
+
+            for (const key in formData) {
+                const value = formData[key as keyof typeof formData];
+                if (value !== null) {
+                    data.append(key, value as string | Blob);
+                }
+            }
+
+            const response = await createBike(data);
+            console.log("Bike created successfully:", response);
+            alert("Bike successfully created!");
+            window.location.reload();
+        } catch (error: any) {
+            console.error("Error creating bike:", error);
+            alert("Failed to create bike: " + error.message);
+        }
     };
 
     return (
@@ -289,8 +344,8 @@ const AddNewBike: React.FC = () => {
                         >
                             <option value="">Select Status</option>
                             {statusOptions.map((opt) => (
-                                <option key={opt.id} value={opt.id}>
-                                    {opt.name}
+                                <option key={opt.id} value={opt.name}>
+                                    {opt.label}
                                 </option>
                             ))}
                         </select>
@@ -366,7 +421,7 @@ const AddNewBike: React.FC = () => {
                             { name: "rear_photo_view", label: "Rear Photo View", preview: "https://res.cloudinary.com/duqbc4nyo/image/upload/v1750243969/Rear_View_dfvsqz.png", dimensions: "1920×1080" },
                             { name: "top_photo_view", label: "Top Photo View", preview: "https://res.cloudinary.com/duqbc4nyo/image/upload/v1750243976/Top_View_nw7dfc.png", dimensions: "1920×1080" },
                             { name: "drive_train_closeup_photo", label: "Drive Train Closeup Photo", preview: "https://res.cloudinary.com/duqbc4nyo/image/upload/v1750243943/Drivetrain_closeup_pes5wf.png", dimensions: "1920×1080" },
-                            { name: "handlebar_controls_photo", label: "Handlebar Controls Photo", preview: "https://res.cloudinary.com/duqbc4nyo/image/upload/v1750243943/Drivetrain_closeup_pes5wf.png", dimensions: "1920×1080" },
+                            { name: "handlebar_controls_photo", label: "Handlebar Controls Photo", preview: "https://res.cloudinary.com/duqbc4nyo/image/upload/v1750243963/Handlebar_controls_q9c8po.png", dimensions: "1920×1080" },
                             { name: "suspension_fork_photo", label: "Suspension Fork Photo", preview: "https://res.cloudinary.com/duqbc4nyo/image/upload/v1750243975/Suspension_fork_c5ztgj.png", dimensions: "1920×1080" },
                             { name: "wheel_tire_condition_photo", label: "Wheel/Tire Condition Photo", preview: "https://res.cloudinary.com/duqbc4nyo/image/upload/v1750243979/Wheel_tire_condition_kial5t.png", dimensions: "1920×1080" },
                             { name: "serial_number_or_branding_photo", label: "Serial Number/Branding Photo", preview: "https://res.cloudinary.com/duqbc4nyo/image/upload/v1750243972/Serial_number_or_branding_mtztg5.png", dimensions: "1920×1080" },

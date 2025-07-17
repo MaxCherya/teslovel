@@ -1,5 +1,6 @@
 from django.db import models
 from backendApps.specs_types.models import *
+from cloudinary.models import CloudinaryField
 
 class Bike(models.Model):
     name = models.CharField(max_length=100)
@@ -19,20 +20,19 @@ class Bike(models.Model):
     brakes_type = models.ForeignKey(BrakesType, on_delete=models.SET_NULL, null=True)
     engine_position = models.ForeignKey(EnginePosition, on_delete=models.SET_NULL, null=True)
 
-    main_img = models.URLField()
-    nav_photo = models.URLField()
-    landscape_img = models.URLField()
-    side_photo_left = models.URLField()
-    side_photo_right = models.URLField()
-    front_photo_view = models.URLField()
-    rear_photo_view = models.URLField()
-    top_photo_view = models.URLField()
-    drive_train_closeup_photo = models.URLField()
-    handlebar_controls_photo = models.URLField()
-    suspension_fork_photo = models.URLField()
-    wheel_tire_condition_photo = models.URLField()
-    serial_number_or_branding_photo = models.URLField()
+    main_img = CloudinaryField('image')
+    nav_photo = CloudinaryField('image')
+    landscape_img = CloudinaryField('image')
+    side_photo_left = CloudinaryField('image')
+    side_photo_right = CloudinaryField('image')
+    front_photo_view = CloudinaryField('image')
+    rear_photo_view = CloudinaryField('image')
+    top_photo_view = CloudinaryField('image')
+    drive_train_closeup_photo = CloudinaryField('image')
+    handlebar_controls_photo = CloudinaryField('image')
+    suspension_fork_photo = CloudinaryField('image')
+    wheel_tire_condition_photo = CloudinaryField('image')
+    serial_number_or_branding_photo = CloudinaryField('image')
 
     def __str__(self):
         return self.name
-        

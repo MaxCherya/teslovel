@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 from dotenv import load_dotenv
+import cloudinary
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -46,6 +47,8 @@ INSTALLED_APPS = [
     'django_otp',
     'django_otp.plugins.otp_totp',
     'two_factor',
+    'cloudinary',
+    'cloudinary_storage',
     'backendApps.catalog',
     'backendApps.specs_types',
     'backendApps.customer_support',
@@ -64,6 +67,14 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+cloudinary.config(
+    cloud_name=os.getenv('CLOUD_NAME_CLOUDINARY'),
+    api_key=os.getenv('API_KEY_CLOUDINARY'),
+    api_secret=os.getenv('API_SECRET_CLOUDINARY')
+)
 
 ROOT_URLCONF = 'backend.urls'
 

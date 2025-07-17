@@ -8,6 +8,7 @@ export interface BikeCatwalk {
     wheels_size: number;
     price_day: number;
     landscape_img: string;
+    main_img: string;
 }
 
 export const fetchCatwalkBikes = async (): Promise<BikeCatwalk[] | null> => {

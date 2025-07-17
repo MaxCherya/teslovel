@@ -22,17 +22,20 @@ Teslovel is a modern web application built with a powerful full-stack architectu
 - [React Icons](https://react-icons.github.io/react-icons/) — Popular icon packs as React components
 - [react-phone-input-2](https://github.com/bl00mber/react-phone-input-2) — International telephone input with flag dropdown
 
-### Backend
+Here's the updated backend documentation section with **Cloudinary** added:
 
-* [Django](https://www.djangoproject.com/) — Python web framework
-* [Django REST Framework](https://www.django-rest-framework.org/) — A powerful and flexible toolkit for building Web APIs. DRF simplifies serialization, request validation, authentication, permissions, pagination, and more — enabling clean and maintainable API endpoints to power the React frontend.
-* [requests](https://pypi.org/project/requests/) — Elegant and simple HTTP library for Python (used for Telegram bot messaging and other external API integrations)
-* [djangorestframework-simplejwt](https://github.com/jazzband/djangorestframework-simplejwt) — A JSON Web Token authentication plugin for Django REST Framework
-* [django-otp](https://pypi.org/project/django-otp/) — Pluggable framework for adding one-time passwords (OTP), used to build two-factor authentication with TOTP tokens
-* [qrcode](https://pypi.org/project/qrcode/) — Python library to generate QR codes, used for displaying TOTP secrets that users can scan in authenticator apps
-* [django-two-factor-auth](https://github.com/Bouke/django-two-factor-auth) — Ready-to-use 2FA integration for Django using OTP via TOTP or static backup tokens; simplifies device setup and verification
-* [phonenumbers](https://pypi.org/project/phonenumbers/) — Library for parsing, formatting, and validating international phone numbers (used internally by `django-two-factor-auth`)
-* [Pillow](https://pypi.org/project/Pillow/) — Imaging library used for generating and manipulating image files (required by `qrcode` for PNG output) 
+### ✅ Backend
+
+* [**Django**](https://www.djangoproject.com/) — Python web framework
+* [**Django REST Framework**](https://www.django-rest-framework.org/) — A powerful and flexible toolkit for building Web APIs. DRF simplifies serialization, request validation, authentication, permissions, pagination, and more — enabling clean and maintainable API endpoints to power the React frontend.
+* [**requests**](https://pypi.org/project/requests/) — Elegant and simple HTTP library for Python (used for Telegram bot messaging and other external API integrations)
+* [**djangorestframework-simplejwt**](https://github.com/jazzband/djangorestframework-simplejwt) — A JSON Web Token authentication plugin for Django REST Framework
+* [**django-otp**](https://pypi.org/project/django-otp/) — Pluggable framework for adding one-time passwords (OTP), used to build two-factor authentication with TOTP tokens
+* [**qrcode**](https://pypi.org/project/qrcode/) — Python library to generate QR codes, used for displaying TOTP secrets that users can scan in authenticator apps
+* [**django-two-factor-auth**](https://github.com/Bouke/django-two-factor-auth) — Ready-to-use 2FA integration for Django using OTP via TOTP or static backup tokens; simplifies device setup and verification
+* [**phonenumbers**](https://pypi.org/project/phonenumbers/) — Library for parsing, formatting, and validating international phone numbers (used internally by `django-two-factor-auth`)
+* [**Pillow**](https://pypi.org/project/Pillow/) — Imaging library used for generating and manipulating image files (required by `qrcode` for PNG output)
+* [**cloudinary**](https://pypi.org/project/cloudinary/) — A cloud-based image and video management solution. Used in combination with [`django-cloudinary-storage`](https://github.com/klis87/django-cloudinary-storage) to enable direct uploads and delivery of optimized images through Cloudinary CDN. All image fields in the `Bike` model are now managed via Cloudinary.
 
 ### Dev & Build Tools
 
