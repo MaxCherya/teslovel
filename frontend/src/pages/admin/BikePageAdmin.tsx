@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom";
 import { updateBikeStatus, deleteBikeWithOTP } from "../../endpoints/adminBikes";
 import { check2FAStatus } from "../../endpoints/auth";
 import FullScreenLoader from "../../components/ui/loaders/FullScreenLoader";
+import { fetchBikeExpenses } from "../../endpoints/adminExpenses";
 
 interface Ride {
     id: number;
@@ -16,18 +17,11 @@ interface Ride {
     cost: number;
 }
 
-interface Expense {
-    id: number;
-    date: string;
-    description: string;
-    amount: number;
-}
-
 const BikePageAdmin: React.FC = () => {
     const { bikeId } = useParams<{ bikeId: string }>();
     const [bikeStatus, setBikeStatus] = useState<string>("1");
     const [rides, setRides] = useState<Ride[]>([]);
-    const [expenses, setExpenses] = useState<Expense[]>([]);
+    const [expenses, setExpenses] = useState<any[]>([]);
     const [stats, setStats] = useState({
         totalRides: 0,
         ridesThisMonth: 0,
@@ -47,15 +41,23 @@ const BikePageAdmin: React.FC = () => {
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        // Fetch bike data, rides, and expenses (replace with real API calls)
+        const loadExpenses = async () => {
+            if (!bikeId) return;
+            try {
+                const data = await fetchBikeExpenses(1, parseInt(bikeId));
+                setExpenses(data.results);
+            } catch (err: any) {
+                console.error("❌ Failed to load expenses:", err);
+            }
+        };
+
+        loadExpenses();
+
+        // Mock ride data and stats remain for now
         setRides([
             { id: 1, start_time: "2025-07-15 10:00", end_time: "2025-07-15 11:30", duration: "1h 30m", cost: 150 },
             { id: 2, start_time: "2025-07-14 14:00", end_time: "2025-07-14 15:00", duration: "1h", cost: 100 },
             { id: 3, start_time: "2025-07-13 09:00", end_time: "2025-07-13 10:45", duration: "1h 45m", cost: 175 },
-        ]);
-        setExpenses([
-            { id: 1, date: "2025-07-15", description: "Tire replacement", amount: 500 },
-            { id: 2, date: "2025-07-10", description: "Battery maintenance", amount: 300 },
         ]);
         setStats({
             totalRides: 50,
@@ -68,7 +70,7 @@ const BikePageAdmin: React.FC = () => {
             expensesThisMonth: 800,
             expensesToday: 500,
         });
-    }, []);
+    }, [bikeId]);
 
     const handleStatusChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
         const newStatus = e.target.value;

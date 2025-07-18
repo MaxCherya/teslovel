@@ -7,6 +7,7 @@ interface Order {
     bike: string;
     name: string;
     phone: string;
+    amount: number;
     is_validated: boolean;
     is_rejected: boolean;
     comments: string;
@@ -78,6 +79,7 @@ const OrderRequests: React.FC = () => {
                                     <th className="px-4 py-3 text-sm font-medium">Bike</th>
                                     <th className="px-4 py-3 text-sm font-medium">Customer Name</th>
                                     <th className="px-4 py-3 text-sm font-medium">Phone</th>
+                                    <th className="px-4 py-3 text-sm font-medium">Amount</th>
                                     <th className="px-4 py-3 text-sm font-medium">Start</th>
                                     <th className="px-4 py-3 text-sm font-medium">End</th>
                                     <th className="px-4 py-3 text-sm font-medium">Comments</th>
@@ -93,6 +95,7 @@ const OrderRequests: React.FC = () => {
                                         <td className="px-4 py-3 text-sm">{order.bike}</td>
                                         <td className="px-4 py-3 text-sm">{order.name}</td>
                                         <td className="px-4 py-3 text-sm">{order.phone}</td>
+                                        <td className="px-4 py-3 text-sm">{order.amount}</td>
                                         <td className="px-4 py-3 text-sm">{order.start_date}</td>
                                         <td className="px-4 py-3 text-sm">{order.end_date}</td>
                                         <td className="px-4 py-3 text-sm">{order.comments || "None"}</td>

@@ -75,6 +75,7 @@ export interface AdminOrder {
     bike: string;
     name: string;
     phone: string;
+    amount: number;
     comments: string;
     is_validated: boolean;
     is_rejected: boolean;
