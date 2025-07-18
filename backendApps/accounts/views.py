@@ -2,16 +2,20 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth import authenticate
+from django.db.models import Q
 from rest_framework_simplejwt.tokens import RefreshToken, TokenError
+from django_otp import devices_for_user
 from rest_framework_simplejwt.views import TokenObtainPairView
+from two_factor.utils import default_device
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.response import Response
 from urllib.parse import quote
 from rest_framework.permissions import IsAuthenticated
+from django.core.paginator import Paginator
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from rest_framework.decorators import permission_classes
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAdminUser
 from qrcode.image.pil import PilImage
 from rest_framework.authentication import BasicAuthentication
 from django_otp.plugins.otp_totp.models import TOTPDevice
@@ -271,3 +275,79 @@ def get_2fa_status(request):
     return Response({
         "has_2fa_enabled": request.user.has_2fa_enabled
     })
+
+@api_view(["GET"])
+@permission_classes([IsAdminUser])
+def list_all_users(request):
+    query = request.GET.get("q", "")
+    page = int(request.GET.get("page", 1))
+    page_size = int(request.GET.get("page_size", 10))
+
+    users = CustomUser.objects.filter(
+        Q(username__icontains=query) | Q(phone__icontains=query)
+    ).order_by("id")
+
+    paginator = Paginator(users, page_size)
+    page_obj = paginator.get_page(page)
+
+    serializer = UserListSerializer(page_obj, many=True)
+
+    return Response({
+        "count": paginator.count,
+        "total_pages": paginator.num_pages,
+        "results": serializer.data,
+        "next": page_obj.next_page_number() if page_obj.has_next() else None,
+        "previous": page_obj.previous_page_number() if page_obj.has_previous() else None,
+    })
+
+@api_view(["POST"])
+@permission_classes([IsAdminUser])
+def assign_superuser_status(request):
+    user_id = request.data.get("user_id")
+    otp_code = request.data.get("otp_code")
+
+    if not user_id:
+        return Response({"detail": "Missing user_id."}, status=400)
+
+    try:
+        target_user = CustomUser.objects.get(id=user_id)
+    except CustomUser.DoesNotExist:
+        return Response({"detail": "User not found."}, status=404)
+
+    current_user = request.user
+
+    if current_user.has_2fa_enabled:
+        devices = list(devices_for_user(current_user))
+        device = next((d for d in devices if d.confirmed), None)
+        if not device or not device.verify_token(otp_code):
+            return Response({"detail": "Invalid or missing OTP code."}, status=403)
+
+    target_user.is_staff = True
+    target_user.save()
+
+    return Response(
+        {"detail": f"User {target_user.username} is now a superuser."},
+        status=200
+    )
+
+
+@api_view(["POST"])
+@permission_classes([IsAdminUser])
+def remove_superuser_status(request):
+    user_id = request.data.get("user_id")
+
+    if not user_id:
+        return Response({"detail": "Missing user_id."}, status=400)
+
+    if str(request.user.id) == str(user_id):
+        return Response({"detail": "You cannot remove your own superuser status."}, status=403)
+
+    try:
+        target_user = CustomUser.objects.get(id=user_id)
+    except CustomUser.DoesNotExist:
+        return Response({"detail": "User not found."}, status=404)
+
+    target_user.is_staff = False
+    target_user.save()
+
+    return Response({"detail": f"User {target_user.username} is no longer a superuser."}, status=200)

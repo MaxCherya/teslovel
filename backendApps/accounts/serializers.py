@@ -35,3 +35,8 @@ class UserProfileSerializer(serializers.ModelSerializer):
     
     def get_is_user_admin(self, obj):
         return self.context.get('is_user_admin', False)
+    
+class UserListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUser
+        fields = ["id", "username", "phone", "has_2fa_enabled", "is_active", "is_staff"]

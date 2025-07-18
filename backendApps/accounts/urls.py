@@ -13,4 +13,7 @@ urlpatterns = [
     path('2fa/verify-login/', verify_otp_login, name='verify-otp-login'),
     path('2fa/disable/', disable_otp, name='disable-otp'),
     path("2fa-status/", get_2fa_status, name="get-2fa-status"),
+    path("users/", list_all_users, name="list_all_users"),
+    path("assign-superuser/", assign_superuser_status),
+    path("remove-superuser/", remove_superuser_status),
 ]
