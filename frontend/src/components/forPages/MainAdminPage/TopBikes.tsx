@@ -1,13 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { fetchTopBikes, type TopBike } from "../../../endpoints/adminBikes";
 
 const TopBikes: React.FC = () => {
-    const bikes = [
-        { id: 1, name: "Yamaha WR450F", rides: 124 },
-        { id: 2, name: "KTM 690 Rally", rides: 103 },
-        { id: 3, name: "Honda CRF300L", rides: 89 },
-        { id: 4, name: "Suzuki DR-Z400S", rides: 78 },
-        { id: 5, name: "Husqvarna FE 501", rides: 72 },
-    ];
+    const [bikes, setBikes] = useState<TopBike[]>([]);
+
+    useEffect(() => {
+        const load = async () => {
+            try {
+                const data = await fetchTopBikes();
+                setBikes(data);
+            } catch (err) {
+                console.error("Failed to load top bikes:", err);
+            }
+        };
+        load();
+    }, []);
 
     return (
         <div className="bg-white shadow rounded-lg mt-8">

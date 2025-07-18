@@ -194,3 +194,28 @@ export const updateBikeImage = async (
     const result = await res.json();
     return result[field];
 };
+
+export interface TopBike {
+    id: number;
+    name: string;
+    rides: number;
+}
+
+export const fetchTopBikes = async (): Promise<TopBike[]> => {
+    const res = await fetch("/api/orders/top-bikes/");
+    if (!res.ok) throw new Error("Failed to fetch top bikes");
+    return await res.json();
+};
+
+export interface TopClient {
+    phone: string;
+    name: string;
+    total_rides: number;
+    total_spent: number;
+}
+
+export const fetchTopClients = async (): Promise<TopClient[]> => {
+    const res = await fetcher("/api/orders/top-clients/");
+    if (!res.ok) throw new Error("Failed to fetch top clients");
+    return await res.json();
+};

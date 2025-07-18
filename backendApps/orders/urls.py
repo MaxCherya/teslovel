@@ -9,4 +9,7 @@ urlpatterns = [
     path("<int:order_id>/reset/", reset_order_status, name="reset-order-status"),
     path("reviewed/", list_reviewed_orders, name="list-reviewed-orders"),
     path("bike-orders/<int:bike_id>/", list_validated_orders_for_bike),
+    path("overview-stats/", overview_stats, name="overview-stats"),
+    path("top-bikes/", top_bikes_by_rides, name="top-bikes"),
+    path("top-clients/", top_clients),
 ]

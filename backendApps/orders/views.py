@@ -10,6 +10,13 @@ from rest_framework.permissions import AllowAny
 from rest_framework.decorators import permission_classes
 from rest_framework.permissions import IsAdminUser
 from rest_framework.pagination import PageNumberPagination
+from django.db.models import Sum
+from django.utils.timezone import now
+from django.db.models import Count
+
+from backendApps.orders.models import Order
+from backendApps.expenses.models import BikeExpense
+from backendApps.catalog.models import Bike
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
@@ -173,3 +180,72 @@ def list_validated_orders_for_bike(request, bike_id):
     result_page = paginator.paginate_queryset(orders, request)
     serializer = OrderSerializer(result_page, many=True)
     return paginator.get_paginated_response(serializer.data)
+
+@api_view(["GET"])
+@permission_classes([IsAdminUser])
+def overview_stats(request):
+    today = now().date()
+    current_month = today.month
+    current_year = today.year
+
+    # Orders
+    validated_orders = Order.objects.filter(is_validated=True, is_rejected=False)
+
+    total_revenue = validated_orders.aggregate(total=Sum('amount'))['total'] or 0
+    monthly_revenue = validated_orders.filter(created_at__year=current_year, created_at__month=current_month).aggregate(total=Sum('amount'))['total'] or 0
+    today_revenue = validated_orders.filter(created_at__date=today).aggregate(total=Sum('amount'))['total'] or 0
+
+    total_rides = validated_orders.count()
+    total_clients = validated_orders.values('phone').distinct().count()
+
+    # Expenses
+    all_expenses = BikeExpense.objects.all()
+    total_expenses = all_expenses.aggregate(total=Sum('amount'))['total'] or 0
+    monthly_expenses = all_expenses.filter(date__year=current_year, date__month=current_month).aggregate(total=Sum('amount'))['total'] or 0
+    today_expenses = all_expenses.filter(date__date=today).aggregate(total=Sum('amount'))['total'] or 0
+
+    return Response({
+        "total_revenue": total_revenue,
+        "monthly_revenue": monthly_revenue,
+        "today_revenue": today_revenue,
+        "total_rides": total_rides,
+        "total_clients": total_clients,
+        "total_expenses": total_expenses,
+        "monthly_expenses": monthly_expenses,
+        "today_expenses": today_expenses,
+    })
+
+@api_view(["GET"])
+@permission_classes([IsAdminUser])
+def top_bikes_by_rides(request):
+    top_bikes = (
+        Bike.objects.annotate(ride_count=Count('order', filter=models.Q(order__is_validated=True)))
+        .filter(ride_count__gt=0)
+        .order_by('-ride_count')[:10]
+    )
+
+    data = [
+        {
+            "id": bike.id,
+            "name": bike.name,
+            "rides": bike.ride_count,
+        }
+        for bike in top_bikes
+    ]
+
+    return Response(data)
+
+@api_view(["GET"])
+@permission_classes([IsAdminUser])
+def top_clients(request):
+    top = (
+        Order.objects.filter(is_validated=True)
+        .values("phone")
+        .annotate(
+            name=models.functions.Substr("name", 1, 240),
+            total_rides=Count("id"),
+            total_spent=Sum("amount"),
+        )
+        .order_by("-total_rides")[:10]
+    )
+    return Response(list(top))

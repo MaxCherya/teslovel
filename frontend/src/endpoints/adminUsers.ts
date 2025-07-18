@@ -53,3 +53,23 @@ export const removeSuperuser = async (
         throw new Error(error.detail || "Failed to remove superuser");
     }
 };
+
+export interface OverviewStats {
+    total_revenue: number;
+    monthly_revenue: number;
+    today_revenue: number;
+    total_rides: number;
+    total_clients: number;
+    total_expenses: number;
+    monthly_expenses: number;
+    today_expenses: number;
+}
+
+export const fetchOverviewStats = async (): Promise<OverviewStats> => {
+    const res = await fetcher("/api/orders/overview-stats/");
+    if (!res.ok) {
+        const error = await res.json();
+        throw new Error(error.detail || "Failed to fetch overview stats");
+    }
+    return await res.json();
+};

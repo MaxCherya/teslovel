@@ -1,6 +1,15 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { fetchTopClients, type TopClient } from "../../../endpoints/adminBikes";
 
 const TopClients: React.FC = () => {
+    const [clients, setClients] = useState<TopClient[]>([]);
+
+    useEffect(() => {
+        fetchTopClients()
+            .then(setClients)
+            .catch((err) => console.error("Failed to fetch top clients:", err));
+    }, []);
+
     return (
         <div className="mt-8 bg-white rounded-lg shadow-md">
             <div className="px-4 sm:px-6 py-4 border-b">
@@ -11,36 +20,25 @@ const TopClients: React.FC = () => {
                     <thead>
                         <tr className="text-left text-gray-600">
                             <th className="px-4 sm:px-6 py-3 text-sm sm:text-base">Client Name</th>
+                            <th className="px-4 sm:px-6 py-3 text-sm sm:text-base">Phone</th>
                             <th className="px-4 sm:px-6 py-3 text-sm sm:text-base">Total Rides</th>
                             <th className="px-4 sm:px-6 py-3 text-sm sm:text-base">Total Spent</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr className="border-t">
-                            <td className="px-4 sm:px-6 py-4 text-sm sm:text-base">Emma Thompson</td>
-                            <td className="px-4 sm:px-6 py-4 text-sm sm:text-base">45</td>
-                            <td className="px-4 sm:px-6 py-4 text-sm sm:text-base">$1,230</td>
-                        </tr>
-                        <tr className="border-t">
-                            <td className="px-4 sm:px-6 py-4 text-sm sm:text-base">Liam Carter</td>
-                            <td className="px-4 sm:px-6 py-4 text-sm sm:text-base">38</td>
-                            <td className="px-4 sm:px-6 py-4 text-sm sm:text-base">$980</td>
-                        </tr>
-                        <tr className="border-t">
-                            <td className="px-4 sm:px-6 py-4 text-sm sm:text-base">Olivia Brown</td>
-                            <td className="px-4 sm:px-6 py-4 text-sm sm:text-base">32</td>
-                            <td className="px-4 sm:px-6 py-4 text-sm sm:text-base">$870</td>
-                        </tr>
-                        <tr className="border-t">
-                            <td className="px-4 sm:px-6 py-4 text-sm sm:text-base">Noah Wilson</td>
-                            <td className="px-4 sm:px-6 py-4 text-sm sm:text-base">29</td>
-                            <td className="px-4 sm:px-6 py-4 text-sm sm:text-base">$750</td>
-                        </tr>
+                        {clients.map((client, idx) => (
+                            <tr className="border-t" key={idx}>
+                                <td className="px-4 sm:px-6 py-4 text-sm sm:text-base">{client.name}</td>
+                                <td className="px-4 sm:px-6 py-4 text-sm sm:text-base">{client.phone}</td>
+                                <td className="px-4 sm:px-6 py-4 text-sm sm:text-base">{client.total_rides}</td>
+                                <td className="px-4 sm:px-6 py-4 text-sm sm:text-base">{client.total_spent} ₴︎</td>
+                            </tr>
+                        ))}
                     </tbody>
                 </table>
             </div>
         </div>
-    )
-}
+    );
+};
 
 export default TopClients;
