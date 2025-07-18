@@ -10,4 +10,9 @@ urlpatterns = [
     path('create-bike/', create_bike, name='create-bike'),
     path('update-bike-status/<int:bike_id>/', update_bike_status, name='update-bike-status'),
     path("delete-bike/", delete_bike_with_otp),
+    path('bike/<int:bike_id>/update-name/', update_bike_name, name='update-bike-name'),
+    path("update-bike-descriptions/<int:bike_id>/", update_bike_descriptions),
+    path("update-bike-specs/<int:bike_id>/", update_bike_technical_specs),
+    path("update-bike-fks/<int:bike_id>/", update_bike_fk_fields),
+    path("bike-option-fields/", list_bike_option_fields),
 ]

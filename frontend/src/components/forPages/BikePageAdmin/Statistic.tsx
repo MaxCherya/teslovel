@@ -18,8 +18,10 @@ const DiffLabel: React.FC<{ diff: number }> = ({ diff }) => {
 };
 
 const Statistic: React.FC<{ stats: any }> = ({ stats }) => {
+    const netIncome = stats.totalRevenue - stats.totalExpenses;
+
     return (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {/* Total Rides */}
             <div className="bg-gray-50 p-4 rounded-lg shadow-sm border border-gray-200">
                 <h3 className="text-sm font-medium text-gray-600">Total Rides</h3>
@@ -54,6 +56,15 @@ const Statistic: React.FC<{ stats: any }> = ({ stats }) => {
                 <p className="text-xs text-gray-500">
                     Today: {formatUAH(stats.expensesToday)} (<DiffLabel diff={stats.expensesToday - stats.totalExpenses} />)
                 </p>
+            </div>
+
+            {/* Net Income */}
+            <div className="bg-gray-100 p-4 rounded-lg shadow border border-gray-300">
+                <h3 className="text-sm font-medium text-gray-700">Net Income</h3>
+                <p className={`text-lg sm:text-xl font-semibold ${netIncome >= 0 ? "text-green-700" : "text-red-700"}`}>
+                    {formatUAH(netIncome)}
+                </p>
+                <p className="text-xs text-gray-500">Revenue − Expenses</p>
             </div>
         </div>
     );

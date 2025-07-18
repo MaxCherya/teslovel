@@ -96,7 +96,7 @@ class BikePageSerializer(serializers.ModelSerializer):
             'top_photo_view', 'drive_train_closeup_photo', 'handlebar_controls_photo',
             'suspension_fork_photo', 'wheel_tire_condition_photo', 'serial_number_or_branding_photo',
             'max_speed', 'range', 'wheels_size', 'power', 'battery_type', 'battery_current',
-            'brakes_type', 'engine_position', 'status', 'status_original'
+            'brakes_type', 'engine_position', 'status', 'status_original', 'description_uk', 'description_ru', 'description_en',
         ]
 
     def get_main_img(self, obj):
@@ -178,3 +178,8 @@ class BikeCreateSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         return Bike.objects.create(**validated_data)
+    
+class BikeNameUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Bike
+        fields = ['name']

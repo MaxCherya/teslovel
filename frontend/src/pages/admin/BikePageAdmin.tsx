@@ -4,15 +4,20 @@ import Statistic from "../../components/forPages/BikePageAdmin/Statistic";
 import RecentRides from "../../components/forPages/BikePageAdmin/RecentRides";
 import Expenses from "../../components/forPages/BikePageAdmin/Expenses";
 import { useParams } from "react-router-dom";
-import { updateBikeStatus, deleteBikeWithOTP } from "../../endpoints/adminBikes";
+import { updateBikeStatus, deleteBikeWithOTP, updateBikeName } from "../../endpoints/adminBikes";
 import { check2FAStatus } from "../../endpoints/auth";
 import FullScreenLoader from "../../components/ui/loaders/FullScreenLoader";
-import { fetchBikeExpenses } from "../../endpoints/adminExpenses";
+import { fetchBikeExpenses, fetchBikeStats } from "../../endpoints/adminExpenses";
 import { fetchBikeRides } from "../../endpoints/BookPage";
+import { fetchBike } from "../../endpoints/BikePage";
+import BikeDetailsAdmin from "./BikeDetailsAdmin";
 
 const BikePageAdmin: React.FC = () => {
     const { bikeId } = useParams<{ bikeId: string }>();
     const [bikeStatus, setBikeStatus] = useState<string>("1");
+    const [bike, setBike] = useState<any>(null);
+    const [editingName, setEditingName] = useState(false);
+    const [nameInput, setNameInput] = useState("");
     const [rides, setRides] = useState<any[]>([]);
     const [expenses, setExpenses] = useState<any[]>([]);
     const [stats, setStats] = useState({
@@ -30,44 +35,43 @@ const BikePageAdmin: React.FC = () => {
     const [showOtpModal, setShowOtpModal] = useState(false);
     const [otpCode, setOtpCode] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
-
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        const loadExpenses = async () => {
+        const loadData = async () => {
             if (!bikeId) return;
+            setLoading(true);
             try {
-                const data = await fetchBikeExpenses(1, parseInt(bikeId));
-                setExpenses(data.results);
-            } catch (err: any) {
-                console.error("❌ Failed to load expenses:", err);
+                const bikeIntId = parseInt(bikeId);
+                const [bikeData, expensesData, ridesData, statsData] = await Promise.all([
+                    fetchBike({ bike_id: bikeIntId }),
+                    fetchBikeExpenses(1, bikeIntId),
+                    fetchBikeRides(bikeIntId, 1),
+                    fetchBikeStats(bikeIntId),
+                ]);
+                setBike(bikeData);
+                if (bikeData) setNameInput(bikeData.name);
+                setExpenses(expensesData.results);
+                setRides(ridesData.results);
+                setStats(statsData);
+
+                const statusMap: Record<string, string> = {
+                    "Available": "1",
+                    "On maintainance": "2",
+                    "Unavailable": "3",
+                };
+
+                if (bikeData?.status_original && statusMap[bikeData.status_original]) {
+                    setBikeStatus(statusMap[bikeData.status_original]);
+                }
+            } catch (err) {
+                console.error("❌ Failed to load bike data:", err);
+            } finally {
+                setLoading(false);
             }
         };
 
-        const loadRides = async () => {
-            if (!bikeId) return;
-            try {
-                const data = await fetchBikeRides(parseInt(bikeId), 1);
-                setRides(data.results);
-            } catch (err: any) {
-                console.error("❌ Failed to load rides:", err);
-            }
-        };
-
-        loadExpenses();
-        loadRides();
-
-        setStats({
-            totalRides: 50,
-            ridesThisMonth: 10,
-            ridesToday: 2,
-            totalRevenue: 7500,
-            revenueThisMonth: 1500,
-            revenueToday: 300,
-            totalExpenses: 1200,
-            expensesThisMonth: 800,
-            expensesToday: 500,
-        });
+        loadData();
     }, [bikeId]);
 
     const handleStatusChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -103,7 +107,6 @@ const BikePageAdmin: React.FC = () => {
         }
     };
 
-
     const handleOtpSubmit = async () => {
         if (!bikeId) return;
         try {
@@ -123,9 +126,66 @@ const BikePageAdmin: React.FC = () => {
             {loading && <FullScreenLoader />}
             <main className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8 lg:pt-8 pt-25 pb-8">
                 <div className="bg-white rounded-xl shadow-2xl p-4 sm:p-6 lg:p-8 max-w-full mx-auto border border-gray-100 space-y-6">
-                    <h2 className="text-lg sm:text-2xl font-semibold text-gray-800 tracking-tight">Bike: City Cruiser</h2>
-                    {bikeId && <ActionButtons bikeId={bikeId} bikeStatus={bikeStatus} handleRemoveBike={handleRemoveBike} handleStatusChange={handleStatusChange} />}
+                    <div className="flex items-center gap-3">
+                        {editingName ? (
+                            <>
+                                <input
+                                    value={nameInput}
+                                    onChange={(e) => setNameInput(e.target.value)}
+                                    className="text-lg sm:text-2xl font-semibold text-gray-800 border border-gray-300 rounded px-2 py-1"
+                                />
+                                <button
+                                    onClick={async () => {
+                                        if (!bike || !bikeId) return;
+                                        setLoading(true);
+                                        try {
+                                            await updateBikeName(parseInt(bikeId), nameInput);
+                                            setBike({ ...bike, name: nameInput });
+                                            setEditingName(false);
+                                        } catch (err) {
+                                            console.error("❌ Failed to update name:", err);
+                                        } finally {
+                                            setLoading(false);
+                                        }
+                                    }}
+                                    className="text-sm bg-blue-600 text-white rounded px-3 py-1 hover:bg-blue-700"
+                                >
+                                    Save
+                                </button>
+                                <button
+                                    onClick={() => {
+                                        setNameInput(bike.name);
+                                        setEditingName(false);
+                                    }}
+                                    className="text-sm text-gray-600 hover:text-gray-800"
+                                >
+                                    Cancel
+                                </button>
+                            </>
+                        ) : (
+                            <>
+                                <h2 className="text-lg sm:text-2xl font-semibold text-gray-800 tracking-tight">
+                                    Bike: {bike?.name || "Loading..."}
+                                </h2>
+                                <button
+                                    onClick={() => setEditingName(true)}
+                                    className="text-sm text-blue-600 hover:underline"
+                                >
+                                    Edit
+                                </button>
+                            </>
+                        )}
+                    </div>
+                    {bikeId && (
+                        <ActionButtons
+                            bikeId={bikeId}
+                            bikeStatus={bikeStatus}
+                            handleRemoveBike={handleRemoveBike}
+                            handleStatusChange={handleStatusChange}
+                        />
+                    )}
                     <Statistic stats={stats} />
+                    {bike && <BikeDetailsAdmin bike={bike} />}
                     <RecentRides rides={rides} />
                     <Expenses expenses={expenses} />
                 </div>

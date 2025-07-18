@@ -14,6 +14,18 @@ export interface UploadExpensePayload {
     amount: string;
 }
 
+export interface BikeStats {
+    totalExpenses: number;
+    expensesThisMonth: number;
+    expensesToday: number;
+    totalRevenue: number;
+    revenueThisMonth: number;
+    revenueToday: number;
+    totalRides: number;
+    ridesThisMonth: number;
+    ridesToday: number;
+}
+
 export const uploadBikeExpense = async (payload: UploadExpensePayload): Promise<void> => {
     const res = await fetcher("/api/admin-expenses/upload-expense/", {
         method: "POST",
@@ -64,4 +76,15 @@ export const deleteBikeExpense = async (expenseId: number): Promise<void> => {
         console.error("❌ Failed to delete expense:", error);
         throw new Error("Failed to delete expense");
     }
+};
+
+export const fetchBikeStats = async (bikeId: number): Promise<BikeStats> => {
+    const res = await fetcher(`/api/admin-expenses/bike/${bikeId}/stats/`);
+    if (!res.ok) {
+        const error = await res.json();
+        console.error("❌ Failed to fetch bike stats:", error);
+        throw new Error("Failed to fetch bike stats");
+    }
+
+    return await res.json();
 };

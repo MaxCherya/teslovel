@@ -15,3 +15,16 @@ class BikeExpenseListSerializer(serializers.ModelSerializer):
     class Meta:
         model = BikeExpense
         fields = ['id', 'bike', 'description', 'amount', 'date']
+
+class BikeStatsSerializer(serializers.Serializer):
+    totalExpenses = serializers.DecimalField(max_digits=12, decimal_places=2)
+    expensesThisMonth = serializers.DecimalField(max_digits=12, decimal_places=2)
+    expensesToday = serializers.DecimalField(max_digits=12, decimal_places=2)
+
+    totalRevenue = serializers.DecimalField(max_digits=12, decimal_places=2)
+    revenueThisMonth = serializers.DecimalField(max_digits=12, decimal_places=2)
+    revenueToday = serializers.DecimalField(max_digits=12, decimal_places=2)
+
+    totalRides = serializers.IntegerField()
+    ridesThisMonth = serializers.IntegerField()
+    ridesToday = serializers.IntegerField()
