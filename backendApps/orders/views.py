@@ -130,3 +130,31 @@ def update_order_status(request, order_id):
 
     order.save()
     return Response({"detail": f"Order {action}d successfully."})
+
+@api_view(["PATCH"])
+@permission_classes([IsAdminUser])
+def reset_order_status(request, order_id):
+    try:
+        order = Order.objects.get(id=order_id)
+    except Order.DoesNotExist:
+        return Response({"detail": "Order not found."}, status=status.HTTP_404_NOT_FOUND)
+
+    order.is_validated = False
+    order.is_rejected = False
+    order.save()
+
+    return Response({"detail": "Order status reset successfully."}, status=status.HTTP_200_OK)
+
+@api_view(["GET"])
+@permission_classes([IsAdminUser])
+def list_reviewed_orders(request):
+    paginator = PageNumberPagination()
+    paginator.page_size = 10
+
+    orders = Order.objects.select_related("bike").filter(
+        models.Q(is_validated=True) | models.Q(is_rejected=True)
+    ).order_by("-created_at")
+
+    result_page = paginator.paginate_queryset(orders, request)
+    serializer = OrderSerializer(result_page, many=True)
+    return paginator.get_paginated_response(serializer.data)

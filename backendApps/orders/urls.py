@@ -6,4 +6,6 @@ urlpatterns = [
     path("<int:bike_id>/busy-days/", get_bike_busy_days, name="get_bike_busy_days"),
     path("admin-orders/", list_orders, name='admin-orders'),
     path('update-order-status/<int:order_id>/', update_order_status),
+    path("<int:order_id>/reset/", reset_order_status, name="reset-order-status"),
+    path("reviewed/", list_reviewed_orders, name="list-reviewed-orders"),
 ]

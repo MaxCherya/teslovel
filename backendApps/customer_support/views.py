@@ -5,8 +5,9 @@ from .serializers import *
 from django.utils.timezone import localtime
 from .utils import send_to_admins, get_client_ip, get_ip_location
 import time
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAdminUser
 from rest_framework.decorators import permission_classes
+from rest_framework.pagination import PageNumberPagination
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
@@ -47,3 +48,35 @@ def upload_contact_request(request):
         return Response({'success': True}, status=status.HTTP_201_CREATED)
 
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(["GET"])
+@permission_classes([IsAdminUser])
+def list_contact_requests(request):
+    paginator = PageNumberPagination()
+    paginator.page_size = 10
+    queryset = ContactRequest.objects.all().order_by("-created_at")
+    result_page = paginator.paginate_queryset(queryset, request)
+    serializer = ContactRequestListSerializer(result_page, many=True)
+    return paginator.get_paginated_response(serializer.data)
+
+@api_view(["PATCH"])
+@permission_classes([IsAdminUser])
+def mark_contacted(request, contact_id):
+    try:
+        contact = ContactRequest.objects.get(id=contact_id)
+        contact.is_contacted = True
+        contact.save()
+        return Response({"detail": "Marked as contacted."})
+    except ContactRequest.DoesNotExist:
+        return Response({"detail": "Contact request not found."}, status=status.HTTP_404_NOT_FOUND)
+
+@api_view(["PATCH"])
+@permission_classes([IsAdminUser])
+def reset_contacted_status(request, contact_id):
+    try:
+        contact = ContactRequest.objects.get(id=contact_id)
+        contact.is_contacted = False
+        contact.save()
+        return Response({"detail": "Contacted status reset."})
+    except ContactRequest.DoesNotExist:
+        return Response({"detail": "Contact request not found."}, status=status.HTTP_404_NOT_FOUND)
