@@ -124,7 +124,7 @@ const BikePageAdmin: React.FC = () => {
             <main className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8 lg:pt-8 pt-25 pb-8">
                 <div className="bg-white rounded-xl shadow-2xl p-4 sm:p-6 lg:p-8 max-w-full mx-auto border border-gray-100 space-y-6">
                     <h2 className="text-lg sm:text-2xl font-semibold text-gray-800 tracking-tight">Bike: City Cruiser</h2>
-                    <ActionButtons bikeStatus={bikeStatus} handleRemoveBike={handleRemoveBike} handleStatusChange={handleStatusChange} />
+                    {bikeId && <ActionButtons bikeId={bikeId} bikeStatus={bikeStatus} handleRemoveBike={handleRemoveBike} handleStatusChange={handleStatusChange} />}
                     <Statistic stats={stats} />
                     <RecentRides rides={rides} />
                     <Expenses expenses={expenses} />

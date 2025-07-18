@@ -1,16 +1,22 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const ActionButtons: React.FC<{ handleRemoveBike: () => void, bikeStatus: string | number | undefined, handleStatusChange: (e: any) => void }> = ({ handleRemoveBike, handleStatusChange, bikeStatus }) => {
+const ActionButtons: React.FC<{ bikeId: string | number, handleRemoveBike: () => void, bikeStatus: string | number | undefined, handleStatusChange: (e: any) => void }> = ({ bikeId, handleRemoveBike, handleStatusChange, bikeStatus }) => {
 
     return (
         <div className="flex flex-col sm:flex-row justify-between items-center gap-2 sm:gap-4">
             <div className="flex flex-col sm:flex-row gap-2 sm:gap-4">
                 <Link
+                    to={`/bike-expenses-admin/${bikeId}`}
+                    className="px-4 sm:px-6 py-2 sm:py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-all duration-200 shadow-md font-medium text-sm sm:text-base"
+                >
+                    Expenses
+                </Link>
+                <Link
                     to="/admin/add-expense"
                     className="px-4 sm:px-6 py-2 sm:py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-all duration-200 shadow-md font-medium text-sm sm:text-base"
                 >
-                    Add Expense
+                    Rides
                 </Link>
                 <button
                     onClick={handleRemoveBike}
