@@ -1,33 +1,48 @@
 import React from "react";
 
-const Expenses: React.FC<{ expenses: any }> = ({ expenses }) => {
+interface Expense {
+    id: number;
+    date: string;
+    description: string;
+    amount: number;
+}
+
+const Expenses: React.FC<{ expenses: Expense[] }> = ({ expenses }) => {
     return (
         <div className="mt-6">
             <h3 className="text-lg font-semibold text-gray-800 mb-4">Recent Expenses</h3>
-            <div className="overflow-x-auto">
-                <table className="w-full min-w-[640px]">
-                    <thead>
-                        <tr className="text-left text-gray-600">
-                            <th className="px-2 sm:px-4 lg:px-6 py-2 sm:py-3 text-xs sm:text-sm lg:text-base font-medium">Expense ID</th>
-                            <th className="px-2 sm:px-4 lg:px-6 py-2 sm:py-3 text-xs sm:text-sm lg:text-base font-medium">Date</th>
-                            <th className="px-2 sm:px-4 lg:px-6 py-2 sm:py-3 text-xs sm:text-sm lg:text-base font-medium">Description</th>
-                            <th className="px-2 sm:px-4 lg:px-6 py-2 sm:py-3 text-xs sm:text-sm lg:text-base font-medium">Amount</th>
+            <div className="overflow-x-auto rounded-lg border border-gray-200">
+                <table className="min-w-full divide-y divide-gray-200 text-sm">
+                    <thead className="bg-gray-50">
+                        <tr>
+                            <th className="px-4 py-2 text-left text-gray-600 font-medium">ID</th>
+                            <th className="px-4 py-2 text-left text-gray-600 font-medium">Date</th>
+                            <th className="px-4 py-2 text-left text-gray-600 font-medium">Description</th>
+                            <th className="px-4 py-2 text-left text-gray-600 font-medium">Amount</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        {expenses.map((expense: any) => (
-                            <tr key={expense.id} className="border-t border-gray-200">
-                                <td className="px-2 sm:px-4 lg:px-6 py-3 sm:py-4 text-xs sm:text-sm lg:text-base">{expense.id}</td>
-                                <td className="px-2 sm:px-4 lg:px-6 py-3 sm:py-4 text-xs sm:text-sm lg:text-base">{expense.date}</td>
-                                <td className="px-2 sm:px-4 lg:px-6 py-3 sm:py-4 text-xs sm:text-sm lg:text-base">{expense.description}</td>
-                                <td className="px-2 sm:px-4 lg:px-6 py-3 sm:py-4 text-xs sm:text-sm lg:text-base">{expense.amount} UAH</td>
+                    <tbody className="bg-white divide-y divide-gray-100">
+                        {expenses.length === 0 ? (
+                            <tr>
+                                <td colSpan={4} className="text-center py-4 text-gray-500">
+                                    No expenses found.
+                                </td>
                             </tr>
-                        ))}
+                        ) : (
+                            expenses.map((expense) => (
+                                <tr key={expense.id} className="hover:bg-gray-50">
+                                    <td className="px-4 py-2">{expense.id}</td>
+                                    <td className="px-4 py-2">{new Date(expense.date).toLocaleDateString()}</td>
+                                    <td className="px-4 py-2">{expense.description}</td>
+                                    <td className="px-4 py-2">{expense.amount} ₴</td>
+                                </tr>
+                            ))
+                        )}
                     </tbody>
                 </table>
             </div>
         </div>
-    )
-}
+    );
+};
 
 export default Expenses;

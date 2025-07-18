@@ -13,7 +13,7 @@ const ActionButtons: React.FC<{ bikeId: string | number, handleRemoveBike: () =>
                     Expenses
                 </Link>
                 <Link
-                    to="/admin/add-expense"
+                    to={`/bike-rides-admin/${bikeId}`}
                     className="px-4 sm:px-6 py-2 sm:py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-all duration-200 shadow-md font-medium text-sm sm:text-base"
                 >
                     Rides

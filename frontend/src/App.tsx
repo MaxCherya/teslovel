@@ -30,6 +30,7 @@ import OrderRequests from './pages/admin/OrderRequests';
 import CurrentOrders from './pages/admin/CurrentOrders';
 import ContactRequests from './pages/admin/ContactRequests';
 import ExpensesPage from './pages/admin/ExpensesPage';
+import RidesPage from './pages/admin/BikeRidesPage';
 
 function App() {
 
@@ -69,6 +70,7 @@ function App() {
           <Route path='/current-orders-admin/' element={<CurrentOrders />} />
           <Route path='/contact-requests-admin/' element={<ContactRequests />} />
           <Route path='/bike-expenses-admin/:bikeId' element={<ExpensesPage />} />
+          <Route path='/bike-rides-admin/:bikeId' element={<RidesPage />} />
 
           <Route path='/add-new-bike-admin/' element={<AddNewBike />} />
           <Route path='/add-battery-type-admin/' element={<AddBatteryType />} />

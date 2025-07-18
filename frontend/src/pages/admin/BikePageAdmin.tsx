@@ -8,19 +8,12 @@ import { updateBikeStatus, deleteBikeWithOTP } from "../../endpoints/adminBikes"
 import { check2FAStatus } from "../../endpoints/auth";
 import FullScreenLoader from "../../components/ui/loaders/FullScreenLoader";
 import { fetchBikeExpenses } from "../../endpoints/adminExpenses";
-
-interface Ride {
-    id: number;
-    start_time: string;
-    end_time: string;
-    duration: string;
-    cost: number;
-}
+import { fetchBikeRides } from "../../endpoints/BookPage";
 
 const BikePageAdmin: React.FC = () => {
     const { bikeId } = useParams<{ bikeId: string }>();
     const [bikeStatus, setBikeStatus] = useState<string>("1");
-    const [rides, setRides] = useState<Ride[]>([]);
+    const [rides, setRides] = useState<any[]>([]);
     const [expenses, setExpenses] = useState<any[]>([]);
     const [stats, setStats] = useState({
         totalRides: 0,
@@ -51,14 +44,19 @@ const BikePageAdmin: React.FC = () => {
             }
         };
 
-        loadExpenses();
+        const loadRides = async () => {
+            if (!bikeId) return;
+            try {
+                const data = await fetchBikeRides(parseInt(bikeId), 1);
+                setRides(data.results);
+            } catch (err: any) {
+                console.error("❌ Failed to load rides:", err);
+            }
+        };
 
-        // Mock ride data and stats remain for now
-        setRides([
-            { id: 1, start_time: "2025-07-15 10:00", end_time: "2025-07-15 11:30", duration: "1h 30m", cost: 150 },
-            { id: 2, start_time: "2025-07-14 14:00", end_time: "2025-07-14 15:00", duration: "1h", cost: 100 },
-            { id: 3, start_time: "2025-07-13 09:00", end_time: "2025-07-13 10:45", duration: "1h 45m", cost: 175 },
-        ]);
+        loadExpenses();
+        loadRides();
+
         setStats({
             totalRides: 50,
             ridesThisMonth: 10,

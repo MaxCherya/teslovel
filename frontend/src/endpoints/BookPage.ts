@@ -147,3 +147,28 @@ export const fetchReviewedOrders = async (page: number = 1): Promise<{
     }
     return await res.json();
 };
+
+export interface Ride {
+    id: number;
+    bike: string;
+    name: string;
+    phone: string;
+    start_date: string;
+    end_date: string;
+    amount: number;
+}
+
+export const fetchBikeRides = async (bikeId: number, page = 1): Promise<{
+    results: Ride[];
+    count: number;
+    next: string | null;
+    previous: string | null;
+}> => {
+    const res = await fetcher(`/api/orders/bike-orders/${bikeId}/?page=${page}`);
+    if (!res.ok) {
+        const error = await res.json();
+        console.error("❌ Failed to fetch rides:", error);
+        throw new Error("Failed to fetch rides");
+    }
+    return await res.json();
+};

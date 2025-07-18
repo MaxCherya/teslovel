@@ -158,3 +158,18 @@ def list_reviewed_orders(request):
     result_page = paginator.paginate_queryset(orders, request)
     serializer = OrderSerializer(result_page, many=True)
     return paginator.get_paginated_response(serializer.data)
+
+@api_view(["GET"])
+@permission_classes([IsAdminUser])
+def list_validated_orders_for_bike(request, bike_id):
+    paginator = PageNumberPagination()
+    paginator.page_size = 10
+
+    orders = Order.objects.select_related("bike").filter(
+        bike_id=bike_id,
+        is_validated=True
+    ).order_by("-created_at")
+
+    result_page = paginator.paginate_queryset(orders, request)
+    serializer = OrderSerializer(result_page, many=True)
+    return paginator.get_paginated_response(serializer.data)
