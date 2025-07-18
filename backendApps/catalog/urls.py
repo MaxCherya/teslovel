@@ -15,4 +15,5 @@ urlpatterns = [
     path("update-bike-specs/<int:bike_id>/", update_bike_technical_specs),
     path("update-bike-fks/<int:bike_id>/", update_bike_fk_fields),
     path("bike-option-fields/", list_bike_option_fields),
+    path("bike/<int:bike_id>/update-image/", update_bike_image, name="update-bike-image"),
 ]

@@ -5,6 +5,7 @@ export type Method = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 interface FetcherOptions extends RequestInit {
     method?: Method;
     body?: any;
+    skipAuthRefresh?: boolean;
 }
 
 const normalizeHeaders = (headersInit?: HeadersInit): Record<string, string> => {
@@ -49,8 +50,10 @@ export const fetcher = async (
 
     let res = await fetchWithCookies();
 
+    const skipAuthRefresh = options.skipAuthRefresh || false;
+
     // Refresh logic (only if it's really an auth issue)
-    if ((res.status === 401 || res.status === 403) && url !== '/api/accounts/token/refresh/') {
+    if (!skipAuthRefresh && (res.status === 401 || res.status === 403) && url !== '/api/accounts/token/refresh/') {
         let errorText: string | null = null;
 
         try {

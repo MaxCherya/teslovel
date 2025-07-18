@@ -168,3 +168,29 @@ export const fetchBikeOptionFields = async (
 
     return await res.json();
 };
+
+export const updateBikeImage = async (
+    bikeId: number,
+    field: string,
+    file: File
+): Promise<string> => {
+    const formData = new FormData();
+    formData.append("image", file);
+
+    const res = await fetcher(
+        `/api/catalog/bike/${bikeId}/update-image/?field=${field}`,
+        {
+            method: "PATCH",
+            body: formData,
+            skipAuthRefresh: true,
+        },
+    );
+
+    if (!res.ok) {
+        const error = await res.json();
+        throw new Error(error.detail || "Failed to upload image");
+    }
+
+    const result = await res.json();
+    return result[field];
+};

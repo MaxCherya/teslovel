@@ -80,6 +80,7 @@ class BikePageSerializer(serializers.ModelSerializer):
     suspension_fork_photo = serializers.SerializerMethodField()
     wheel_tire_condition_photo = serializers.SerializerMethodField()
     serial_number_or_branding_photo = serializers.SerializerMethodField()
+    nav_photo = serializers.SerializerMethodField()
 
     status = serializers.SerializerMethodField()
     description = serializers.SerializerMethodField()
@@ -95,9 +96,12 @@ class BikePageSerializer(serializers.ModelSerializer):
             'side_photo_left', 'side_photo_right', 'front_photo_view', 'rear_photo_view',
             'top_photo_view', 'drive_train_closeup_photo', 'handlebar_controls_photo',
             'suspension_fork_photo', 'wheel_tire_condition_photo', 'serial_number_or_branding_photo',
-            'max_speed', 'range', 'wheels_size', 'power', 'battery_type', 'battery_current',
+            'max_speed', 'range', 'wheels_size', 'power', 'battery_type', 'battery_current', 'nav_photo',
             'brakes_type', 'engine_position', 'status', 'status_original', 'description_uk', 'description_ru', 'description_en',
         ]
+
+    def get_nav_photo(self, obj):
+        return get_cloudinary_url(obj.nav_photo)
 
     def get_main_img(self, obj):
         return get_cloudinary_url(obj.main_img)

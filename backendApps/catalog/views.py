@@ -5,10 +5,11 @@ from rest_framework.response import Response
 from django.views.decorators.cache import cache_page
 from django_otp.plugins.otp_totp.models import TOTPDevice
 from django.views.decorators.vary import vary_on_headers
-from rest_framework.permissions import AllowAny, IsAdminUser, IsAuthenticated
+from rest_framework.permissions import AllowAny, IsAdminUser, IsAuthenticated 
 from django.shortcuts import get_object_or_404
 from rest_framework import status
-from cloudinary.uploader import destroy
+from PIL import Image
+from cloudinary.uploader import destroy, upload
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.decorators import permission_classes, parser_classes
 from .utils import extract_public_id
@@ -245,3 +246,45 @@ def list_bike_option_fields(request):
         "engine_positions": engine_positions,
         "current": current,
     })
+
+@api_view(["PATCH"])
+@permission_classes([IsAdminUser])
+def update_bike_image(request, bike_id):
+    field_name = request.query_params.get("field")
+    image_file = request.FILES.get("image")
+
+    if not field_name or not image_file:
+        return Response({"detail": "Missing field or image."}, status=status.HTTP_400_BAD_REQUEST)
+
+    if field_name not in [
+        "main_img", "nav_photo", "landscape_img", "side_photo_left", "side_photo_right",
+        "front_photo_view", "rear_photo_view", "top_photo_view", "drive_train_closeup_photo",
+        "handlebar_controls_photo", "suspension_fork_photo", "wheel_tire_condition_photo",
+        "serial_number_or_branding_photo"
+    ]:
+        return Response({"detail": "Invalid field name."}, status=status.HTTP_400_BAD_REQUEST)
+
+    try:
+        bike = Bike.objects.get(id=bike_id)
+    except Bike.DoesNotExist:
+        return Response({"detail": "Bike not found."}, status=status.HTTP_404_NOT_FOUND)
+
+    # Deletes old image from Cloudinary
+    old_value = getattr(bike, field_name)
+    old_url = get_cloudinary_url(old_value)
+    if old_url:
+        public_id = extract_public_id(old_url)
+        if public_id:
+            destroy(public_id)
+
+    # Uploads new image
+    result = upload(
+        image_file,
+    )
+    new_url = result["secure_url"]
+
+    # Saves to model
+    setattr(bike, field_name, new_url)
+    bike.save()
+
+    return Response({"detail": "Image updated", "url": new_url}, status=status.HTTP_200_OK)

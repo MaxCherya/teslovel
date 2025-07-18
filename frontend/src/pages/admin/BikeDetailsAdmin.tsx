@@ -1,19 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { fetchBikeOptionFields, updateBikeDescriptions, updateBikeForeignKeys, updateBikeSpecs, type BikeOption, type BikeOptionFieldsResponse } from "../../endpoints/adminBikes";
+import { fetchBikeOptionFields, updateBikeDescriptions, updateBikeForeignKeys, updateBikeImage, updateBikeSpecs, type BikeOption, type BikeOptionFieldsResponse } from "../../endpoints/adminBikes";
 
 interface BikeDetailsAdminProps {
     bike: any;
 }
-
-const ImageField: React.FC<{ label: string; url?: string }> = ({ label, url }) => {
-    if (!url) return null;
-    return (
-        <div className="mb-4">
-            <p className="text-sm font-medium text-gray-700 mb-1">{label}</p>
-            <img src={url} alt={label} className="w-full max-w-md rounded-lg shadow border" />
-        </div>
-    );
-};
 
 const BikeDetailsAdmin: React.FC<BikeDetailsAdminProps> = ({ bike }) => {
     const [editing, setEditing] = useState(false);
@@ -40,6 +30,57 @@ const BikeDetailsAdmin: React.FC<BikeDetailsAdminProps> = ({ bike }) => {
         brakes_type: bike.brakes_type_id || null,
         engine_position: bike.engine_position_id || null,
     });
+
+    const imageFields = [
+        { key: "main_img", label: "Main Image" },
+        { key: "landscape_img", label: "Landscape Image" },
+        { key: "side_photo_left", label: "Side Photo Left" },
+        { key: "side_photo_right", label: "Side Photo Right" },
+        { key: "front_photo_view", label: "Front View" },
+        { key: "rear_photo_view", label: "Rear View" },
+        { key: "top_photo_view", label: "Top View" },
+        { key: "drive_train_closeup_photo", label: "Drivetrain Close-up" },
+        { key: "handlebar_controls_photo", label: "Handlebar & Controls" },
+        { key: "suspension_fork_photo", label: "Suspension Fork" },
+        { key: "wheel_tire_condition_photo", label: "Wheels & Tires" },
+        { key: "serial_number_or_branding_photo", label: "Serial Number / Branding" },
+        { key: "nav_photo", label: "Nav Photo" },
+    ];
+    const imageDimensions: Record<string, { width: number; height: number }> = {
+        nav_photo: { width: 160, height: 160 },
+        landscape_img: { width: 640, height: 360 },
+        main_img: { width: 1920, height: 1080 },
+        side_photo_left: { width: 1920, height: 1080 },
+        side_photo_right: { width: 1920, height: 1080 },
+        front_photo_view: { width: 1920, height: 1080 },
+        rear_photo_view: { width: 1920, height: 1080 },
+        top_photo_view: { width: 1920, height: 1080 },
+        drive_train_closeup_photo: { width: 1920, height: 1080 },
+        handlebar_controls_photo: { width: 1920, height: 1080 },
+        suspension_fork_photo: { width: 1920, height: 1080 },
+        wheel_tire_condition_photo: { width: 1920, height: 1080 },
+        serial_number_or_branding_photo: { width: 1920, height: 1080 },
+    };
+    const [imageEditing, setImageEditing] = useState<{ [key: string]: boolean }>({});
+    const [uploadingImage, setUploadingImage] = useState<{ [key: string]: boolean }>({});
+    const [uploadErrors, setUploadErrors] = useState<{ [key: string]: string }>({});
+
+    const handleImageChange = async (fieldKey: string, file: File) => {
+        setUploadingImage(prev => ({ ...prev, [fieldKey]: true }));
+        setUploadErrors(prev => ({ ...prev, [fieldKey]: "" }));
+
+        try {
+            await updateBikeImage(bike.id, fieldKey, file);
+            window.location.reload();
+        } catch (err: any) {
+            setUploadErrors(prev => ({
+                ...prev,
+                [fieldKey]: err.message || "Upload failed"
+            }));
+        } finally {
+            setUploadingImage(prev => ({ ...prev, [fieldKey]: false }));
+        }
+    };
 
     const handleChange = (lang: "uk" | "ru" | "en", value: string) => {
         setDescriptions(prev => ({ ...prev, [lang]: value }));
@@ -236,6 +277,7 @@ const BikeDetailsAdmin: React.FC<BikeDetailsAdminProps> = ({ bike }) => {
 
                 {saveError && <p className="text-sm text-red-600 mt-2">{saveError}</p>}
             </div>
+            {/* Components */}
             <div>
                 <div className="flex justify-between items-center mb-2">
                     <h3 className="text-lg font-semibold text-gray-800">Bike Components</h3>
@@ -298,18 +340,64 @@ const BikeDetailsAdmin: React.FC<BikeDetailsAdminProps> = ({ bike }) => {
 
             {/* Photos */}
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                <ImageField label="Main Image" url={bike.main_img} />
-                <ImageField label="Landscape Image" url={bike.landscape_img} />
-                <ImageField label="Side Photo Left" url={bike.side_photo_left} />
-                <ImageField label="Side Photo Right" url={bike.side_photo_right} />
-                <ImageField label="Front View" url={bike.front_photo_view} />
-                <ImageField label="Rear View" url={bike.rear_photo_view} />
-                <ImageField label="Top View" url={bike.top_photo_view} />
-                <ImageField label="Drivetrain Close-up" url={bike.drive_train_closeup_photo} />
-                <ImageField label="Handlebar & Controls" url={bike.handlebar_controls_photo} />
-                <ImageField label="Suspension Fork" url={bike.suspension_fork_photo} />
-                <ImageField label="Wheels & Tires" url={bike.wheel_tire_condition_photo} />
-                <ImageField label="Serial Number / Branding" url={bike.serial_number_or_branding_photo} />
+                {imageFields.map(({ key, label }) => (
+                    <div key={key} className="mb-6">
+                        <p className="text-sm font-medium text-gray-700 mb-1">{label}</p>
+                        {bike[key] && (
+                            <img
+                                src={bike[key]}
+                                alt={label}
+                                className="w-full max-w-md rounded-lg shadow border mb-2"
+                            />
+                        )}
+                        {imageEditing[key] ? (
+                            <input
+                                type="file"
+                                accept="image/*"
+                                onChange={(e) => {
+                                    const file = e.target.files?.[0];
+                                    if (!file) return;
+
+                                    const img = new Image();
+                                    img.onload = () => {
+                                        const required = imageDimensions[key] || { width: 1920, height: 1080 };
+                                        if (img.width !== required.width || img.height !== required.height) {
+                                            setUploadErrors(prev => ({
+                                                ...prev,
+                                                [key]: `Image must be ${required.width}x${required.height}px`,
+                                            }));
+                                        } else {
+                                            handleImageChange(key, file);
+                                        }
+                                    };
+
+                                    const reader = new FileReader();
+                                    reader.onload = (event) => {
+                                        if (typeof event.target?.result === "string") {
+                                            img.src = event.target.result;
+                                        }
+                                    };
+                                    reader.readAsDataURL(file);
+                                }}
+                                className="text-sm"
+                            />
+                        ) : null}
+                        <div className="flex gap-2 mt-1">
+                            <button
+                                onClick={() =>
+                                    setImageEditing(prev => ({ ...prev, [key]: !prev[key] }))
+                                }
+                                className="text-blue-600 text-xs font-medium hover:underline"
+                            >
+                                {imageEditing[key] ? "Cancel" : "Change"}
+                            </button>
+                            {uploadingImage[key] && <span className="text-gray-500 text-xs">Uploading...</span>}
+                        </div>
+                        {uploadErrors[key] && (
+                            <p className="text-xs text-red-600 mt-1">{uploadErrors[key]}</p>
+                        )}
+                    </div>
+                ))}
             </div>
         </div>
     );
