@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import type { OverviewStats } from "../../../endpoints/adminUsers";
 
 interface OverviewProps {
@@ -6,15 +7,11 @@ interface OverviewProps {
 }
 
 const Overview: React.FC<OverviewProps> = ({ stats }) => {
-    const today = new Date().toLocaleDateString("en-US", {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-    });
-    const month = new Date().toLocaleDateString("en-US", {
-        year: "numeric",
-        month: "long",
-    });
+    const { t } = useTranslation();
+    const now = new Date();
+
+    const today = `${String(now.getDate()).padStart(2, "0")}.${String(now.getMonth() + 1).padStart(2, "0")}.${now.getFullYear()}`;
+    const month = `${String(now.getMonth() + 1).padStart(2, "0")}.${now.getFullYear()}`;
 
     const net_total_income = stats.total_revenue - stats.total_expenses;
     const net_monthly_income = stats.monthly_revenue - stats.monthly_expenses;
@@ -22,42 +19,38 @@ const Overview: React.FC<OverviewProps> = ({ stats }) => {
 
     return (
         <div className="space-y-8">
-            {/* Revenue Section */}
             <section className="bg-gray-50 p-6 rounded-lg shadow-sm">
-                <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-4">Revenue</h2>
+                <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-4">{t("admin.overview.revenue.title")}</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                    <Card title="Total Revenue" value={stats.total_revenue} subtitle="All time" />
-                    <Card title="Monthly Revenue" value={stats.monthly_revenue} subtitle={month} />
-                    <Card title="Today's Revenue" value={stats.today_revenue} subtitle={today} />
+                    <Card title={t("admin.overview.revenue.total")} value={stats.total_revenue} subtitle={t("admin.overview.allTime")} />
+                    <Card title={t("admin.overview.revenue.monthly")} value={stats.monthly_revenue} subtitle={month} />
+                    <Card title={t("admin.overview.revenue.today")} value={stats.today_revenue} subtitle={today} />
                 </div>
             </section>
 
-            {/* Expenses Section */}
             <section className="bg-gray-50 p-6 rounded-lg shadow-sm">
-                <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-4">Expenses</h2>
+                <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-4">{t("admin.overview.expenses.title")}</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                    <Card title="Total Expenses" value={stats.total_expenses} subtitle="All time" />
-                    <Card title="Monthly Expenses" value={stats.monthly_expenses} subtitle={month} />
-                    <Card title="Today's Expenses" value={stats.today_expenses} subtitle={today} />
+                    <Card title={t("admin.overview.expenses.total")} value={stats.total_expenses} subtitle={t("admin.overview.allTime")} />
+                    <Card title={t("admin.overview.expenses.monthly")} value={stats.monthly_expenses} subtitle={month} />
+                    <Card title={t("admin.overview.expenses.today")} value={stats.today_expenses} subtitle={today} />
                 </div>
             </section>
 
-            {/* Net Income Section */}
             <section className="bg-gray-50 p-6 rounded-lg shadow-sm">
-                <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-4">Net Income</h2>
+                <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-4">{t("admin.overview.net.title")}</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                    <Card title="Total Net Income" value={net_total_income} subtitle="Revenue - Expenses" isNet />
-                    <Card title="Monthly Net Income" value={net_monthly_income} subtitle={`In ${month}`} isNet />
-                    <Card title="Today's Net Income" value={net_today_income} subtitle={`On ${today}`} isNet />
+                    <Card title={t("admin.overview.net.total")} value={net_total_income} subtitle={t("admin.overview.net.totalSubtitle")} isNet />
+                    <Card title={t("admin.overview.net.monthly")} value={net_monthly_income} subtitle={t("admin.overview.net.monthlySubtitle", { month })} isNet />
+                    <Card title={t("admin.overview.net.today")} value={net_today_income} subtitle={t("admin.overview.net.todaySubtitle", { today })} isNet />
                 </div>
             </section>
 
-            {/* Other Section */}
             <section className="bg-gray-50 p-6 rounded-lg shadow-sm">
-                <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-4">Other Metrics</h2>
+                <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-4">{t("admin.overview.other.title")}</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4">
-                    <Card title="Total Rides" value={stats.total_rides} subtitle="All time" />
-                    <Card title="Total Clients" value={stats.total_clients} subtitle="All time" />
+                    <Card title={t("admin.overview.other.rides")} value={stats.total_rides} subtitle={t("admin.overview.allTime")} />
+                    <Card title={t("admin.overview.other.clients")} value={stats.total_clients} subtitle={t("admin.overview.allTime")} />
                 </div>
             </section>
         </div>
@@ -67,8 +60,6 @@ const Overview: React.FC<OverviewProps> = ({ stats }) => {
 const Card: React.FC<{
     title: string;
     value: number;
-
-
     subtitle: string;
     isNet?: boolean;
 }> = ({ title, value, subtitle, isNet = false }) => {

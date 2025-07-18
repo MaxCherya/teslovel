@@ -1,4 +1,61 @@
 {
+    "admin": {
+        "header": "Bike Rental Admin",
+        "nav": {
+            "catalog": "Catalog",
+            "users": "Users",
+            "orders": "Orders",
+            "contactRequests": "Contact Requests",
+            "orderRequests": "Order Requests"
+        },
+        "topClients": {
+            "title": "Top Clients",
+            "columns": {
+                "name": "Client Name",
+                "phone": "Phone",
+                "rides": "Total Rides",
+                "spent": "Total Spent"
+            }
+        },
+        "topBikes": {
+            "title": "Top Bikes",
+            "subtitle": "Most used bikes by number of rides",
+            "columns": {
+                "index": "#",
+                "name": "Bike Name",
+                "rides": "Rides"
+            }
+        },
+        "overview": {
+            "revenue": {
+                "title": "Revenue",
+                "total": "Total Revenue",
+                "monthly": "Monthly Revenue",
+                "today": "Today's Revenue"
+            },
+            "expenses": {
+                "title": "Expenses",
+                "total": "Total Expenses",
+                "monthly": "Monthly Expenses",
+                "today": "Today's Expenses"
+            },
+            "net": {
+                "title": "Net Income",
+                "total": "Total Net Income",
+                "monthly": "Monthly Net Income",
+                "today": "Today's Net Income",
+                "totalSubtitle": "Revenue - Expenses",
+                "monthlySubtitle": "In {{month}}",
+                "todaySubtitle": "On {{today}}"
+            },
+            "other": {
+                "title": "Other Metrics",
+                "rides": "Total Rides",
+                "clients": "Total Clients"
+            },
+            "allTime": "All time"
+        }
+    },
     "profile": {
         "title": "Your Profile",
         "username": "Username",
@@ -10,7 +67,8 @@
         "cancel": "Cancel",
         "invalid_otp": "The OTP you entered is invalid. Please try again.",
         "disable2fa": "Disable 2FA",
-        "enter_otp_to_disable": "Enter OTP to disable 2FA"
+        "enter_otp_to_disable": "Enter OTP to disable 2FA",
+        "admin_panel": "Admin Panel"
     },
     "homePage": {
         "catwalk": {
