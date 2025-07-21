@@ -65,7 +65,7 @@ const Models: React.FC = () => {
                 </div>
 
                 {/* Bike Grid */}
-                <div className="w-screen bg-gray-100 flex flex-col items-center py-8">
+                <div className="w-full bg-gray-100 max-w-7xl flex flex-col items-center py-8">
                     <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-8 w-full max-w-7xl" >
                         {bikes.map((bike: any) => (
                             <BikeCard

@@ -54,7 +54,8 @@ INSTALLED_APPS = [
     'backendApps.customer_support',
     'backendApps.accounts',
     'backendApps.orders',
-    'backendApps.expenses'
+    'backendApps.expenses',
+    'backendApps.blogs',
 ]
 
 MIDDLEWARE = [

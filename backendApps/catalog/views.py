@@ -8,7 +8,6 @@ from django.views.decorators.vary import vary_on_headers
 from rest_framework.permissions import AllowAny, IsAdminUser, IsAuthenticated 
 from django.shortcuts import get_object_or_404
 from rest_framework import status
-from PIL import Image
 from cloudinary.uploader import destroy, upload
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.decorators import permission_classes, parser_classes
@@ -81,7 +80,7 @@ def getBikePage(request, bike_id):
     return Response(serializer.data)
 
 @api_view(["POST"])
-@permission_classes([IsAuthenticated])
+@permission_classes([IsAdminUser])
 def delete_bike_with_otp(request):
     if not request.user.is_superuser:
         return Response({"detail": "Forbidden"}, status=status.HTTP_403_FORBIDDEN)

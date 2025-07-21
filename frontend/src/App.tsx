@@ -32,6 +32,8 @@ import ContactRequests from './pages/admin/ContactRequests';
 import ExpensesPage from './pages/admin/ExpensesPage';
 import RidesPage from './pages/admin/BikeRidesPage';
 import AdminUserListPage from './pages/admin/AdminListUsers';
+import BlogsAdmin from './pages/admin/BlogsAdmin';
+import AddNewPost from './pages/admin/AddNewPost';
 
 function App() {
 
@@ -73,6 +75,8 @@ function App() {
           <Route path='/bike-expenses-admin/:bikeId' element={<ExpensesPage />} />
           <Route path='/bike-rides-admin/:bikeId' element={<RidesPage />} />
           <Route path='/accounts-admin/' element={<AdminUserListPage />} />
+          <Route path='/blogs-admin/' element={<BlogsAdmin />} />
+          <Route path='/blogs-admin/new/' element={<AddNewPost />} />
 
           <Route path='/add-new-bike-admin/' element={<AddNewBike />} />
           <Route path='/add-battery-type-admin/' element={<AddBatteryType />} />
