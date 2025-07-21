@@ -34,6 +34,8 @@ import RidesPage from './pages/admin/BikeRidesPage';
 import AdminUserListPage from './pages/admin/AdminListUsers';
 import BlogsAdmin from './pages/admin/BlogsAdmin';
 import AddNewPost from './pages/admin/AddNewPost';
+import Blog from './pages/main/Blog';
+import BlogPage from './pages/main/BlogPage';
 
 function App() {
 
@@ -54,6 +56,8 @@ function App() {
           {/* Main Pages */}
           <Route index element={<Home />} />
           <Route path='about' element={<About />} />
+          <Route path='blog' element={<Blog />} />
+          <Route path='blog/:blogId' element={<BlogPage />} />
           <Route path='models' element={<Models />} />
           <Route path='models/:bikeId' element={<BikePage />} />
           <Route path='book/:bikeId' element={<BookPage />} />

@@ -24,3 +24,13 @@ class BlogPostUploadSerializer(serializers.ModelSerializer):
             'title_uk', 'title_en', 'title_ru',
             'content_uk', 'content_en', 'content_ru',
         ]
+
+class BlogPostSerializer(serializers.ModelSerializer):
+    banner_uk = serializers.CharField(source='banner_uk.url')
+    banner_en = serializers.CharField(source='banner_en.url')
+    banner_ru = serializers.CharField(source='banner_ru.url')
+    poster = serializers.CharField(source='poster.url')
+
+    class Meta:
+        model = BlogPost
+        fields = "__all__"

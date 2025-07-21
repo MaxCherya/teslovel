@@ -54,3 +54,28 @@ export const uploadAdminBlog = async (formData: FormData): Promise<void> => {
         throw new Error(error.detail || "Failed to upload blog");
     }
 };
+
+export const fetchPaginatedBlogs = async (page: number) => {
+    const res = await fetcher(`/api/blogs/fetch-list/?page=${page}`);
+
+    if (!res.ok) {
+        const error = await res.json();
+        console.error("❌ Failed to fetch paginated blogs:", error);
+        throw new Error("Failed to fetch paginated blogs");
+    }
+
+    const data = await res.json();
+    return data;
+};
+
+export const fetchBlogById = async (id: number): Promise<AdminBlog> => {
+    const res = await fetcher(`/api/blogs/${id}/`);
+
+    if (!res.ok) {
+        const error = await res.json();
+        console.error("❌ Failed to fetch blog by ID:", error);
+        throw new Error(error.detail || "Failed to fetch blog by ID");
+    }
+
+    return await res.json();
+}
