@@ -48,7 +48,7 @@ const Enable2FA: React.FC<{ onFinish: () => void }> = ({ onFinish }) => {
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
                     <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
                         <h3 className="text-xl font-bold mb-4 text-center">{t("profile.scan_qr")}</h3>
-                        <img src={`data:image/png;base64,${qrData.qr_code_base64}`} alt="QR Code" className="mx-auto mb-4" />
+                        <img src={`data:image/png;base64,${qrData.qr_code_base64}`} alt="QR Code" className="mx-auto mb-4 w-50 h-50" />
                         <p className="text-sm text-center break-all mb-2">{qrData.otp_uri}</p>
                         <input
                             type="text"

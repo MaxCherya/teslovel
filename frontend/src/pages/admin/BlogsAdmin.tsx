@@ -3,28 +3,35 @@ import { useNavigate } from "react-router-dom";
 import FullScreenLoader from "../../components/ui/loaders/FullScreenLoader";
 import { check2FAStatus } from "../../endpoints/auth";
 import { deleteAdminBlog, fetchAdminBlogs } from "../../endpoints/blogs";
-
-interface Blog {
-    id: number;
-    poster: string;
-    content: string;
-    created_at: string;
-}
+import i18n from "../../locales";
 
 const BlogsAdmin: React.FC = () => {
     const navigate = useNavigate();
-    const [blogs, setBlogs] = useState<Blog[]>([]);
+    const [blogs, setBlogs] = useState<any[]>([]);
     const [loading, setLoading] = useState(false);
     const [showOtpModal, setShowOtpModal] = useState(false);
     const [otpCode, setOtpCode] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
     const [selectedBlogId, setSelectedBlogId] = useState<number | null>(null);
+    const [lang, setLang] = useState<'uk' | 'en' | 'ru'>(i18n.language as 'uk' | 'en' | 'ru');
+
+    useEffect(() => {
+        const onLanguageChanged = (lng: string) => {
+            setLang(lng as 'uk' | 'en' | 'ru');
+        };
+
+        i18n.on('languageChanged', onLanguageChanged);
+
+        return () => {
+            i18n.off('languageChanged', onLanguageChanged);
+        };
+    }, [i18n])
 
     useEffect(() => {
         const loadBlogs = async () => {
             setLoading(true);
             try {
-                const blogsData = await fetchAdminBlogs(); // Fetch blogs from backend
+                const blogsData = await fetchAdminBlogs();
                 setBlogs(blogsData || []);
             } catch (err) {
                 console.error("❌ Failed to load blogs:", err);
@@ -95,37 +102,40 @@ const BlogsAdmin: React.FC = () => {
                             <p className="text-gray-600">No blogs available.</p>
                         ) : (
                             <ul className="space-y-4">
-                                {blogs.map((blog) => (
-                                    <li
-                                        key={blog.id}
-                                        className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 bg-gray-50 rounded-lg border border-gray-200"
-                                    >
-                                        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-                                            {blog.poster && (
-                                                <img
-                                                    src={blog.poster}
-                                                    alt="Blog poster"
-                                                    className="w-24 h-24 object-cover rounded-lg"
-                                                />
-                                            )}
-                                            <div>
-                                                <p className="text-gray-800 font-medium">
-                                                    {blog.content.substring(0, 100)}
-                                                    {blog.content.length > 100 ? "..." : ""}
-                                                </p>
-                                                <p className="text-sm text-gray-500">
-                                                    Created: {new Date(blog.created_at).toLocaleDateString()}
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <button
-                                            onClick={() => handleRemoveBlog(blog.id)}
-                                            className="mt-2 sm:mt-0 bg-red-600 text-white font-medium py-1 px-3 rounded-lg hover:bg-red-700"
+                                {blogs.map((blog) => {
+                                    const title = blog[`title_${lang}`];
+                                    return (
+                                        <li
+                                            key={blog.id}
+                                            className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 bg-gray-50 rounded-lg border border-gray-200"
                                         >
-                                            Delete
-                                        </button>
-                                    </li>
-                                ))}
+                                            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                                                {blog.poster && (
+                                                    <img
+                                                        src={blog.poster}
+                                                        alt="Blog poster"
+                                                        className="w-24 h-24 object-cover rounded-lg"
+                                                    />
+                                                )}
+                                                <div>
+                                                    <p className="text-gray-800 font-medium">
+                                                        {title?.substring(0, 100)}
+                                                        {title?.length > 100 ? "..." : ""}
+                                                    </p>
+                                                    <p className="text-sm text-gray-500">
+                                                        {new Date(blog.created_at).toLocaleDateString()}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <button
+                                                onClick={() => handleRemoveBlog(blog.id)}
+                                                className="mt-2 sm:mt-0 bg-red-600 text-white font-medium py-1 px-3 rounded-lg hover:bg-red-700"
+                                            >
+                                                Delete
+                                            </button>
+                                        </li>
+                                    );
+                                })}
                             </ul>
                         )}
                     </div>

@@ -2,10 +2,16 @@ import { fetcher } from "../lib/fetchers/fetcher";
 
 export interface AdminBlog {
     id: number;
-    title: string;
-    content: string;
+    title_uk: string;
+    title_en: string;
+    title_ru: string;
+    content_uk: string;
+    content_en: string;
+    content_ru: string;
     created_at: string;
-    banner: string;
+    banner_uk: string;
+    banner_en: string;
+    banner_ru: string;
     poster: string;
     views_counts: number;
 }
