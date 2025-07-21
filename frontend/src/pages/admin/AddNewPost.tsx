@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import ReactQuill, { Quill } from "react-quill-new";
 import "react-quill-new/dist/quill.snow.css";
-
+import { toast } from "react-toastify";
 import { AlignClass } from 'quill/formats/align';
+import { uploadAdminBlog } from "../../endpoints/blogs";
 Quill.register(AlignClass, true);
 
 const modules = {
@@ -51,8 +52,30 @@ const AddNewPost: React.FC = () => {
         setImages(prev => ({ ...prev, [key]: file }));
     };
 
-    const handleSubmit = () => {
-        console.log(contents); // For now
+    const handleSubmit = async () => {
+        const formData = new FormData();
+
+        formData.append("title_uk", titles.uk);
+        formData.append("title_en", titles.en);
+        formData.append("title_ru", titles.ru);
+        formData.append("content_uk", contents.uk);
+        formData.append("content_en", contents.en);
+        formData.append("content_ru", contents.ru);
+
+        if (images.banner_uk) formData.append("banner_uk", images.banner_uk);
+        if (images.banner_en) formData.append("banner_en", images.banner_en);
+        if (images.banner_ru) formData.append("banner_ru", images.banner_ru);
+        if (images.poster) formData.append("poster", images.poster);
+
+        try {
+            await uploadAdminBlog(formData);
+            toast.success("Blog post uploaded successfully!");
+            setTitles({ uk: "", en: "", ru: "" });
+            setContents({ uk: "", en: "", ru: "" });
+            setImages({ banner_en: null, banner_uk: null, banner_ru: null, poster: null });
+        } catch (error: any) {
+            toast.error(`Upload failed: ${error.message}`);
+        }
     };
 
     return (

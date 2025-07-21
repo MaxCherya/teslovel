@@ -35,3 +35,16 @@ export const deleteAdminBlog = async (blog_id: number, otp_code?: string): Promi
         throw new Error(error.detail || "Failed to delete blog");
     }
 };
+
+export const uploadAdminBlog = async (formData: FormData): Promise<void> => {
+    const res = await fetcher("/api/blogs/upload-blog/", {
+        method: "POST",
+        body: formData,
+    });
+
+    if (!res.ok) {
+        const error = await res.json();
+        console.error("❌ Failed to upload blog:", error);
+        throw new Error(error.detail || "Failed to upload blog");
+    }
+};

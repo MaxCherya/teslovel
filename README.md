@@ -21,8 +21,7 @@ Teslovel is a modern web application built with a powerful full-stack architectu
 - [Swiper](https://swiperjs.com/react) — Modern touch slider for carousels and galleries
 - [React Icons](https://react-icons.github.io/react-icons/) — Popular icon packs as React components
 - [react-phone-input-2](https://github.com/bl00mber/react-phone-input-2) — International telephone input with flag dropdown
-
-Here's the updated backend documentation section with **Cloudinary** added:
+* [react-quill-new](https://www.npmjs.com/package/react-quill-new) — Rich text editor for blog content and formatted input
 
 ### ✅ Backend
 
