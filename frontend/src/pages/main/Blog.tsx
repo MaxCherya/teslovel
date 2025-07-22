@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { fetchPaginatedBlogs } from "../../endpoints/blogs";
 import { GeneralButton } from "../../components/ui/btns";
+import { useNavigate } from "react-router-dom";
 
 const Blog: React.FC = () => {
     const { i18n } = useTranslation();
@@ -9,6 +10,8 @@ const Blog: React.FC = () => {
     const [page, setPage] = useState(1);
     const [hasMore, setHasMore] = useState(false);
     const lang = i18n.language as "uk" | "en" | "ru";
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         const loadInitial = async () => {
@@ -45,7 +48,7 @@ const Blog: React.FC = () => {
     return (
         <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 text-gray-900 px-4 lg:px-16 pt-8 pb-16">
 
-            <div className="grid md:grid-cols-3 gap-6">
+            <div className="grid md:grid-cols-3 gap-6 lg:pt-0 pt-20">
                 {posts.map((post, index) => {
                     const title = getTitle(post);
                     const image = index === 0 ? getBanner(post) : post.poster;
@@ -56,9 +59,9 @@ const Blog: React.FC = () => {
                     else className += " h-full";
 
                     return (
-                        <div key={post.id} className={className}>
-                            <img src={image} alt="" className="w-full object-cover" />
-                            <div className="p-4">
+                        <div key={post.id} className={className} onClick={() => navigate(`/blog/${post.id}`)}>
+                            <img src={image} alt="" className="w-full object-cover cursor-pointer" />
+                            <div className="p-4 cursor-pointer">
                                 <h2 className="font-semibold text-lg">{title}</h2>
                                 <p className="text-sm text-gray-500">
                                     {new Date(post.created_at).toLocaleDateString()}

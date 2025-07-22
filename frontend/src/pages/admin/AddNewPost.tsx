@@ -1,21 +1,38 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import ReactQuill, { Quill } from "react-quill-new";
-import "react-quill-new/dist/quill.snow.css";
 import { toast } from "react-toastify";
 import { AlignClass } from 'quill/formats/align';
 import { uploadAdminBlog } from "../../endpoints/blogs";
+import FullScreenLoader from "../../components/ui/loaders/FullScreenLoader";
 Quill.register(AlignClass, true);
 
+interface CustomToolbarHandlerContext {
+    quill: Quill;
+}
+
 const modules = {
-    toolbar: [
-        [{ 'header': [1, 2, 3, false] }],
-        ['bold', 'italic', 'underline', 'strike'],
-        [{ 'align': [] }],
-        [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-        ['blockquote', 'code-block'],
-        ['link', 'image', 'video'],
-        ['clean'],
-    ],
+    toolbar: {
+        container: [
+            [{ header: [1, 2, 3, false] }],
+            ["bold", "italic", "underline", "strike"],
+            [{ align: [] }],
+            [{ list: "ordered" }],
+            ["blockquote", "code-block"],
+            ["link", "image", "video"],
+            ["clean"],
+        ],
+        handlers: {
+            image: function (this: CustomToolbarHandlerContext) {
+                const url = prompt("Enter image URL (must end with .jpg/.png/.gif):");
+                if (url && /\.(jpg|jpeg|png|gif|webp)$/i.test(url)) {
+                    const range = this.quill.getSelection();
+                    this.quill.insertEmbed(range?.index || 0, "image", url);
+                } else if (url) {
+                    toast.error("Invalid image URL. Must end with .jpg/.png/.gif");
+                }
+            },
+        },
+    },
 };
 
 const formats = [
@@ -39,6 +56,24 @@ const AddNewPost: React.FC = () => {
         banner_ru: null,
         poster: null,
     });
+    const quillRefs = useRef<{ [lang: string]: ReactQuill | null }>({ uk: null, en: null, ru: null });
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
+    useEffect(() => {
+        Object.keys(quillRefs.current).forEach((lang) => {
+            const editor = quillRefs.current[lang]?.getEditor();
+            if (!editor) return;
+
+            editor.root.addEventListener("paste", (e: ClipboardEvent) => {
+                if (!e.clipboardData) return;
+                const types = Array.from(e.clipboardData.items).map(item => item.type);
+                if (types.includes("image/png") || types.includes("image/jpeg") || types.includes("image/gif")) {
+                    e.preventDefault();
+                    toast.warn("Please insert image links instead of pasting media.");
+                }
+            });
+        });
+    }, []);
 
     const handleTitleChange = (lang: "uk" | "en" | "ru", value: string) => {
         setTitles(prev => ({ ...prev, [lang]: value }));
@@ -53,6 +88,22 @@ const AddNewPost: React.FC = () => {
     };
 
     const handleSubmit = async () => {
+        if (isSubmitting) return;
+        setIsSubmitting(true);
+
+        if (!titles.uk || !titles.en || !titles.ru) {
+            toast.warn("All titles must be filled.");
+            return;
+        }
+        if (!contents.uk || !contents.en || !contents.ru) {
+            toast.warn("All contents must be filled.");
+            return;
+        }
+        if (Object.values(images).some((file) => file && file.size > 5 * 1024 * 1024)) {
+            toast.warn("Images must be under 5MB.");
+            return;
+        }
+
         const formData = new FormData();
 
         formData.append("title_uk", titles.uk);
@@ -73,13 +124,22 @@ const AddNewPost: React.FC = () => {
             setTitles({ uk: "", en: "", ru: "" });
             setContents({ uk: "", en: "", ru: "" });
             setImages({ banner_en: null, banner_uk: null, banner_ru: null, poster: null });
+            Object.values(quillRefs.current).forEach((ref) => {
+                if (ref?.getEditor) {
+                    const editor = ref.getEditor();
+                    editor.history.clear();
+                }
+            });
         } catch (error: any) {
             toast.error(`Upload failed: ${error.message}`);
+        } finally {
+            setIsSubmitting(false)
         }
     };
 
     return (
         <div className="w-full min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 text-gray-900">
+            {isSubmitting && <FullScreenLoader />}
             <main className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8 lg:pt-8 pt-25 pb-8">
                 <div className="bg-white rounded-xl shadow-2xl p-4 sm:p-6 lg:p-8 max-w-full mx-auto border border-gray-100 space-y-6">
                     <h1 className="text-2xl font-bold text-gray-800">Add New Blog Post</h1>
@@ -127,10 +187,11 @@ const AddNewPost: React.FC = () => {
                                     Content ({lang.toUpperCase()})
                                 </label>
                                 <ReactQuill
+                                    ref={(el) => {
+                                        quillRefs.current[lang] = el;
+                                    }}
                                     value={contents[lang as "uk" | "en" | "ru"]}
-                                    onChange={(value: any) =>
-                                        handleContentChange(lang as "uk" | "en" | "ru", value)
-                                    }
+                                    onChange={(value: any) => handleContentChange(lang as "uk" | "en" | "ru", value)}
                                     modules={modules}
                                     formats={formats}
                                     theme="snow"
@@ -141,10 +202,12 @@ const AddNewPost: React.FC = () => {
 
                     <div className="pt-6 flex justify-end">
                         <button
-                            className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700"
+                            disabled={isSubmitting}
+                            className={`px-6 py-2 rounded-lg text-white ${isSubmitting ? "bg-gray-400 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700"
+                                }`}
                             onClick={handleSubmit}
                         >
-                            Submit Post
+                            {isSubmitting ? "Uploading..." : "Submit Post"}
                         </button>
                     </div>
                 </div>

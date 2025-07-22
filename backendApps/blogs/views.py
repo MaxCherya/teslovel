@@ -11,15 +11,17 @@ from django_otp.plugins.otp_totp.models import TOTPDevice
 from .models import *
 from .serializers import *
 
-@api_view(['GET'])
-@permission_classes([IsAdminUser])
+@api_view(["GET"])
 def fetch_blogs(request):
-    try:
-        blogs = BlogPost.objects.all()
-        serializer = BlogPostSerializer(blogs, many=True)
-        return Response({"results": serializer.data}, status=status.HTTP_200_OK)
-    except Exception as e:
-        return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    posts = BlogPost.objects.all().order_by("-created_at")
+
+    paginator = PageNumberPagination()
+    paginator.page_size = 10
+
+    result_page = paginator.paginate_queryset(posts, request)
+    serializer = BlogPostSerializer(result_page, many=True)
+
+    return paginator.get_paginated_response(serializer.data)
 
 @api_view(['DELETE'])
 @permission_classes([IsAdminUser])

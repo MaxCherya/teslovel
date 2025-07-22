@@ -16,8 +16,8 @@ export interface AdminBlog {
     views_counts: number;
 }
 
-export const fetchAdminBlogs = async (): Promise<AdminBlog[]> => {
-    const res = await fetcher("/api/blogs/fetch/");
+export const fetchAdminBlogs = async (page = 1) => {
+    const res = await fetcher(`/api/blogs/fetch/?page=${page}`);
 
     if (!res.ok) {
         const error = await res.json();
@@ -25,8 +25,7 @@ export const fetchAdminBlogs = async (): Promise<AdminBlog[]> => {
         throw new Error("Failed to fetch blogs");
     }
 
-    const data = await res.json();
-    return data.results;
+    return await res.json();
 };
 
 export const deleteAdminBlog = async (blog_id: number, otp_code?: string): Promise<void> => {

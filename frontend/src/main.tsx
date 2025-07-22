@@ -3,7 +3,6 @@ import { createRoot } from 'react-dom/client'
 
 import './index.css'
 import 'react-toastify/dist/ReactToastify.css'
-import "react-quill-new/dist/quill.snow.css";
 
 import App from './App.tsx'
 

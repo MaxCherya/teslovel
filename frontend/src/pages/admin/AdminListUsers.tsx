@@ -81,8 +81,8 @@ const AdminUserListPage: React.FC = () => {
     }
 
     return (
-        <div className="w-full min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 text-gray-900 lg:mt-0 mt-18">
-            <main className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8 pt-20 sm:pt-24 pb-8">
+        <div className="w-full min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 text-gray-900">
+            <main className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8 pb-8 lg:pt-0 pt-20">
                 <h1 className="text-xl font-semibold mb-4">User Management</h1>
 
                 <input
@@ -99,24 +99,71 @@ const AdminUserListPage: React.FC = () => {
                 {loading ? (
                     <FullScreenLoader />
                 ) : (
-                    <table className="w-full border text-sm">
-                        <thead className="bg-gray-100">
-                            <tr>
-                                <th className="p-2 text-left">Username</th>
-                                <th className="p-2 text-left">Phone</th>
-                                <th className="p-2 text-left">2FA Enabled</th>
-                                <th className="p-2 text-left">Admin</th>
-                                <th className="p-2 text-left">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                    <div className="space-y-4">
+                        {/* Desktop Table */}
+                        <div className="hidden md:block">
+                            <table className="w-full border text-sm">
+                                <thead className="bg-gray-100">
+                                    <tr>
+                                        <th className="p-2 text-left">Username</th>
+                                        <th className="p-2 text-left">Phone</th>
+                                        <th className="p-2 text-left">2FA Enabled</th>
+                                        <th className="p-2 text-left">Admin</th>
+                                        <th className="p-2 text-left">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {users.map((user) => (
+                                        <tr key={user.id} className="border-t">
+                                            <td className="p-2">{user.username}</td>
+                                            <td className="p-2">{user.phone}</td>
+                                            <td className="p-2">{user.has_2fa_enabled ? "✅" : "❌"}</td>
+                                            <td className="p-2">{user.is_staff ? "✅" : "❌"}</td>
+                                            <td className="p-2">
+                                                {user.is_staff ? (
+                                                    <button
+                                                        onClick={() => handleRemove(user.id)}
+                                                        className="text-red-600 text-xs underline"
+                                                    >
+                                                        Remove Admin
+                                                    </button>
+                                                ) : (
+                                                    <button
+                                                        onClick={() => handleMakeAdminClick(user.id)}
+                                                        className="text-green-600 text-xs underline"
+                                                    >
+                                                        Make Admin
+                                                    </button>
+                                                )}
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+
+                        {/* Mobile Cards */}
+                        <div className="md:hidden space-y-4">
                             {users.map((user) => (
-                                <tr key={user.id} className="border-t">
-                                    <td className="p-2">{user.username}</td>
-                                    <td className="p-2">{user.phone}</td>
-                                    <td className="p-2">{user.has_2fa_enabled ? "✅" : "❌"}</td>
-                                    <td className="p-2">{user.is_staff ? "✅" : "❌"}</td>
-                                    <td className="p-2">
+                                <div
+                                    key={user.id}
+                                    className="p-4 border rounded-lg bg-white shadow-sm text-sm space-y-1"
+                                >
+                                    <div>
+                                        <span className="font-medium">Username: </span>{user.username}
+                                    </div>
+                                    <div>
+                                        <span className="font-medium">Phone: </span>{user.phone}
+                                    </div>
+                                    <div>
+                                        <span className="font-medium">2FA Enabled: </span>
+                                        {user.has_2fa_enabled ? "✅" : "❌"}
+                                    </div>
+                                    <div>
+                                        <span className="font-medium">Admin: </span>
+                                        {user.is_staff ? "✅" : "❌"}
+                                    </div>
+                                    <div className="pt-2">
                                         {user.is_staff ? (
                                             <button
                                                 onClick={() => handleRemove(user.id)}
@@ -132,11 +179,11 @@ const AdminUserListPage: React.FC = () => {
                                                 Make Admin
                                             </button>
                                         )}
-                                    </td>
-                                </tr>
+                                    </div>
+                                </div>
                             ))}
-                        </tbody>
-                    </table>
+                        </div>
+                    </div>
                 )}
 
                 <div className="mt-4 flex justify-center gap-2">

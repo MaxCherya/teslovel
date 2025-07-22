@@ -43,7 +43,7 @@ const BlogPage: React.FC = () => {
 
     return (
         <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 text-gray-900 px-4 lg:px-24 py-10">
-            <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-md overflow-hidden">
+            <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-md overflow-hidden lg:mt-0 mt-15">
                 <img src={banner} alt="Banner" className="w-full h-[300px] object-cover" />
                 <div className="p-6 space-y-4">
                     <h1 className="text-3xl font-bold">{title}</h1>

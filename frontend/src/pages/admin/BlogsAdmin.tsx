@@ -14,6 +14,8 @@ const BlogsAdmin: React.FC = () => {
     const [errorMsg, setErrorMsg] = useState("");
     const [selectedBlogId, setSelectedBlogId] = useState<number | null>(null);
     const [lang, setLang] = useState<'uk' | 'en' | 'ru'>(i18n.language as 'uk' | 'en' | 'ru');
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
 
     useEffect(() => {
         const onLanguageChanged = (lng: string) => {
@@ -31,8 +33,9 @@ const BlogsAdmin: React.FC = () => {
         const loadBlogs = async () => {
             setLoading(true);
             try {
-                const blogsData = await fetchAdminBlogs();
-                setBlogs(blogsData || []);
+                const data = await fetchAdminBlogs(currentPage);
+                setBlogs(data.results || []);
+                setTotalPages(Math.ceil(data.count / 10));
             } catch (err) {
                 console.error("❌ Failed to load blogs:", err);
             } finally {
@@ -41,7 +44,7 @@ const BlogsAdmin: React.FC = () => {
         };
 
         loadBlogs();
-    }, []);
+    }, [currentPage]);
 
     const handleAddBlog = () => {
         navigate("/blogs-admin/new/");
@@ -137,10 +140,31 @@ const BlogsAdmin: React.FC = () => {
                                     );
                                 })}
                             </ul>
+
                         )}
                     </div>
                 </div>
             </main>
+
+            <div className="flex justify-center items-center space-x-2 pt-4">
+                <button
+                    disabled={currentPage === 1}
+                    onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                    className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50"
+                >
+                    Prev
+                </button>
+                <span className="text-gray-700">
+                    Page {currentPage} of {totalPages}
+                </span>
+                <button
+                    disabled={currentPage === totalPages}
+                    onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+                    className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50"
+                >
+                    Next
+                </button>
+            </div>
 
             {showOtpModal && (
                 <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50">
