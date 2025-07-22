@@ -1,44 +1,47 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import banner1 from '../../assets/imgs/test-blog-banner-1.png';
-import banner2 from '../../assets/imgs/test-blog-banner-2.png';
-import banner3 from '../../assets/imgs/test-blog-banner-3.png';
-
 import BannerSwiper from "../../components/ui/swipers/BannerSwiper";
 import BikeCard from "../../components/forPages/Models/BikeCard";
 import { fetchModelsBikes } from "../../endpoints/Models";
+import { fetchPaginatedBlogs } from "../../endpoints/blogs";
 import FullScreenLoader from "../../components/ui/loaders/FullScreenLoader";
-
-const tempBlogBanners = [
-    { id: 0, banner_url: banner1 },
-    { id: 1, banner_url: banner2 },
-    { id: 2, banner_url: banner3 },
-];
 
 const Models: React.FC = () => {
     const [bikes, setBikes] = useState<any>([]);
-    const { t } = useTranslation();
-
+    const [dynamicBanners, setDynamicBanners] = useState<any[]>([]);
+    const { t, i18n } = useTranslation();
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        const fetchBikes = async () => {
+        const fetchData = async () => {
             try {
                 setIsLoading(true);
-                const bikes = await fetchModelsBikes();
-                setBikes(bikes);
+
+                const bikesData = await fetchModelsBikes();
+                setBikes(bikesData);
+
+                const blogData = await fetchPaginatedBlogs(1);
+                const langKey = i18n.language as "en" | "uk" | "ru";
+                const bannerKey = `banner_${langKey}`;
+
+                const banners = blogData.results.map((item: any) => ({
+                    id: `${item.id}`,
+                    banner_url: item[bannerKey],
+                }));
+
+                setDynamicBanners(banners);
             } catch (err) {
                 console.error(err);
             } finally {
                 setIsLoading(false);
             }
-        }
+        };
 
-        fetchBikes()
+        fetchData();
+    }, [i18n.language]);
 
-    }, [])
-
+    const allBanners = [...dynamicBanners];
 
     return (
         <div className="w-full min-h-screen text-gray-900 bg-gray-100">
@@ -47,7 +50,7 @@ const Models: React.FC = () => {
 
                 {/* Banner */}
                 <div className="w-full max-w-7xl mt-25 lg:mt-16 mb-10">
-                    <BannerSwiper banners={tempBlogBanners} />
+                    <BannerSwiper banners={allBanners} />
                 </div>
 
                 {/* Stats/Intro */}
@@ -66,7 +69,7 @@ const Models: React.FC = () => {
 
                 {/* Bike Grid */}
                 <div className="w-full bg-gray-100 max-w-7xl flex flex-col items-center py-8">
-                    <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-8 w-full max-w-7xl" >
+                    <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-8 w-full max-w-7xl">
                         {bikes.map((bike: any) => (
                             <BikeCard
                                 key={bike.id}

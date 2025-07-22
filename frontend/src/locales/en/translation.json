@@ -1,5 +1,226 @@
 {
     "admin": {
+        "bike_admin": {
+            "stats": {
+                "total_rides": "Total Rides",
+                "total_revenue": "Total Revenue",
+                "total_expenses": "Total Expenses",
+                "net_income": "Net Income",
+                "this_month": "This Month",
+                "today": "Today",
+                "revenue_minus_expenses": "Revenue − Expenses"
+            },
+            "rides": {
+                "title": "Recent Rides",
+                "id": "ID",
+                "client": "Client",
+                "phone": "Phone",
+                "start": "Start",
+                "end": "End",
+                "amount": "Amount",
+                "no_data": "No rides found."
+            },
+            "expenses": {
+                "title": "Recent Expenses",
+                "id": "ID",
+                "date": "Date",
+                "description": "Description",
+                "amount": "Amount",
+                "no_data": "No expenses found."
+            },
+            "actions": {
+                "expenses": "Expenses",
+                "rides": "Rides",
+                "remove": "Remove Bike",
+                "change_status": "Change Status",
+                "statuses": {
+                    "available": "Available",
+                    "maintenance": "On Maintenance",
+                    "not_available": "Not Available"
+                }
+            },
+            "page": {
+                "bike": "Bike",
+                "edit": "Edit",
+                "save": "Save",
+                "cancel": "Cancel",
+                "loading": "Loading...",
+                "otp": {
+                    "title": "Enter OTP to confirm deletion",
+                    "placeholder": "Enter OTP code",
+                    "confirm_delete": "Delete Bike"
+                }
+            },
+            "details": {
+                "change": "Change",
+                "cancel_upload": "Cancel",
+                "uploading": "Uploading...",
+                "upload_failed": "Upload failed",
+                "image_dimension_error": "Image must be {{width}}x{{height}}px",
+                "edit": "Edit",
+                "cancel": "Cancel",
+                "save": "Save",
+                "saving": "Saving...",
+                "not_selected": "Not selected",
+                "section": {
+                    "descriptions": "Descriptions",
+                    "specs": "Technical Specs",
+                    "components": "Bike Components"
+                },
+                "lang": {
+                    "uk": "🇺🇦 Ukrainian",
+                    "ru": "🇷🇺 Russian",
+                    "en": "🇬🇧 English"
+                },
+                "specs": {
+                    "price_day": "Price per day",
+                    "max_speed": "Max speed",
+                    "range": "Range",
+                    "wheels_size": "Wheels size",
+                    "power": "Power",
+                    "battery_current": "Battery current"
+                },
+                "units": {
+                    "price_day": "₴",
+                    "max_speed": "km/h",
+                    "range": "km",
+                    "wheels_size": "\"",
+                    "power": "W",
+                    "battery_current": "Ah"
+                },
+                "components": {
+                    "battery_type": "Battery type",
+                    "brakes_type": "Brakes type",
+                    "engine_position": "Engine position"
+                },
+                "images": {
+                    "main_img": "Main Image",
+                    "landscape_img": "Landscape Image",
+                    "side_photo_left": "Side Photo Left",
+                    "side_photo_right": "Side Photo Right",
+                    "front_photo_view": "Front View",
+                    "rear_photo_view": "Rear View",
+                    "top_photo_view": "Top View",
+                    "drive_train_closeup_photo": "Drivetrain Close-up",
+                    "handlebar_controls_photo": "Handlebar & Controls",
+                    "suspension_fork_photo": "Suspension Fork",
+                    "wheel_tire_condition_photo": "Wheels & Tires",
+                    "serial_number_or_branding_photo": "Serial Number / Branding",
+                    "nav_photo": "Nav Photo"
+                }
+            }
+        },
+        "batteryTypeList": {
+            "title": "Current Battery Types",
+            "addButton": "Add New Battery Type",
+            "nameUk": "Name (Ukrainian)",
+            "nameEn": "Name (English)",
+            "nameRu": "Name (Russian)",
+            "actions": "Actions",
+            "remove": "Remove",
+            "removeSuccess": "Battery type removed",
+            "removeError": "Failed to remove battery type",
+            "loadError": "Failed to load battery types"
+        },
+        "userList": {
+            "title": "User Management",
+            "searchPlaceholder": "Search by phone or username...",
+            "username": "Username",
+            "phone": "Phone",
+            "twoFA": "2FA Enabled",
+            "admin": "Admin",
+            "actions": "Actions",
+            "removeAdmin": "Remove Admin",
+            "makeAdmin": "Make Admin",
+            "otpModal": {
+                "title": "Enter OTP",
+                "placeholder": "Enter your OTP",
+                "cancel": "Cancel",
+                "confirm": "Confirm"
+            }
+        },
+        "bikeForm": {
+            "images": {
+                "main_img": "Main Image",
+                "nav_photo": "Navigation Photo",
+                "landscape_img": "Landscape Image",
+                "side_photo_left": "Side Photo (Left)",
+                "side_photo_right": "Side Photo (Right)",
+                "front_photo_view": "Front Photo View",
+                "rear_photo_view": "Rear Photo View",
+                "top_photo_view": "Top Photo View",
+                "drive_train_closeup_photo": "Drive Train Closeup Photo",
+                "handlebar_controls_photo": "Handlebar Controls Photo",
+                "suspension_fork_photo": "Suspension Fork Photo",
+                "wheel_tire_condition_photo": "Wheel/Tire Condition Photo",
+                "serial_number_or_branding_photo": "Serial Number/Branding Photo"
+            },
+            "title": "Create a New Bike",
+            "name": "Bike Name",
+            "descriptionUk": "Description (Ukrainian)",
+            "descriptionEn": "Description (English)",
+            "descriptionRu": "Description (Russian)",
+            "pricePerDay": "Price per Day (UAH)",
+            "maxSpeed": "Max Speed (km/h)",
+            "range": "Range (km)",
+            "wheelSize": "Wheel Size (inches)",
+            "power": "Power (W)",
+            "batteryCurrent": "Battery Current (Ah)",
+            "status": "Status",
+            "batteryType": "Battery Type",
+            "brakesType": "Brakes Type",
+            "enginePosition": "Engine Position",
+            "imagesSection": "Bike Images",
+            "selectStatus": "Select Status",
+            "selectBattery": "Select Battery Type",
+            "selectBrakes": "Select Brakes Type",
+            "selectEngine": "Select Engine Position",
+            "imageError": "Image must be exactly {{width}}×{{height}} pixels.",
+            "example": "Example: {{label}}",
+            "addButton": "Add Bike",
+            "success": "Bike successfully created!",
+            "error": "Failed to create bike: {{message}}",
+            "reload": "Reloading..."
+        },
+        "enginePosition": {
+            "addTitle": "Create a New Engine Position",
+            "nameUK": "Name (UK)",
+            "nameEN": "Name (EN)",
+            "nameRU": "Name (RU)",
+            "placeholderUK": "Enter name in Ukrainian",
+            "placeholderEN": "Enter name in English",
+            "placeholderRU": "Enter name in Russian",
+            "submit": "Add Engine Position",
+            "submitting": "Submitting...",
+            "success": "Engine position created successfully",
+            "error": "Failed to create engine position"
+        },
+        "brakesType": {
+            "addTitle": "Create a New Brake Type",
+            "nameUK": "Name (UK)",
+            "nameEN": "Name (EN)",
+            "nameRU": "Name (RU)",
+            "placeholderUK": "Enter name in Ukrainian",
+            "placeholderEN": "Enter name in English",
+            "placeholderRU": "Enter name in Russian",
+            "submit": "Add Brake Type",
+            "submitting": "Submitting...",
+            "success": "Brake type created successfully",
+            "error": "Failed to create brake type"
+        },
+        "batteryType": {
+            "addTitle": "Create a New Battery Type",
+            "nameUK": "Name (UK)",
+            "nameEN": "Name (EN)",
+            "nameRU": "Name (RU)",
+            "placeholderUK": "Enter name in Ukrainian",
+            "placeholderEN": "Enter name in English",
+            "placeholderRU": "Enter name in Russian",
+            "submit": "Add Battery Type",
+            "submitting": "Submitting...",
+            "success": "Battery type created successfully",
+            "error": "Error creating battery type"
+        },
         "header": "Bike Rental Admin",
         "nav": {
             "catalog": "Catalog",

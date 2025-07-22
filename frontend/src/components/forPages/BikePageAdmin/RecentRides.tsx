@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 interface Ride {
     id: number;
@@ -10,26 +11,28 @@ interface Ride {
 }
 
 const RecentRides: React.FC<{ rides: Ride[] }> = ({ rides }) => {
+    const { t } = useTranslation("", { keyPrefix: "admin.bike_admin.rides" });
+
     return (
         <div className="mt-6">
-            <h3 className="text-lg font-semibold text-gray-800 mb-4">Recent Rides</h3>
+            <h3 className="text-lg font-semibold text-gray-800 mb-4">{t("title")}</h3>
             <div className="overflow-x-auto rounded-lg border border-gray-200">
                 <table className="min-w-full divide-y divide-gray-200 text-sm">
                     <thead className="bg-gray-50">
                         <tr>
-                            <th className="px-4 py-2 text-left text-gray-600 font-medium">ID</th>
-                            <th className="px-4 py-2 text-left text-gray-600 font-medium">Client</th>
-                            <th className="px-4 py-2 text-left text-gray-600 font-medium">Phone</th>
-                            <th className="px-4 py-2 text-left text-gray-600 font-medium">Start</th>
-                            <th className="px-4 py-2 text-left text-gray-600 font-medium">End</th>
-                            <th className="px-4 py-2 text-left text-gray-600 font-medium">Amount</th>
+                            <th className="px-4 py-2 text-left text-gray-600 font-medium">{t("id")}</th>
+                            <th className="px-4 py-2 text-left text-gray-600 font-medium">{t("client")}</th>
+                            <th className="px-4 py-2 text-left text-gray-600 font-medium">{t("phone")}</th>
+                            <th className="px-4 py-2 text-left text-gray-600 font-medium">{t("start")}</th>
+                            <th className="px-4 py-2 text-left text-gray-600 font-medium">{t("end")}</th>
+                            <th className="px-4 py-2 text-left text-gray-600 font-medium">{t("amount")}</th>
                         </tr>
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-100">
                         {rides.length === 0 ? (
                             <tr>
                                 <td colSpan={6} className="text-center py-4 text-gray-500">
-                                    No rides found.
+                                    {t("no_data")}
                                 </td>
                             </tr>
                         ) : (

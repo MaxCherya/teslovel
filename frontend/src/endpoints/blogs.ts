@@ -13,7 +13,7 @@ export interface AdminBlog {
     banner_en: string;
     banner_ru: string;
     poster: string;
-    views_counts: number;
+    views_count: number;
 }
 
 export const fetchAdminBlogs = async (page = 1) => {

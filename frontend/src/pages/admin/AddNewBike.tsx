@@ -3,6 +3,8 @@ import { createBike } from "../../endpoints/adminBikes";
 import { fetchBatteryTypes, fetchBrakesTypes, fetchEnginePositions } from "../../endpoints/specs";
 import i18n from "../../locales";
 import FullScreenLoader from "../../components/ui/loaders/FullScreenLoader";
+import { useTranslation } from "react-i18next";
+import { toast } from "react-toastify";
 
 interface Option {
     id: number;
@@ -44,10 +46,13 @@ const AddNewBike: React.FC = () => {
         serial_number_or_branding_photo: null as File | null,
     });
 
+    const { t } = useTranslation();
+    const { t: setT } = useTranslation();
+
     const [statusOptions] = useState<any[]>([
-        { id: 1, name: "1", label: i18n.t("status.available") },
-        { id: 2, name: "2", label: i18n.t("status.maintenance") },
-        { id: 3, name: "3", label: i18n.t("status.unavailable") },
+        { id: 1, name: "1", label: setT("bikeCard.status.available") },
+        { id: 2, name: "2", label: setT("bikeCard.status.onMaintenance") },
+        { id: 3, name: "3", label: setT("bikeCard.status.notAvailable") },
     ]);
 
     const [imageErrors, setImageErrors] = useState<ImageError>({});
@@ -148,7 +153,7 @@ const AddNewBike: React.FC = () => {
             } else {
                 setImageErrors((prev) => ({
                     ...prev,
-                    [name]: `Image must be exactly ${requiredWidth}×${requiredHeight} pixels.`,
+                    [name]: t("admin.bikeForm.imageError", { width: requiredWidth, height: requiredHeight }),
                 }));
                 e.target.value = "";
             }
@@ -178,14 +183,46 @@ const AddNewBike: React.FC = () => {
 
             const response = await createBike(data);
             console.log("Bike created successfully:", response);
-            alert("Bike successfully created!");
+            toast.success(t("admin.bikeForm.success"));
             window.location.reload();
         } catch (error: any) {
             console.error("Error creating bike:", error);
-            alert("Failed to create bike: " + error.message);
+            toast.error(t("admin.bikeForm.error", { message: error.message }));
         } finally {
             setLoading(false);
         }
+    };
+
+    const previewMap: Record<string, string> = {
+        main_img: "https://res.cloudinary.com/duqbc4nyo/image/upload/v1750243967/Main_Photo_e9deoc.png",
+        nav_photo: "https://res.cloudinary.com/duqbc4nyo/image/upload/v1750244143/Nav_Photo_l2f1xf.png",
+        landscape_img: "https://res.cloudinary.com/duqbc4nyo/image/upload/v1750244140/Landscape_xfgp9q.png",
+        side_photo_left: "https://res.cloudinary.com/duqbc4nyo/image/upload/v1750243965/Left_View_xq71fr.png",
+        side_photo_right: "https://res.cloudinary.com/duqbc4nyo/image/upload/v1750243971/Right_View_p6ndy3.png",
+        front_photo_view: "https://res.cloudinary.com/duqbc4nyo/image/upload/v1750243958/Front_View_y6pjvv.png",
+        rear_photo_view: "https://res.cloudinary.com/duqbc4nyo/image/upload/v1750243969/Rear_View_dfvsqz.png",
+        top_photo_view: "https://res.cloudinary.com/duqbc4nyo/image/upload/v1750243976/Top_View_nw7dfc.png",
+        drive_train_closeup_photo: "https://res.cloudinary.com/duqbc4nyo/image/upload/v1750243943/Drivetrain_closeup_pes5wf.png",
+        handlebar_controls_photo: "https://res.cloudinary.com/duqbc4nyo/image/upload/v1750243963/Handlebar_controls_q9c8po.png",
+        suspension_fork_photo: "https://res.cloudinary.com/duqbc4nyo/image/upload/v1750243975/Suspension_fork_c5ztgj.png",
+        wheel_tire_condition_photo: "https://res.cloudinary.com/duqbc4nyo/image/upload/v1750243979/Wheel_tire_condition_kial5t.png",
+        serial_number_or_branding_photo: "https://res.cloudinary.com/duqbc4nyo/image/upload/v1750243972/Serial_number_or_branding_mtztg5.png",
+    };
+
+    const dimensionMap: Record<string, string> = {
+        nav_photo: "160×160",
+        landscape_img: "640×360",
+        main_img: "1920×1080",
+        side_photo_left: "1920×1080",
+        side_photo_right: "1920×1080",
+        front_photo_view: "1920×1080",
+        rear_photo_view: "1920×1080",
+        top_photo_view: "1920×1080",
+        drive_train_closeup_photo: "1920×1080",
+        handlebar_controls_photo: "1920×1080",
+        suspension_fork_photo: "1920×1080",
+        wheel_tire_condition_photo: "1920×1080",
+        serial_number_or_branding_photo: "1920×1080",
     };
 
     return (
@@ -196,12 +233,12 @@ const AddNewBike: React.FC = () => {
             {/* Main Content */}
             <main className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8 pb-8 pt-23 lg:pt-10">
                 <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow-2xl p-4 sm:p-6 lg:p-8 max-w-2xl mx-auto border border-gray-100 space-y-6">
-                    <h2 className="text-lg sm:text-2xl font-semibold text-gray-800 mb-6 tracking-tight">Create a New Bike</h2>
+                    <h2 className="text-lg sm:text-2xl font-semibold text-gray-800 mb-6 tracking-tight">{t("admin.bikeForm.title")}</h2>
 
                     {/* Bike Name */}
                     <div>
                         <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
-                            Bike Name
+                            {t("admin.bikeForm.name")}
                         </label>
                         <input
                             type="text"
@@ -210,14 +247,14 @@ const AddNewBike: React.FC = () => {
                             value={formData.name}
                             onChange={handleChange}
                             className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200 bg-gray-50"
-                            placeholder="Enter bike name"
+                            placeholder={t('admin.bikeForm.name')}
                         />
                     </div>
 
                     {/* Descriptions */}
                     <div>
                         <label htmlFor="description_uk" className="block text-sm font-medium text-gray-700 mb-2">
-                            Description (Ukrainian)
+                            {t("admin.bikeForm.descriptionUk")}
                         </label>
                         <textarea
                             id="description_uk"
@@ -225,13 +262,13 @@ const AddNewBike: React.FC = () => {
                             value={formData.description_uk}
                             onChange={handleChange}
                             className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200 bg-gray-50"
-                            placeholder="Enter description in Ukrainian"
+                            placeholder={t("admin.bikeForm.descriptionUk")}
                             rows={4}
                         />
                     </div>
                     <div>
                         <label htmlFor="description_en" className="block text-sm font-medium text-gray-700 mb-2">
-                            Description (English)
+                            {t("admin.bikeForm.descriptionEn")}
                         </label>
                         <textarea
                             id="description_en"
@@ -239,13 +276,13 @@ const AddNewBike: React.FC = () => {
                             value={formData.description_en}
                             onChange={handleChange}
                             className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200 bg-gray-50"
-                            placeholder="Enter description in English"
+                            placeholder={t("admin.bikeForm.descriptionEn")}
                             rows={4}
                         />
                     </div>
                     <div>
                         <label htmlFor="description_ru" className="block text-sm font-medium text-gray-700 mb-2">
-                            Description (Russian)
+                            {t("admin.bikeForm.descriptionRu")}
                         </label>
                         <textarea
                             id="description_ru"
@@ -253,7 +290,7 @@ const AddNewBike: React.FC = () => {
                             value={formData.description_ru}
                             onChange={handleChange}
                             className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200 bg-gray-50"
-                            placeholder="Enter description in Russian"
+                            placeholder={t("admin.bikeForm.descriptionRu")}
                             rows={4}
                         />
                     </div>
@@ -261,7 +298,7 @@ const AddNewBike: React.FC = () => {
                     {/* Numeric Fields */}
                     <div>
                         <label htmlFor="price_day" className="block text-sm font-medium text-gray-700 mb-2">
-                            Price per Day (uah)
+                            {t("admin.bikeForm.pricePerDay")}
                         </label>
                         <input
                             type="number"
@@ -270,12 +307,12 @@ const AddNewBike: React.FC = () => {
                             value={formData.price_day}
                             onChange={handleChange}
                             className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200 bg-gray-50"
-                            placeholder="Enter price per day"
+                            placeholder={t("admin.bikeForm.pricePerDay")}
                         />
                     </div>
                     <div>
                         <label htmlFor="max_speed" className="block text-sm font-medium text-gray-700 mb-2">
-                            Max Speed (km/h)
+                            {t("admin.bikeForm.maxSpeed")}
                         </label>
                         <input
                             type="number"
@@ -284,12 +321,12 @@ const AddNewBike: React.FC = () => {
                             value={formData.max_speed}
                             onChange={handleChange}
                             className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200 bg-gray-50"
-                            placeholder="Enter max speed"
+                            placeholder={t("admin.bikeForm.maxSpeed")}
                         />
                     </div>
                     <div>
                         <label htmlFor="range" className="block text-sm font-medium text-gray-700 mb-2">
-                            Range (km)
+                            {t("admin.bikeForm.range")}
                         </label>
                         <input
                             type="number"
@@ -298,12 +335,12 @@ const AddNewBike: React.FC = () => {
                             value={formData.range}
                             onChange={handleChange}
                             className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200 bg-gray-50"
-                            placeholder="Enter range"
+                            placeholder={t("admin.bikeForm.range")}
                         />
                     </div>
                     <div>
                         <label htmlFor="wheels_size" className="block text-sm font-medium text-gray-700 mb-2">
-                            Wheel Size (inches)
+                            {t("admin.bikeForm.wheelSize")}
                         </label>
                         <input
                             type="number"
@@ -312,12 +349,12 @@ const AddNewBike: React.FC = () => {
                             value={formData.wheels_size}
                             onChange={handleChange}
                             className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200 bg-gray-50"
-                            placeholder="Enter wheel size"
+                            placeholder={t("admin.bikeForm.wheelSize")}
                         />
                     </div>
                     <div>
                         <label htmlFor="power" className="block text-sm font-medium text-gray-700 mb-2">
-                            Power (W)
+                            {t("admin.bikeForm.power")}
                         </label>
                         <input
                             type="number"
@@ -326,12 +363,12 @@ const AddNewBike: React.FC = () => {
                             value={formData.power}
                             onChange={handleChange}
                             className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200 bg-gray-50"
-                            placeholder="Enter power"
+                            placeholder={t("admin.bikeForm.power")}
                         />
                     </div>
                     <div>
                         <label htmlFor="battery_current" className="block text-sm font-medium text-gray-700 mb-2">
-                            Battery Current (Ah)
+                            {t("admin.bikeForm.batteryCurrent")}
                         </label>
                         <input
                             type="number"
@@ -340,14 +377,14 @@ const AddNewBike: React.FC = () => {
                             value={formData.battery_current}
                             onChange={handleChange}
                             className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200 bg-gray-50"
-                            placeholder="Enter battery current"
+                            placeholder={t("admin.bikeForm.batteryCurrent")}
                         />
                     </div>
 
                     {/* Select Fields */}
                     <div>
                         <label htmlFor="status" className="block text-sm font-medium text-gray-700 mb-2">
-                            Status
+                            {t("admin.bikeForm.status")}
                         </label>
                         <select
                             id="status"
@@ -356,7 +393,7 @@ const AddNewBike: React.FC = () => {
                             onChange={handleChange}
                             className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200 bg-gray-50"
                         >
-                            <option value="">Select Status</option>
+                            <option value="">{t("admin.bikeForm.selectStatus")}</option>
                             {statusOptions.map((opt) => (
                                 <option key={opt.id} value={opt.name}>
                                     {opt.label}
@@ -366,7 +403,7 @@ const AddNewBike: React.FC = () => {
                     </div>
                     <div>
                         <label htmlFor="battery_type" className="block text-sm font-medium text-gray-700 mb-2">
-                            Battery Type
+                            {t("admin.bikeForm.batteryType")}
                         </label>
                         <select
                             id="battery_type"
@@ -375,7 +412,7 @@ const AddNewBike: React.FC = () => {
                             onChange={handleChange}
                             className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200 bg-gray-50"
                         >
-                            <option value="">Select Battery Type</option>
+                            <option value="">{t("admin.bikeForm.selectBattery")}</option>
                             {batteryOptions.map((opt) => (
                                 <option key={opt.id} value={opt.id}>
                                     {opt.name}
@@ -385,7 +422,7 @@ const AddNewBike: React.FC = () => {
                     </div>
                     <div>
                         <label htmlFor="brakes_type" className="block text-sm font-medium text-gray-700 mb-2">
-                            Brakes Type
+                            {t("admin.bikeForm.brakesType")}
                         </label>
                         <select
                             id="brakes_type"
@@ -394,7 +431,7 @@ const AddNewBike: React.FC = () => {
                             onChange={handleChange}
                             className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200 bg-gray-50"
                         >
-                            <option value="">Select Brakes Type</option>
+                            <option value="">{t("admin.bikeForm.selectBrakes")}</option>
                             {brakesOptions.map((opt) => (
                                 <option key={opt.id} value={opt.id}>
                                     {opt.name}
@@ -404,7 +441,7 @@ const AddNewBike: React.FC = () => {
                     </div>
                     <div>
                         <label htmlFor="engine_position" className="block text-sm font-medium text-gray-700 mb-2">
-                            Engine Position
+                            {t("admin.bikeForm.enginePosition")}
                         </label>
                         <select
                             id="engine_position"
@@ -413,7 +450,7 @@ const AddNewBike: React.FC = () => {
                             onChange={handleChange}
                             className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200 bg-gray-50"
                         >
-                            <option value="">Select Engine Position</option>
+                            <option value="">{t("admin.bikeForm.selectEngine")}</option>
                             {engineOptions.map((opt) => (
                                 <option key={opt.id} value={opt.id}>
                                     {opt.name}
@@ -424,48 +461,43 @@ const AddNewBike: React.FC = () => {
 
                     {/* Image Inputs with Previews and Dimension Requirements */}
                     <div>
-                        <h3 className="text-lg font-semibold text-gray-800 mb-4">Bike Images</h3>
-                        {[
-                            { name: "main_img", label: "Main Image", preview: "https://res.cloudinary.com/duqbc4nyo/image/upload/v1750243967/Main_Photo_e9deoc.png", dimensions: "1920×1080" },
-                            { name: "nav_photo", label: "Navigation Photo", preview: "https://res.cloudinary.com/duqbc4nyo/image/upload/v1750244143/Nav_Photo_l2f1xf.png", dimensions: "160×160" },
-                            { name: "landscape_img", label: "Landscape Image", preview: "https://res.cloudinary.com/duqbc4nyo/image/upload/v1750244140/Landscape_xfgp9q.png", dimensions: "640×360" },
-                            { name: "side_photo_left", label: "Side Photo (Left)", preview: "https://res.cloudinary.com/duqbc4nyo/image/upload/v1750243965/Left_View_xq71fr.png", dimensions: "1920×1080" },
-                            { name: "side_photo_right", label: "Side Photo (Right)", preview: "https://res.cloudinary.com/duqbc4nyo/image/upload/v1750243971/Right_View_p6ndy3.png", dimensions: "1920×1080" },
-                            { name: "front_photo_view", label: "Front Photo View", preview: "https://res.cloudinary.com/duqbc4nyo/image/upload/v1750243958/Front_View_y6pjvv.png", dimensions: "1920×1080" },
-                            { name: "rear_photo_view", label: "Rear Photo View", preview: "https://res.cloudinary.com/duqbc4nyo/image/upload/v1750243969/Rear_View_dfvsqz.png", dimensions: "1920×1080" },
-                            { name: "top_photo_view", label: "Top Photo View", preview: "https://res.cloudinary.com/duqbc4nyo/image/upload/v1750243976/Top_View_nw7dfc.png", dimensions: "1920×1080" },
-                            { name: "drive_train_closeup_photo", label: "Drive Train Closeup Photo", preview: "https://res.cloudinary.com/duqbc4nyo/image/upload/v1750243943/Drivetrain_closeup_pes5wf.png", dimensions: "1920×1080" },
-                            { name: "handlebar_controls_photo", label: "Handlebar Controls Photo", preview: "https://res.cloudinary.com/duqbc4nyo/image/upload/v1750243963/Handlebar_controls_q9c8po.png", dimensions: "1920×1080" },
-                            { name: "suspension_fork_photo", label: "Suspension Fork Photo", preview: "https://res.cloudinary.com/duqbc4nyo/image/upload/v1750243975/Suspension_fork_c5ztgj.png", dimensions: "1920×1080" },
-                            { name: "wheel_tire_condition_photo", label: "Wheel/Tire Condition Photo", preview: "https://res.cloudinary.com/duqbc4nyo/image/upload/v1750243979/Wheel_tire_condition_kial5t.png", dimensions: "1920×1080" },
-                            { name: "serial_number_or_branding_photo", label: "Serial Number/Branding Photo", preview: "https://res.cloudinary.com/duqbc4nyo/image/upload/v1750243972/Serial_number_or_branding_mtztg5.png", dimensions: "1920×1080" },
-                        ].map((field) => (
-                            <div key={field.name} className="mt-6">
-                                <label htmlFor={field.name} className="block text-sm font-medium text-gray-700 mb-2">
-                                    {field.label}
-                                </label>
-                                <input
-                                    type="file"
-                                    id={field.name}
-                                    name={field.name}
-                                    accept="image/*"
-                                    onChange={handleFileChange}
-                                    className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200 bg-gray-50 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:bg-indigo-100 file:text-indigo-600 file:cursor-pointer hover:file:bg-indigo-200"
-                                />
-                                <p className="text-xs text-gray-500 mt-1">Required: {field.dimensions}</p>
-                                {imageErrors[field.name] && (
-                                    <p className="text-xs text-red-600 mt-1">{imageErrors[field.name]}</p>
-                                )}
-                                <div className="mt-2">
-                                    <img
-                                        src={field.preview}
-                                        alt={`${field.label} preview`}
-                                        className="w-full max-w-xs sm:max-w-sm rounded-lg border border-gray-200 shadow-sm object-cover"
+                        <h3 className="text-lg font-semibold text-gray-800 mb-4">{t("admin.bikeForm.imagesSection")}</h3>
+
+                        {Object.keys(previewMap).map((key) => {
+                            const label = t(`admin.bikeForm.images.${key}`);
+                            const preview = previewMap[key];
+                            const dimensions = dimensionMap[key];
+
+                            return (
+                                <div key={key} className="mt-6">
+                                    <label htmlFor={key} className="block text-sm font-medium text-gray-700 mb-2">
+                                        {label}
+                                    </label>
+                                    <input
+                                        type="file"
+                                        id={key}
+                                        name={key}
+                                        accept="image/*"
+                                        onChange={handleFileChange}
+                                        className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200 bg-gray-50 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:bg-indigo-100 file:text-indigo-600 file:cursor-pointer hover:file:bg-indigo-200"
                                     />
-                                    <p className="text-xs text-gray-500 mt-1">Example: {field.label}</p>
+                                    <p className="text-xs text-gray-500 mt-1">Required: {dimensions}</p>
+                                    {imageErrors[key] && (
+                                        <p className="text-xs text-red-600 mt-1">{imageErrors[key]}</p>
+                                    )}
+                                    <div className="mt-2">
+                                        <img
+                                            src={preview}
+                                            alt={`${label} preview`}
+                                            className="w-full max-w-xs sm:max-w-sm rounded-lg border border-gray-200 shadow-sm object-cover"
+                                        />
+                                        <p className="text-xs text-gray-500 mt-1">
+                                            {t("admin.bikeForm.example", { label })}
+                                        </p>
+                                    </div>
                                 </div>
-                            </div>
-                        ))}
+                            );
+                        })}
                     </div>
 
                     {/* Form Actions */}
@@ -474,7 +506,7 @@ const AddNewBike: React.FC = () => {
                             type="submit"
                             className="px-4 sm:px-6 py-2 sm:py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-all duration-200 shadow-md font-medium text-sm sm:text-base"
                         >
-                            Add Bike
+                            {t("admin.bikeForm.addButton")}
                         </button>
                     </div>
                 </form>

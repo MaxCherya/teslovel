@@ -94,6 +94,8 @@ def fetch_blog_post_by_id(request, blog_id):
     try:
         blog = BlogPost.objects.get(id=blog_id)
         serializer = BlogPostSerializer(blog)
+        blog.views_count = blog.views_count + 1
+        blog.save()
         return Response(serializer.data, status=status.HTTP_200_OK)
     except BlogPost.DoesNotExist:
         return Response({"detail": "Blog post not found."}, status=status.HTTP_404_NOT_FOUND)

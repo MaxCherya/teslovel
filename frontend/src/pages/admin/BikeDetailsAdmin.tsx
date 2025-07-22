@@ -1,5 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { fetchBikeOptionFields, updateBikeDescriptions, updateBikeForeignKeys, updateBikeImage, updateBikeSpecs, type BikeOption, type BikeOptionFieldsResponse } from "../../endpoints/adminBikes";
+import {
+    fetchBikeOptionFields,
+    updateBikeDescriptions,
+    updateBikeForeignKeys,
+    updateBikeImage,
+    updateBikeSpecs,
+    type BikeOption,
+    type BikeOptionFieldsResponse
+} from "../../endpoints/adminBikes";
+import { useTranslation } from "react-i18next";
 
 interface BikeDetailsAdminProps {
     bike: any;
@@ -31,21 +40,24 @@ const BikeDetailsAdmin: React.FC<BikeDetailsAdminProps> = ({ bike }) => {
         engine_position: bike.engine_position_id || null,
     });
 
+    const { t } = useTranslation("", { keyPrefix: "admin.bike_admin.details" });
+
     const imageFields = [
-        { key: "main_img", label: "Main Image" },
-        { key: "landscape_img", label: "Landscape Image" },
-        { key: "side_photo_left", label: "Side Photo Left" },
-        { key: "side_photo_right", label: "Side Photo Right" },
-        { key: "front_photo_view", label: "Front View" },
-        { key: "rear_photo_view", label: "Rear View" },
-        { key: "top_photo_view", label: "Top View" },
-        { key: "drive_train_closeup_photo", label: "Drivetrain Close-up" },
-        { key: "handlebar_controls_photo", label: "Handlebar & Controls" },
-        { key: "suspension_fork_photo", label: "Suspension Fork" },
-        { key: "wheel_tire_condition_photo", label: "Wheels & Tires" },
-        { key: "serial_number_or_branding_photo", label: "Serial Number / Branding" },
-        { key: "nav_photo", label: "Nav Photo" },
+        { key: "main_img", label: t("images.main_img") },
+        { key: "landscape_img", label: t("images.landscape_img") },
+        { key: "side_photo_left", label: t("images.side_photo_left") },
+        { key: "side_photo_right", label: t("images.side_photo_right") },
+        { key: "front_photo_view", label: t("images.front_photo_view") },
+        { key: "rear_photo_view", label: t("images.rear_photo_view") },
+        { key: "top_photo_view", label: t("images.top_photo_view") },
+        { key: "drive_train_closeup_photo", label: t("images.drive_train_closeup_photo") },
+        { key: "handlebar_controls_photo", label: t("images.handlebar_controls_photo") },
+        { key: "suspension_fork_photo", label: t("images.suspension_fork_photo") },
+        { key: "wheel_tire_condition_photo", label: t("images.wheel_tire_condition_photo") },
+        { key: "serial_number_or_branding_photo", label: t("images.serial_number_or_branding_photo") },
+        { key: "nav_photo", label: t("images.nav_photo") },
     ];
+
     const imageDimensions: Record<string, { width: number; height: number }> = {
         nav_photo: { width: 160, height: 160 },
         landscape_img: { width: 640, height: 360 },
@@ -61,6 +73,7 @@ const BikeDetailsAdmin: React.FC<BikeDetailsAdminProps> = ({ bike }) => {
         wheel_tire_condition_photo: { width: 1920, height: 1080 },
         serial_number_or_branding_photo: { width: 1920, height: 1080 },
     };
+
     const [imageEditing, setImageEditing] = useState<{ [key: string]: boolean }>({});
     const [uploadingImage, setUploadingImage] = useState<{ [key: string]: boolean }>({});
     const [uploadErrors, setUploadErrors] = useState<{ [key: string]: string }>({});
@@ -75,7 +88,7 @@ const BikeDetailsAdmin: React.FC<BikeDetailsAdminProps> = ({ bike }) => {
         } catch (err: any) {
             setUploadErrors(prev => ({
                 ...prev,
-                [fieldKey]: err.message || "Upload failed"
+                [fieldKey]: err.message || t("upload_failed")
             }));
         } finally {
             setUploadingImage(prev => ({ ...prev, [fieldKey]: false }));
@@ -93,10 +106,10 @@ const BikeDetailsAdmin: React.FC<BikeDetailsAdminProps> = ({ bike }) => {
         if (Array.isArray(list)) {
             const valueId = fkValues[key];
             const found = list.find((opt) => opt.id === valueId);
-            return found?.name || "Not selected";
+            return found?.name || t("not_selected");
         }
 
-        return "Not selected";
+        return t("not_selected");
     };
 
     useEffect(() => {
@@ -178,12 +191,12 @@ const BikeDetailsAdmin: React.FC<BikeDetailsAdminProps> = ({ bike }) => {
             {/* Description and Info */}
             <div>
                 <div className="flex justify-between items-center">
-                    <h3 className="text-lg font-semibold text-gray-800 mb-2">Descriptions</h3>
+                    <h3 className="text-lg font-semibold text-gray-800 mb-2">{t("section.descriptions")}</h3>
                     <button
                         onClick={() => setEditing(!editing)}
                         className="text-blue-600 text-sm font-medium hover:underline"
                     >
-                        {editing ? "Cancel" : "Edit"}
+                        {editing ? t("cancel") : t("edit")}
                     </button>
                 </div>
 
@@ -191,7 +204,7 @@ const BikeDetailsAdmin: React.FC<BikeDetailsAdminProps> = ({ bike }) => {
                     {["uk", "ru", "en"].map(lang => (
                         <div key={lang}>
                             <p className="text-sm font-medium text-gray-600 mb-1">
-                                {lang === "uk" ? "🇺🇦 Ukrainian" : lang === "ru" ? "🇷🇺 Russian" : "🇬🇧 English"}
+                                {t(`lang.${lang}`)}
                             </p>
                             {editing ? (
                                 <textarea
@@ -214,7 +227,7 @@ const BikeDetailsAdmin: React.FC<BikeDetailsAdminProps> = ({ bike }) => {
                             className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg disabled:opacity-50"
                             disabled={saving}
                         >
-                            {saving ? "Saving..." : "Save"}
+                            {saving ? t("saving") : t("save")}
                         </button>
                     </div>
                 )}
@@ -225,22 +238,22 @@ const BikeDetailsAdmin: React.FC<BikeDetailsAdminProps> = ({ bike }) => {
             {/* Bike specs */}
             <div>
                 <div className="flex justify-between items-center mb-2">
-                    <h3 className="text-lg font-semibold text-gray-800">Technical Specs</h3>
+                    <h3 className="text-lg font-semibold text-gray-800">{t("section.specs")}</h3>
                     <button
                         onClick={() => setEditingSpecs(!editingSpecs)}
                         className="text-blue-600 text-sm font-medium hover:underline"
                     >
-                        {editingSpecs ? "Cancel" : "Edit"}
+                        {editingSpecs ? t("cancel") : t("edit")}
                     </button>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                     {([
-                        { key: "price_day", label: "Price per day", unit: "₴" },
-                        { key: "max_speed", label: "Max speed", unit: "km/h" },
-                        { key: "range", label: "Range", unit: "km" },
-                        { key: "wheels_size", label: "Wheels size", unit: '"' },
-                        { key: "power", label: "Power", unit: "W" },
-                        { key: "battery_current", label: "Battery current", unit: "Ah" },
+                        { key: "price_day", label: t("specs.price_day"), unit: t("units.price_day") },
+                        { key: "max_speed", label: t("specs.max_speed"), unit: t("units.max_speed") },
+                        { key: "range", label: t("specs.range"), unit: t("units.range") },
+                        { key: "wheels_size", label: t("specs.wheels_size"), unit: t("units.wheels_size") },
+                        { key: "power", label: t("specs.power"), unit: t("units.power") },
+                        { key: "battery_current", label: t("specs.battery_current"), unit: t("units.battery_current") },
                     ] as const).map(({ key, label, unit }) => (
                         <div key={key}>
                             {editingSpecs ? (
@@ -270,7 +283,7 @@ const BikeDetailsAdmin: React.FC<BikeDetailsAdminProps> = ({ bike }) => {
                             className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg disabled:opacity-50"
                             disabled={saving}
                         >
-                            {saving ? "Saving..." : "Save"}
+                            {saving ? t("saving") : t("save")}
                         </button>
                     </div>
                 )}
@@ -280,20 +293,20 @@ const BikeDetailsAdmin: React.FC<BikeDetailsAdminProps> = ({ bike }) => {
             {/* Components */}
             <div>
                 <div className="flex justify-between items-center mb-2">
-                    <h3 className="text-lg font-semibold text-gray-800">Bike Components</h3>
+                    <h3 className="text-lg font-semibold text-gray-800">{t("section.components")}</h3>
                     <button
                         onClick={() => setEditingFKs(!editingFKs)}
                         className="text-blue-600 text-sm font-medium hover:underline"
                     >
-                        {editingFKs ? "Cancel" : "Edit"}
+                        {editingFKs ? t("cancel") : t("edit")}
                     </button>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                     {[
-                        { key: "battery_type", label: "Battery type" },
-                        { key: "brakes_type", label: "Brakes type" },
-                        { key: "engine_position", label: "Engine position" },
+                        { key: "battery_type", label: t("components.battery_type") },
+                        { key: "brakes_type", label: t("components.brakes_type") },
+                        { key: "engine_position", label: t("components.engine_position") }
                     ].map(({ key, label }) => (
                         <div key={key}>
                             {editingFKs ? (
@@ -304,7 +317,7 @@ const BikeDetailsAdmin: React.FC<BikeDetailsAdminProps> = ({ bike }) => {
                                         value={fkValues[key as keyof typeof fkValues] || ""}
                                         onChange={(e) => handleFKChange(key as keyof typeof fkValues, Number(e.target.value))}
                                     >
-                                        <option value="">Not selected</option>
+                                        <option value="">{t("not_selected")}</option>
                                         {
                                             Array.isArray(fkOptions?.[`${key}s` as keyof BikeOptionFieldsResponse]) &&
                                             (fkOptions?.[`${key}s` as keyof BikeOptionFieldsResponse] as BikeOption[]).map((opt) => (
@@ -332,7 +345,7 @@ const BikeDetailsAdmin: React.FC<BikeDetailsAdminProps> = ({ bike }) => {
                             className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg disabled:opacity-50"
                             disabled={saving}
                         >
-                            {saving ? "Saving..." : "Save"}
+                            {saving ? t("saving") : t("save")}
                         </button>
                     </div>
                 )}
@@ -389,9 +402,9 @@ const BikeDetailsAdmin: React.FC<BikeDetailsAdminProps> = ({ bike }) => {
                                 }
                                 className="text-blue-600 text-xs font-medium hover:underline"
                             >
-                                {imageEditing[key] ? "Cancel" : "Change"}
+                                {imageEditing[key] ? t("cancel_upload") : t("change")}
                             </button>
-                            {uploadingImage[key] && <span className="text-gray-500 text-xs">Uploading...</span>}
+                            {uploadingImage[key] && <span className="text-gray-500 text-xs">{t("uploading")}</span>}
                         </div>
                         {uploadErrors[key] && (
                             <p className="text-xs text-red-600 mt-1">{uploadErrors[key]}</p>

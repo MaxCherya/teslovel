@@ -10,7 +10,7 @@ from django.shortcuts import get_object_or_404
 from rest_framework import status
 from cloudinary.uploader import destroy, upload
 from rest_framework.parsers import MultiPartParser, FormParser
-from rest_framework.decorators import permission_classes, parser_classes
+from rest_framework.decorators import permission_classes, parser_classes, throttle_classes
 from .utils import extract_public_id
 from backendApps.catalog.models import Bike, BatteryType, BrakesType, EnginePosition
 
@@ -55,6 +55,7 @@ def getCatwalkBikes(request):
 
 @api_view(['GET'])
 @permission_classes([AllowAny])
+@throttle_classes([])
 # @cache_page(60 * 5, key_prefix='navbar_bikes')
 def getNavBarBikes(request):
     bikes = Bike.objects.order_by('added_on')[:3]

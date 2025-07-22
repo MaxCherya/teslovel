@@ -11,6 +11,7 @@ import { fetchBikeExpenses, fetchBikeStats } from "../../endpoints/adminExpenses
 import { fetchBikeRides } from "../../endpoints/BookPage";
 import { fetchBike } from "../../endpoints/BikePage";
 import BikeDetailsAdmin from "./BikeDetailsAdmin";
+import { useTranslation } from "react-i18next";
 
 const BikePageAdmin: React.FC = () => {
     const { bikeId } = useParams<{ bikeId: string }>();
@@ -31,6 +32,8 @@ const BikePageAdmin: React.FC = () => {
         expensesThisMonth: 0,
         expensesToday: 0,
     });
+
+    const { t } = useTranslation("", { keyPrefix: "admin.bike_admin.page" });
 
     const [showOtpModal, setShowOtpModal] = useState(false);
     const [otpCode, setOtpCode] = useState("");
@@ -150,7 +153,7 @@ const BikePageAdmin: React.FC = () => {
                                     }}
                                     className="text-sm bg-blue-600 text-white rounded px-3 py-1 hover:bg-blue-700"
                                 >
-                                    Save
+                                    {t("save")}
                                 </button>
                                 <button
                                     onClick={() => {
@@ -159,19 +162,19 @@ const BikePageAdmin: React.FC = () => {
                                     }}
                                     className="text-sm text-gray-600 hover:text-gray-800"
                                 >
-                                    Cancel
+                                    {t("cancel")}
                                 </button>
                             </>
                         ) : (
                             <>
                                 <h2 className="text-lg sm:text-2xl font-semibold text-gray-800 tracking-tight">
-                                    Bike: {bike?.name || "Loading..."}
+                                    {t("bike")}: {bike?.name || t("loading")}
                                 </h2>
                                 <button
                                     onClick={() => setEditingName(true)}
                                     className="text-sm text-blue-600 hover:underline"
                                 >
-                                    Edit
+                                    {t("edit")}
                                 </button>
                             </>
                         )}
@@ -194,13 +197,13 @@ const BikePageAdmin: React.FC = () => {
             {showOtpModal && (
                 <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50">
                     <div className="bg-white p-6 rounded-xl shadow-xl w-full max-w-md">
-                        <h3 className="text-lg font-bold mb-4">Enter OTP to confirm deletion</h3>
+                        <h3 className="text-lg font-bold mb-4">{t("otp.title")}</h3>
                         <input
                             type="text"
                             value={otpCode}
                             onChange={(e) => setOtpCode(e.target.value)}
                             className="w-full border border-gray-300 rounded-lg px-4 py-2 mb-3"
-                            placeholder="Enter OTP code"
+                            placeholder={t("otp.placeholder")}
                         />
                         {errorMsg && <p className="text-sm text-red-500 mb-2">{errorMsg}</p>}
                         <div className="flex justify-end space-x-2">
@@ -208,13 +211,13 @@ const BikePageAdmin: React.FC = () => {
                                 onClick={() => setShowOtpModal(false)}
                                 className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-2 px-4 rounded-lg"
                             >
-                                Cancel
+                                {t("cancel")}
                             </button>
                             <button
                                 onClick={handleOtpSubmit}
                                 className="bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-lg"
                             >
-                                Delete Bike
+                                {t("otp.confirm_delete")}
                             </button>
                         </div>
                     </div>

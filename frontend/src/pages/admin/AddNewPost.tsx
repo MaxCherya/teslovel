@@ -84,7 +84,34 @@ const AddNewPost: React.FC = () => {
     };
 
     const handleFileChange = (key: keyof typeof images, file: File | null) => {
-        setImages(prev => ({ ...prev, [key]: file }));
+        if (!file) return;
+
+        const img = new Image();
+        img.onload = () => {
+            const { width, height } = img;
+
+            const expectedDimensions = {
+                banner_en: [1584, 396],
+                banner_uk: [1584, 396],
+                banner_ru: [1584, 396],
+                poster: [500, 500],
+            } as const;
+
+            const [expectedWidth, expectedHeight] = expectedDimensions[key];
+
+            if (width === expectedWidth && height === expectedHeight) {
+                setImages((prev) => ({ ...prev, [key]: file }));
+            } else {
+                toast.error(
+                    `${key.replace("_", " ").toUpperCase()} must be exactly ${expectedWidth}x${expectedHeight}px.`
+                );
+            }
+        };
+        img.onerror = () => {
+            toast.error("Failed to read image dimensions. Please upload a valid image file.");
+        };
+
+        img.src = URL.createObjectURL(file);
     };
 
     const handleSubmit = async () => {

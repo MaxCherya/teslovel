@@ -3,12 +3,16 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, A11y, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
     banners: { id: number; banner_url: string }[];
 }
 
 const BannerSwiper: React.FC<Props> = ({ banners }) => {
+
+    const navigate = useNavigate();
+
     return (
         <div className="w-full bg-black">
             <Swiper
@@ -25,7 +29,8 @@ const BannerSwiper: React.FC<Props> = ({ banners }) => {
                             <img
                                 src={banner.banner_url}
                                 alt={`Banner ${banner.id}`}
-                                className="object-contain"
+                                className="object-contain cursor-pointer"
+                                onClick={() => navigate(`/blog/${banner.id}`)}
                             />
                         </div>
                     </SwiperSlide>
