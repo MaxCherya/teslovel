@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { deleteBrakesType, fetchBrakesTypes } from "../../endpoints/specs";
 import FullScreenLoader from "../../components/ui/loaders/FullScreenLoader";
+import { useTranslation } from "react-i18next";
 
 interface BrakesType {
     id: number;
@@ -13,6 +14,7 @@ interface BrakesType {
 const BrakesTypeAdmin: React.FC = () => {
     const [brakesTypes, setBrakesTypes] = useState<BrakesType[]>([]);
     const [loading, setLoading] = useState(true);
+    const { t } = useTranslation("", { keyPrefix: "admin.bike_admin.brakes_type_admin" });
 
     const loadBrakesTypes = async () => {
         try {
@@ -30,7 +32,7 @@ const BrakesTypeAdmin: React.FC = () => {
     }, []);
 
     const handleRemove = async (id: number) => {
-        if (!window.confirm("Are you sure you want to delete this brake type?")) return;
+        if (!window.confirm(t("confirm_delete"))) return;
 
         try {
             await deleteBrakesType(id);
@@ -46,12 +48,12 @@ const BrakesTypeAdmin: React.FC = () => {
             <main className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8 pt-20 sm:pt-24 pb-8">
                 <div className="bg-white rounded-xl shadow-2xl p-4 sm:p-6 lg:p-8 max-w-full mx-auto border border-gray-100">
                     <div className="flex flex-col sm:flex-row justify-between items-center mb-4 sm:mb-6">
-                        <h2 className="text-lg sm:text-2xl font-semibold text-gray-800 tracking-tight mb-2 sm:mb-0">Current Brake Types</h2>
+                        <h2 className="text-lg sm:text-2xl font-semibold text-gray-800 tracking-tight mb-2 sm:mb-0">{t("title")}</h2>
                         <Link
                             to="/add-brake-type-admin/"
                             className="px-4 sm:px-6 py-2 sm:py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-all duration-200 shadow-md font-medium text-sm sm:text-base"
                         >
-                            Add New Brake Type
+                            {t("add")}
                         </Link>
                     </div>
 
@@ -62,10 +64,10 @@ const BrakesTypeAdmin: React.FC = () => {
                             <table className="w-full min-w-[640px]">
                                 <thead>
                                     <tr className="text-left text-gray-600">
-                                        <th className="px-4 py-2">Name (Ukrainian)</th>
-                                        <th className="px-4 py-2">Name (English)</th>
-                                        <th className="px-4 py-2">Name (Russian)</th>
-                                        <th className="px-4 py-2">Actions</th>
+                                        <th className="px-4 py-2">{t("table.name_uk")}</th>
+                                        <th className="px-4 py-2">{t("table.name_en")}</th>
+                                        <th className="px-4 py-2">{t("table.name_ru")}</th>
+                                        <th className="px-4 py-2">{t("table.actions")}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -79,7 +81,7 @@ const BrakesTypeAdmin: React.FC = () => {
                                                     onClick={() => handleRemove(type.id)}
                                                     className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-all duration-200 shadow-md text-sm"
                                                 >
-                                                    Remove
+                                                    {t("remove")}
                                                 </button>
                                             </td>
                                         </tr>

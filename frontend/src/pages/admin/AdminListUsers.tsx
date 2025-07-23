@@ -83,7 +83,7 @@ const AdminUserListPage: React.FC = () => {
 
     return (
         <div className="w-full min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 text-gray-900">
-            <main className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8 pb-8 lg:pt-0 pt-20">
+            <main className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8 pb-8 lg:pt-10 pt-20">
                 <h1 className="text-xl font-semibold mb-4">{t("title")}</h1>
 
                 <input

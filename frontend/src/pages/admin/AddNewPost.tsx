@@ -4,36 +4,12 @@ import { toast } from "react-toastify";
 import { AlignClass } from 'quill/formats/align';
 import { uploadAdminBlog } from "../../endpoints/blogs";
 import FullScreenLoader from "../../components/ui/loaders/FullScreenLoader";
+import { useTranslation } from "react-i18next";
 Quill.register(AlignClass, true);
 
 interface CustomToolbarHandlerContext {
     quill: Quill;
 }
-
-const modules = {
-    toolbar: {
-        container: [
-            [{ header: [1, 2, 3, false] }],
-            ["bold", "italic", "underline", "strike"],
-            [{ align: [] }],
-            [{ list: "ordered" }],
-            ["blockquote", "code-block"],
-            ["link", "image", "video"],
-            ["clean"],
-        ],
-        handlers: {
-            image: function (this: CustomToolbarHandlerContext) {
-                const url = prompt("Enter image URL (must end with .jpg/.png/.gif):");
-                if (url && /\.(jpg|jpeg|png|gif|webp)$/i.test(url)) {
-                    const range = this.quill.getSelection();
-                    this.quill.insertEmbed(range?.index || 0, "image", url);
-                } else if (url) {
-                    toast.error("Invalid image URL. Must end with .jpg/.png/.gif");
-                }
-            },
-        },
-    },
-};
 
 const formats = [
     'header', 'bold', 'italic', 'underline', 'strike',
@@ -59,6 +35,33 @@ const AddNewPost: React.FC = () => {
     const quillRefs = useRef<{ [lang: string]: ReactQuill | null }>({ uk: null, en: null, ru: null });
     const [isSubmitting, setIsSubmitting] = useState(false);
 
+    const { t } = useTranslation("", { keyPrefix: "blog.add" });
+
+    const modules = {
+        toolbar: {
+            container: [
+                [{ header: [1, 2, 3, false] }],
+                ["bold", "italic", "underline", "strike"],
+                [{ align: [] }],
+                [{ list: "ordered" }],
+                ["blockquote", "code-block"],
+                ["link", "image", "video"],
+                ["clean"],
+            ],
+            handlers: {
+                image: function (this: CustomToolbarHandlerContext) {
+                    const url = prompt("Enter image URL (must end with .jpg/.png/.gif):");
+                    if (url && /\.(jpg|jpeg|png|gif|webp)$/i.test(url)) {
+                        const range = this.quill.getSelection();
+                        this.quill.insertEmbed(range?.index || 0, "image", url);
+                    } else if (url) {
+                        toast.error(t("validation.invalid_image_url"))
+                    }
+                },
+            },
+        },
+    };
+
     useEffect(() => {
         Object.keys(quillRefs.current).forEach((lang) => {
             const editor = quillRefs.current[lang]?.getEditor();
@@ -69,7 +72,7 @@ const AddNewPost: React.FC = () => {
                 const types = Array.from(e.clipboardData.items).map(item => item.type);
                 if (types.includes("image/png") || types.includes("image/jpeg") || types.includes("image/gif")) {
                     e.preventDefault();
-                    toast.warn("Please insert image links instead of pasting media.");
+                    toast.warn(t("validation.no_paste_images"))
                 }
             });
         });
@@ -102,13 +105,15 @@ const AddNewPost: React.FC = () => {
             if (width === expectedWidth && height === expectedHeight) {
                 setImages((prev) => ({ ...prev, [key]: file }));
             } else {
-                toast.error(
-                    `${key.replace("_", " ").toUpperCase()} must be exactly ${expectedWidth}x${expectedHeight}px.`
-                );
+                toast.error(t("validation.invalid_dimensions", {
+                    field: key.replace("_", " ").toUpperCase(),
+                    width: expectedWidth,
+                    height: expectedHeight
+                }))
             }
         };
         img.onerror = () => {
-            toast.error("Failed to read image dimensions. Please upload a valid image file.");
+            alert("Failed to read image dimensions. Please upload a valid image file.");
         };
 
         img.src = URL.createObjectURL(file);
@@ -116,18 +121,17 @@ const AddNewPost: React.FC = () => {
 
     const handleSubmit = async () => {
         if (isSubmitting) return;
-        setIsSubmitting(true);
 
         if (!titles.uk || !titles.en || !titles.ru) {
-            toast.warn("All titles must be filled.");
+            toast.warn(t("validation.titles_required"))
             return;
         }
         if (!contents.uk || !contents.en || !contents.ru) {
-            toast.warn("All contents must be filled.");
+            toast.warn(t("validation.contents_required"))
             return;
         }
         if (Object.values(images).some((file) => file && file.size > 5 * 1024 * 1024)) {
-            toast.warn("Images must be under 5MB.");
+            toast.warn(t("validation.image_too_large"))
             return;
         }
 
@@ -146,8 +150,9 @@ const AddNewPost: React.FC = () => {
         if (images.poster) formData.append("poster", images.poster);
 
         try {
+            setIsSubmitting(true);
             await uploadAdminBlog(formData);
-            toast.success("Blog post uploaded successfully!");
+            toast.success(t("success"))
             setTitles({ uk: "", en: "", ru: "" });
             setContents({ uk: "", en: "", ru: "" });
             setImages({ banner_en: null, banner_uk: null, banner_ru: null, poster: null });
@@ -158,7 +163,7 @@ const AddNewPost: React.FC = () => {
                 }
             });
         } catch (error: any) {
-            toast.error(`Upload failed: ${error.message}`);
+            toast.error(t("error", { message: error.message }))
         } finally {
             setIsSubmitting(false)
         }
@@ -169,13 +174,13 @@ const AddNewPost: React.FC = () => {
             {isSubmitting && <FullScreenLoader />}
             <main className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8 lg:pt-8 pt-25 pb-8">
                 <div className="bg-white rounded-xl shadow-2xl p-4 sm:p-6 lg:p-8 max-w-full mx-auto border border-gray-100 space-y-6">
-                    <h1 className="text-2xl font-bold text-gray-800">Add New Blog Post</h1>
+                    <h1 className="text-2xl font-bold text-gray-800">{t("title")}</h1>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         {["banner_en", "banner_uk", "banner_ru", "poster"].map((field) => (
                             <div key={field}>
                                 <label className="block text-sm font-medium text-gray-700 capitalize">
-                                    {field.replace("_", " ")}
+                                    {t(`fields.${field}`)}
                                 </label>
                                 <input
                                     type="file"
@@ -193,7 +198,7 @@ const AddNewPost: React.FC = () => {
                         {["uk", "en", "ru"].map((lang) => (
                             <div key={lang}>
                                 <label className="block text-sm font-medium text-gray-700">
-                                    Title ({lang.toUpperCase()})
+                                    {t("titleLabel")} ({lang.toUpperCase()})
                                 </label>
                                 <input
                                     type="text"
@@ -211,7 +216,7 @@ const AddNewPost: React.FC = () => {
                         {["uk", "en", "ru"].map((lang) => (
                             <div key={lang}>
                                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                                    Content ({lang.toUpperCase()})
+                                    {t("contentLabel")} ({lang.toUpperCase()})
                                 </label>
                                 <ReactQuill
                                     ref={(el) => {
@@ -234,7 +239,7 @@ const AddNewPost: React.FC = () => {
                                 }`}
                             onClick={handleSubmit}
                         >
-                            {isSubmitting ? "Uploading..." : "Submit Post"}
+                            {isSubmitting ? t("uploading") : t("submit")}
                         </button>
                     </div>
                 </div>

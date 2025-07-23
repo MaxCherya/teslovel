@@ -45,7 +45,7 @@ const BikesMenu: React.FC<BikesMenuProps> = ({ showBikes, setShowBikes, bikes, t
                             bikes.map((bike: any) => (
                                 <li
                                     key={bike.id}
-                                    className="w-full bg-gray-50 lg:bg-transparent lg:shadow-none rounded-lg shadow-sm hover:shadow-md transition-all duration-200"
+                                    className="w-full bg-white lg:bg-transparent lg:shadow-none rounded-lg shadow-sm hover:shadow-md transition-all duration-200"
                                 >
                                     <a
                                         href={`/models/${bike.id}`}

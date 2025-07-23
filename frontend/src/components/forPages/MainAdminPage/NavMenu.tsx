@@ -22,7 +22,7 @@ const NavMenu: React.FC<{ isMenuOpen: boolean }> = ({ isMenuOpen }) => {
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 21v-8H7v8" />
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 3v5h5" />
                         </svg>
-                        Blogs
+                        {t("admin.nav.blogs")}
                     </a>
                 </li>
                 <li>

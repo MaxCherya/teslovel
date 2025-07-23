@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { deleteEnginePosition, fetchEnginePositions } from "../../endpoints/specs";
 import FullScreenLoader from "../../components/ui/loaders/FullScreenLoader";
 
@@ -11,6 +12,7 @@ interface EnginePosition {
 }
 
 const EnginePositionAdmin: React.FC = () => {
+    const { t } = useTranslation("", { keyPrefix: "admin.bike_admin.engine_position_admin" });
     const [enginePositions, setEnginePositions] = useState<EnginePosition[]>([]);
     const [loading, setLoading] = useState(true);
 
@@ -30,7 +32,7 @@ const EnginePositionAdmin: React.FC = () => {
     }, []);
 
     const handleRemove = async (id: number) => {
-        if (!window.confirm("Are you sure you want to delete this engine position?")) return;
+        if (!window.confirm(t("confirm_delete"))) return;
 
         try {
             await deleteEnginePosition(id);
@@ -42,16 +44,17 @@ const EnginePositionAdmin: React.FC = () => {
 
     return (
         <div className="w-full min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 text-gray-900 lg:mt-0 mt-18">
-
             <main className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8 pt-20 sm:pt-24 pb-8">
                 <div className="bg-white rounded-xl shadow-2xl p-4 sm:p-6 lg:p-8 max-w-full mx-auto border border-gray-100">
                     <div className="flex flex-col sm:flex-row justify-between items-center mb-4 sm:mb-6">
-                        <h2 className="text-lg sm:text-2xl font-semibold text-gray-800 tracking-tight mb-2 sm:mb-0">Current Engine Positions</h2>
+                        <h2 className="text-lg sm:text-2xl font-semibold text-gray-800 tracking-tight mb-2 sm:mb-0">
+                            {t("title")}
+                        </h2>
                         <Link
                             to="/add-engine-position-admin/"
                             className="px-4 sm:px-6 py-2 sm:py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-all duration-200 shadow-md font-medium text-sm sm:text-base"
                         >
-                            Add New Engine Position
+                            {t("add")}
                         </Link>
                     </div>
 
@@ -62,10 +65,10 @@ const EnginePositionAdmin: React.FC = () => {
                             <table className="w-full min-w-[640px]">
                                 <thead>
                                     <tr className="text-left text-gray-600">
-                                        <th className="px-4 py-2">Name (Ukrainian)</th>
-                                        <th className="px-4 py-2">Name (English)</th>
-                                        <th className="px-4 py-2">Name (Russian)</th>
-                                        <th className="px-4 py-2">Actions</th>
+                                        <th className="px-4 py-2">{t("headers.uk")}</th>
+                                        <th className="px-4 py-2">{t("headers.en")}</th>
+                                        <th className="px-4 py-2">{t("headers.ru")}</th>
+                                        <th className="px-4 py-2">{t("headers.actions")}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -79,7 +82,7 @@ const EnginePositionAdmin: React.FC = () => {
                                                     onClick={() => handleRemove(position.id)}
                                                     className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-all duration-200 shadow-md text-sm"
                                                 >
-                                                    Remove
+                                                    {t("remove")}
                                                 </button>
                                             </td>
                                         </tr>

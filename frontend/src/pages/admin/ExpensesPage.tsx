@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 import {
     deleteBikeExpense,
     fetchBikeExpenses,
@@ -10,6 +11,7 @@ import {
 import FullScreenLoader from "../../components/ui/loaders/FullScreenLoader";
 
 const ExpensesPage: React.FC = () => {
+    const { t } = useTranslation("", { keyPrefix: "admin.bike_admin.expenses_d" });
     const { bikeId } = useParams<{ bikeId: string }>();
     const [expenses, setExpenses] = useState<Expense[]>([]);
     const [page, setPage] = useState(1);
@@ -28,7 +30,7 @@ const ExpensesPage: React.FC = () => {
             setExpenses(data.results);
             setTotalPages(Math.ceil(data.count / 10));
         } catch {
-            toast.error("Failed to load expenses.");
+            toast.error(t("toast.load_error"));
         } finally {
             setLoading(false);
         }
@@ -39,18 +41,18 @@ const ExpensesPage: React.FC = () => {
     }, [page, bikeId]);
 
     const handleDelete = async (id: number) => {
-        if (!window.confirm("Are you sure you want to delete this expense?")) return;
+        if (!window.confirm(t("toast.delete_confirm"))) return;
         try {
             await deleteBikeExpense(id);
             setExpenses((prev) => prev.filter((exp) => exp.id !== id));
-            toast.success("Expense deleted successfully.");
+            toast.success(t("toast.delete_success"));
         } catch (err: any) {
-            toast.error(err.message || "Failed to delete expense.");
+            toast.error(err.message || t("toast.delete_error"));
         }
     };
 
     const handleAddExpense = async () => {
-        if (!bikeId || !description || !amount) return toast.error("Fill all fields.");
+        if (!bikeId || !description || !amount) return toast.error(t("toast.fill_error"));
 
         try {
             await uploadBikeExpense({
@@ -58,14 +60,14 @@ const ExpensesPage: React.FC = () => {
                 description,
                 amount,
             });
-            toast.success("Expense added.");
+            toast.success(t("toast.add_success"));
             setIsModalOpen(false);
             setDescription("");
             setAmount("");
             loadExpenses(1);
             setPage(1);
         } catch {
-            toast.error("Failed to add expense.");
+            toast.error(t("toast.add_error"));
         }
     };
 
@@ -73,13 +75,13 @@ const ExpensesPage: React.FC = () => {
         <div className="w-full min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 text-gray-900">
             <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:pt-10 pt-20">
                 <div className="bg-white shadow-lg rounded-xl p-6 relative">
-                    <h2 className="text-xl font-bold mb-6">Expenses for Bike #{bikeId}</h2>
+                    <h2 className="text-xl font-bold mb-6">{t("title", { bikeId })}</h2>
 
                     <button
                         onClick={() => setIsModalOpen(true)}
                         className="mb-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 text-sm"
                     >
-                        ➕ Add Expense
+                        {t("add_button")}
                     </button>
 
                     {loading ? (
@@ -89,12 +91,12 @@ const ExpensesPage: React.FC = () => {
                             <table className="w-full min-w-[800px] text-sm">
                                 <thead>
                                     <tr className="text-left text-gray-600 border-b">
-                                        <th className="px-4 py-2">ID</th>
-                                        <th className="px-4 py-2">Bike</th>
-                                        <th className="px-4 py-2">Description</th>
-                                        <th className="px-4 py-2">Amount</th>
-                                        <th className="px-4 py-2">Date</th>
-                                        <th className="px-4 py-2">Actions</th>
+                                        <th className="px-4 py-2">{t("table.id")}</th>
+                                        <th className="px-4 py-2">{t("table.bike")}</th>
+                                        <th className="px-4 py-2">{t("table.description")}</th>
+                                        <th className="px-4 py-2">{t("table.amount")}</th>
+                                        <th className="px-4 py-2">{t("table.date")}</th>
+                                        <th className="px-4 py-2">{t("table.actions")}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -110,7 +112,7 @@ const ExpensesPage: React.FC = () => {
                                                     onClick={() => handleDelete(exp.id)}
                                                     className="bg-red-600 cursor-pointer text-white px-3 py-1 rounded hover:bg-red-700 text-xs"
                                                 >
-                                                    Delete
+                                                    {t("table.actions")}
                                                 </button>
                                             </td>
                                         </tr>
@@ -127,15 +129,15 @@ const ExpensesPage: React.FC = () => {
                             disabled={page === 1}
                             className="px-3 py-1 border rounded disabled:opacity-50"
                         >
-                            Prev
+                            {t("pagination.prev")}
                         </button>
-                        <span className="text-sm">Page {page} of {totalPages}</span>
+                        <span className="text-sm">{t("pagination.page", { current: page, total: totalPages })}</span>
                         <button
                             onClick={() => setPage((p) => Math.min(p + 1, totalPages))}
                             disabled={page === totalPages}
                             className="px-3 py-1 border rounded disabled:opacity-50"
                         >
-                            Next
+                            {t("pagination.next")}
                         </button>
                     </div>
 
@@ -143,27 +145,27 @@ const ExpensesPage: React.FC = () => {
                     {isModalOpen && (
                         <div className="fixed inset-0 z-50 bg-black bg-opacity-40 flex items-center justify-center">
                             <div className="bg-white rounded-lg shadow-lg p-6 w-[90%] max-w-md">
-                                <h3 className="text-lg font-semibold mb-4">Add Expense</h3>
+                                <h3 className="text-lg font-semibold mb-4">{t("modal.title")}</h3>
 
                                 <div className="mb-4">
-                                    <label className="block mb-1 text-sm font-medium">Description</label>
+                                    <label className="block mb-1 text-sm font-medium">{t("modal.description_label")}</label>
                                     <input
                                         value={description}
                                         onChange={(e) => setDescription(e.target.value)}
                                         className="w-full border px-3 py-2 rounded"
-                                        placeholder="What was the expense for?"
+                                        placeholder={t("modal.description_placeholder")}
                                     />
                                 </div>
 
                                 <div className="mb-4">
-                                    <label className="block mb-1 text-sm font-medium">Amount (₴)</label>
+                                    <label className="block mb-1 text-sm font-medium">{t("modal.amount_label")}</label>
                                     <input
                                         type="number"
                                         step="0.01"
                                         value={amount}
                                         onChange={(e) => setAmount(e.target.value)}
                                         className="w-full border px-3 py-2 rounded"
-                                        placeholder="0.00"
+                                        placeholder={t("modal.amount_placeholder")}
                                     />
                                 </div>
 
@@ -172,13 +174,13 @@ const ExpensesPage: React.FC = () => {
                                         onClick={() => setIsModalOpen(false)}
                                         className="px-4 cursor-pointer py-2 rounded border"
                                     >
-                                        Cancel
+                                        {t("modal.cancel")}
                                     </button>
                                     <button
                                         onClick={handleAddExpense}
                                         className="px-4 cursor-pointer py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
                                     >
-                                        Save
+                                        {t("modal.save")}
                                     </button>
                                 </div>
                             </div>

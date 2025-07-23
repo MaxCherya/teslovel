@@ -11,6 +11,8 @@ const Blog: React.FC = () => {
     const [hasMore, setHasMore] = useState(false);
     const lang = i18n.language as "uk" | "en" | "ru";
 
+    const { t } = useTranslation();
+
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -74,9 +76,7 @@ const Blog: React.FC = () => {
 
             {hasMore && (
                 <div className="text-center mt-8">
-                    <GeneralButton type="show" label="Load More"
-                        onClick={handleLoadMore}
-                    />
+                    <GeneralButton type="show" label={t("blog.load_more")} onClick={handleLoadMore} />
                 </div>
             )}
         </div>

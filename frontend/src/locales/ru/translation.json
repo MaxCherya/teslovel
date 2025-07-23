@@ -1,6 +1,241 @@
 {
+    "blog": {
+        "load_more": "Загрузить ещё",
+        "notFound": "Блог не найден.",
+        "add": {
+            "title": "Добавить новый пост в блог",
+            "titleLabel": "Заголовок",
+            "contentLabel": "Контент",
+            "submit": "Опубликовать пост",
+            "uploading": "Загрузка...",
+            "success": "Пост успешно опубликован!",
+            "error": "Ошибка публикации: {{message}}",
+            "validation": {
+                "titles_required": "Все заголовки должны быть заполнены.",
+                "contents_required": "Все поля контента должны быть заполнены.",
+                "image_too_large": "Изображения должны быть меньше 5MB.",
+                "invalid_dimensions": "{{field}} должно быть точно {{width}}x{{height}} пикселей.",
+                "no_paste_images": "Пожалуйста, вставляйте только ссылки на изображения, а не сами файлы.",
+                "invalid_image_url": "Недопустимый URL изображения. Должен заканчиваться на .jpg/.png/.gif"
+            },
+            "fields": {
+                "banner_en": "Баннер EN (1584x396)",
+                "banner_uk": "Баннер UK (1584x396)",
+                "banner_ru": "Баннер RU (1584x396)",
+                "poster": "Постер (500x500)"
+            }
+        }
+    },
     "admin": {
         "bike_admin": {
+            "order_requests": {
+                "title": "Ожидающие заказы",
+                "columns": {
+                    "order_id": "ID заказа",
+                    "bike": "Велосипед",
+                    "name": "Имя клиента",
+                    "phone": "Телефон",
+                    "amount": "Сумма",
+                    "start": "Начало",
+                    "end": "Конец",
+                    "comments": "Комментарии",
+                    "created_at": "Создано",
+                    "status": "Статус",
+                    "actions": "Действия"
+                },
+                "status": {
+                    "validated": "Подтверждено",
+                    "rejected": "Отклонено",
+                    "pending": "Ожидает"
+                },
+                "buttons": {
+                    "validate": "Подтвердить",
+                    "reject": "Отклонить"
+                },
+                "pagination": {
+                    "prev": "Назад",
+                    "next": "Далее",
+                    "page": "Страница",
+                    "of": "из"
+                },
+                "toast": {
+                    "validated": "Заказ успешно подтвержден!",
+                    "rejected": "Заказ отклонен.",
+                    "failed_validate": "Не удалось подтвердить заказ.",
+                    "failed_reject": "Не удалось отклонить заказ."
+                },
+                "none": "Нет"
+            },
+            "expenses_d": {
+                "title": "Расходы на велосипед №{{bikeId}}",
+                "add_button": "➕ Добавить расход",
+                "table": {
+                    "id": "ID",
+                    "bike": "Велосипед",
+                    "description": "Описание",
+                    "amount": "Сумма",
+                    "date": "Дата",
+                    "actions": "Действия"
+                },
+                "pagination": {
+                    "prev": "Назад",
+                    "next": "Вперёд",
+                    "page": "Страница {{current}} из {{total}}"
+                },
+                "modal": {
+                    "title": "Добавить расход",
+                    "description_label": "Описание",
+                    "description_placeholder": "На что был расход?",
+                    "amount_label": "Сумма (₴)",
+                    "amount_placeholder": "0.00",
+                    "cancel": "Отмена",
+                    "save": "Сохранить"
+                },
+                "toast": {
+                    "load_error": "Не удалось загрузить расходы.",
+                    "delete_confirm": "Вы уверены, что хотите удалить этот расход?",
+                    "delete_success": "Расход успешно удалён.",
+                    "delete_error": "Не удалось удалить расход.",
+                    "fill_error": "Заполните все поля.",
+                    "add_success": "Расход добавлен.",
+                    "add_error": "Не удалось добавить расход."
+                }
+            },
+            "engine_position_admin": {
+                "title": "Текущие позиции двигателя",
+                "add": "Добавить новую позицию двигателя",
+                "remove": "Удалить",
+                "confirm_delete": "Вы уверены, что хотите удалить эту позицию двигателя?",
+                "headers": {
+                    "uk": "Название (украинский)",
+                    "en": "Название (английский)",
+                    "ru": "Название (русский)",
+                    "actions": "Действия"
+                }
+            },
+            "orders": {
+                "title": "Текущие заказы (подтвержденные или отклоненные)",
+                "headers": {
+                    "order_id": "ID заказа",
+                    "bike": "Велосипед",
+                    "name": "Имя клиента",
+                    "phone": "Телефон",
+                    "amount": "Сумма",
+                    "start": "Начало",
+                    "end": "Конец",
+                    "comments": "Комментарии",
+                    "created": "Создано",
+                    "status": "Статус",
+                    "actions": "Действия"
+                },
+                "status": {
+                    "validated": "Подтверждено",
+                    "rejected": "Отклонено"
+                },
+                "actions": {
+                    "reset": "Сбросить"
+                },
+                "pagination": {
+                    "prev": "Назад",
+                    "next": "Вперед",
+                    "page": "Страница",
+                    "of": "из"
+                },
+                "none": "Нет",
+                "errors": {
+                    "fetch": "Не удалось загрузить заказы",
+                    "reset": "Не удалось сбросить статус."
+                },
+                "success": {
+                    "reset": "Статус заказа сброшен."
+                }
+            },
+            "contact_requests": {
+                "title": "Запросы на связь",
+                "headers": {
+                    "id": "ID",
+                    "name": "Имя",
+                    "phone": "Телефон",
+                    "notes": "Заметки",
+                    "created": "Создано",
+                    "status": "Статус",
+                    "actions": "Действия"
+                },
+                "status": {
+                    "contacted": "Связались",
+                    "pending": "В ожидании"
+                },
+                "buttons": {
+                    "mark_contacted": "Отметить как связались",
+                    "reset": "Сбросить"
+                },
+                "toast": {
+                    "fetch_error": "Не удалось загрузить запросы",
+                    "marked_contacted": "Отмечено как связались.",
+                    "update_failed": "Не удалось обновить статус.",
+                    "reset_success": "Статус сброшен.",
+                    "reset_failed": "Не удалось сбросить статус."
+                },
+                "pagination": {
+                    "prev": "Назад",
+                    "next": "Вперёд",
+                    "page": "Страница",
+                    "of": "из"
+                }
+            },
+            "catalog_admin": {
+                "add_new_bike": "Добавить новый велосипед",
+                "manage_motor_positions": "Управление положением моторов",
+                "manage_brake_types": "Управление типами тормозов",
+                "manage_battery_types": "Управление типами батарей"
+            },
+            "brakes_type_admin": {
+                "title": "Текущие типы тормозов",
+                "add": "Добавить новый тип тормозов",
+                "remove": "Удалить",
+                "confirm_delete": "Вы уверены, что хотите удалить этот тип тормозов?",
+                "table": {
+                    "name_uk": "Название (украинский)",
+                    "name_en": "Название (английский)",
+                    "name_ru": "Название (русский)",
+                    "actions": "Действия"
+                }
+            },
+            "blogs_admin": {
+                "title": "Управление блогами",
+                "add": "Добавить новый блог",
+                "no_blogs": "Блоги отсутствуют.",
+                "delete": "Удалить",
+                "pagination": {
+                    "prev": "Назад",
+                    "next": "Вперёд",
+                    "page_info": "Страница {{current}} из {{total}}"
+                },
+                "otp_modal": {
+                    "title": "Введите OTP для подтверждения удаления",
+                    "placeholder": "Введите код OTP",
+                    "cancel": "Отмена",
+                    "submit": "Удалить блог",
+                    "error": "Не удалось удалить блог"
+                }
+            },
+            "rides_d": {
+                "title": "Поездки для велосипеда №{{id}}",
+                "load_failed": "Не удалось загрузить поездки.",
+                "columns": {
+                    "id": "ID",
+                    "client": "Клиент",
+                    "phone": "Телефон",
+                    "start": "Начало",
+                    "end": "Конец",
+                    "amount": "Сумма"
+                },
+                "pagination": {
+                    "prev": "Назад",
+                    "next": "Вперёд",
+                    "page_info": "Страница {{page}} из {{total}}"
+                }
+            },
             "stats": {
                 "total_rides": "Всего поездок",
                 "total_revenue": "Общий доход",
@@ -227,7 +462,8 @@
             "users": "Пользователи",
             "orders": "Заказы",
             "contactRequests": "Запросы на связь",
-            "orderRequests": "Запросы на аренду"
+            "orderRequests": "Запросы на аренду",
+            "blogs": "Блоги"
         },
         "topClients": {
             "title": "Топ Клиентов",

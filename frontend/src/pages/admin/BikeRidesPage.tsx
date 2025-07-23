@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { fetchBikeRides, type Ride } from "../../endpoints/BookPage";
 import FullScreenLoader from "../../components/ui/loaders/FullScreenLoader";
+import { useTranslation } from "react-i18next";
 
 const RidesPage: React.FC = () => {
     const { bikeId } = useParams<{ bikeId: string }>();
@@ -10,6 +11,8 @@ const RidesPage: React.FC = () => {
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [loading, setLoading] = useState(false);
+
+    const { t } = useTranslation("", { keyPrefix: "admin.bike_admin.rides_d" });
 
     const loadRides = async (pageNum: number) => {
         if (!bikeId) return;
@@ -19,7 +22,7 @@ const RidesPage: React.FC = () => {
             setRides(data.results);
             setTotalPages(Math.ceil(data.count / 10));
         } catch {
-            toast.error("Failed to load rides.");
+            toast.error(t("load_failed"));
         } finally {
             setLoading(false);
         }
@@ -33,7 +36,9 @@ const RidesPage: React.FC = () => {
         <div className="w-full min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 text-gray-900">
             <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:pt-10 pt-20">
                 <div className="bg-white shadow-lg rounded-xl p-6 relative">
-                    <h2 className="text-xl font-bold mb-6">Rides for Bike #{bikeId}</h2>
+                    <h2 className="text-xl font-bold mb-6">
+                        {t("title", { id: bikeId })}
+                    </h2>
 
                     {loading ? (
                         <FullScreenLoader />
@@ -42,12 +47,12 @@ const RidesPage: React.FC = () => {
                             <table className="w-full min-w-[800px] text-sm">
                                 <thead>
                                     <tr className="text-left text-gray-600 border-b">
-                                        <th className="px-4 py-2">ID</th>
-                                        <th className="px-4 py-2">Client</th>
-                                        <th className="px-4 py-2">Phone</th>
-                                        <th className="px-4 py-2">Start</th>
-                                        <th className="px-4 py-2">End</th>
-                                        <th className="px-4 py-2">Amount</th>
+                                        <th className="px-4 py-2">{t("columns.id")}</th>
+                                        <th className="px-4 py-2">{t("columns.client")}</th>
+                                        <th className="px-4 py-2">{t("columns.phone")}</th>
+                                        <th className="px-4 py-2">{t("columns.start")}</th>
+                                        <th className="px-4 py-2">{t("columns.end")}</th>
+                                        <th className="px-4 py-2">{t("columns.amount")}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -73,15 +78,17 @@ const RidesPage: React.FC = () => {
                             disabled={page === 1}
                             className="px-3 py-1 border rounded disabled:opacity-50"
                         >
-                            Prev
+                            {t("pagination.prev")}
                         </button>
-                        <span className="text-sm">Page {page} of {totalPages}</span>
+                        <span className="text-sm">
+                            {t("pagination.page_info", { page, total: totalPages })}
+                        </span>
                         <button
                             onClick={() => setPage((p) => Math.min(p + 1, totalPages))}
                             disabled={page === totalPages}
                             className="px-3 py-1 border rounded disabled:opacity-50"
                         >
-                            Next
+                            {t("pagination.next")}
                         </button>
                     </div>
                 </div>

@@ -8,7 +8,7 @@ import FullScreenLoader from "../../components/ui/loaders/FullScreenLoader";
 
 const BlogPage: React.FC = () => {
     const { blogId } = useParams<{ blogId: string }>();
-    const { i18n } = useTranslation();
+    const { t, i18n } = useTranslation();
     const lang = i18n.language as "en" | "uk" | "ru";
 
     const [post, setPost] = useState<AdminBlog | null>(null);
@@ -29,13 +29,12 @@ const BlogPage: React.FC = () => {
         loadPost();
     }, [blogId]);
 
-    if (loading) {
-        return <FullScreenLoader />;
-    }
-
-    if (!post) {
-        return <div className="text-center py-16 text-red-500">Blog post not found.</div>;
-    }
+    if (loading) return <FullScreenLoader />;
+    if (!post) return (
+        <div className="text-center py-16 text-red-500">
+            {t("blog.notFound")}
+        </div>
+    );
 
     const title = post[`title_${lang}`];
     const content = post[`content_${lang}`];
@@ -43,8 +42,8 @@ const BlogPage: React.FC = () => {
 
     return (
         <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 text-gray-900 px-4 lg:px-24 py-10">
-            <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-md overflow-hidden lg:mt-0 mt-15">
-                <img src={banner} alt="Banner" className="w-full h-[300px] object-cover" />
+            <div className="max-w-7xl mx-auto bg-white rounded-xl shadow-md overflow-hidden lg:mt-0 mt-15">
+                <img src={banner} alt="Banner" className="w-full object-contain" />
                 <div className="p-6 space-y-4">
                     <h1 className="text-3xl font-bold">{title}</h1>
                     <p className="text-sm text-gray-500">
@@ -70,7 +69,7 @@ const BlogPage: React.FC = () => {
                                 d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
                             />
                         </svg>
-                        {post.views_count && post.views_count.toLocaleString()}
+                        {post.views_count?.toLocaleString()}
                     </p>
                     <div className="prose max-w-none ql-editor">
                         {parse(content)}

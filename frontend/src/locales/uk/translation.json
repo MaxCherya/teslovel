@@ -1,6 +1,241 @@
 {
+    "blog": {
+        "load_more": "Завантажити ще",
+        "notFound": "Блог не знайдено.",
+        "add": {
+            "title": "Додати новий допис у блог",
+            "titleLabel": "Заголовок",
+            "contentLabel": "Контент",
+            "submit": "Опублікувати допис",
+            "uploading": "Завантаження...",
+            "success": "Блог успішно опубліковано!",
+            "error": "Помилка публікації: {{message}}",
+            "validation": {
+                "titles_required": "Усі заголовки мають бути заповнені.",
+                "contents_required": "Усі контенти мають бути заповнені.",
+                "image_too_large": "Зображення мають бути розміром до 5MB.",
+                "invalid_dimensions": "{{field}} має бути точно {{width}}x{{height}} пікселів.",
+                "no_paste_images": "Будь ласка, вставляйте лише посилання на зображення, а не самі файли.",
+                "invalid_image_url": "Недійсне посилання на зображення. Має закінчуватись на .jpg/.png/.gif"
+            },
+            "fields": {
+                "banner_en": "Банер EN (1584x396)",
+                "banner_uk": "Банер UK (1584x396)",
+                "banner_ru": "Банер RU (1584x396)",
+                "poster": "Постер (500x500)"
+            }
+        }
+    },
     "admin": {
         "bike_admin": {
+            "order_requests": {
+                "title": "Запити на замовлення, що очікують",
+                "columns": {
+                    "order_id": "ID замовлення",
+                    "bike": "Велосипед",
+                    "name": "Ім'я клієнта",
+                    "phone": "Телефон",
+                    "amount": "Сума",
+                    "start": "Початок",
+                    "end": "Кінець",
+                    "comments": "Коментарі",
+                    "created_at": "Створено",
+                    "status": "Статус",
+                    "actions": "Дії"
+                },
+                "status": {
+                    "validated": "Підтверджено",
+                    "rejected": "Відхилено",
+                    "pending": "Очікує"
+                },
+                "buttons": {
+                    "validate": "Підтвердити",
+                    "reject": "Відхилити"
+                },
+                "pagination": {
+                    "prev": "Назад",
+                    "next": "Далі",
+                    "page": "Сторінка",
+                    "of": "з"
+                },
+                "toast": {
+                    "validated": "Замовлення підтверджено!",
+                    "rejected": "Замовлення відхилено.",
+                    "failed_validate": "Не вдалося підтвердити замовлення.",
+                    "failed_reject": "Не вдалося відхилити замовлення."
+                },
+                "none": "Немає"
+            },
+            "expenses_d": {
+                "title": "Витрати для велосипеда №{{bikeId}}",
+                "add_button": "➕ Додати витрату",
+                "table": {
+                    "id": "ID",
+                    "bike": "Велосипед",
+                    "description": "Опис",
+                    "amount": "Сума",
+                    "date": "Дата",
+                    "actions": "Дії"
+                },
+                "pagination": {
+                    "prev": "Назад",
+                    "next": "Вперед",
+                    "page": "Сторінка {{current}} з {{total}}"
+                },
+                "modal": {
+                    "title": "Додати витрату",
+                    "description_label": "Опис",
+                    "description_placeholder": "На що була витрата?",
+                    "amount_label": "Сума (₴)",
+                    "amount_placeholder": "0.00",
+                    "cancel": "Скасувати",
+                    "save": "Зберегти"
+                },
+                "toast": {
+                    "load_error": "Не вдалося завантажити витрати.",
+                    "delete_confirm": "Ви впевнені, що хочете видалити цю витрату?",
+                    "delete_success": "Витрату успішно видалено.",
+                    "delete_error": "Не вдалося видалити витрату.",
+                    "fill_error": "Заповніть всі поля.",
+                    "add_success": "Витрату додано.",
+                    "add_error": "Не вдалося додати витрату."
+                }
+            },
+            "engine_position_admin": {
+                "title": "Поточні позиції двигуна",
+                "add": "Додати нову позицію двигуна",
+                "remove": "Видалити",
+                "confirm_delete": "Ви впевнені, що хочете видалити цю позицію двигуна?",
+                "headers": {
+                    "uk": "Назва (українською)",
+                    "en": "Назва (англійською)",
+                    "ru": "Назва (російською)",
+                    "actions": "Дії"
+                }
+            },
+            "orders": {
+                "title": "Поточні замовлення (підтверджені або відхилені)",
+                "headers": {
+                    "order_id": "ID замовлення",
+                    "bike": "Велосипед",
+                    "name": "Ім’я клієнта",
+                    "phone": "Телефон",
+                    "amount": "Сума",
+                    "start": "Початок",
+                    "end": "Кінець",
+                    "comments": "Коментарі",
+                    "created": "Створено",
+                    "status": "Статус",
+                    "actions": "Дії"
+                },
+                "status": {
+                    "validated": "Підтверджено",
+                    "rejected": "Відхилено"
+                },
+                "actions": {
+                    "reset": "Скинути"
+                },
+                "pagination": {
+                    "prev": "Попередня",
+                    "next": "Наступна",
+                    "page": "Сторінка",
+                    "of": "з"
+                },
+                "none": "Немає",
+                "errors": {
+                    "fetch": "Не вдалося завантажити замовлення",
+                    "reset": "Не вдалося скинути статус."
+                },
+                "success": {
+                    "reset": "Статус замовлення скинуто."
+                }
+            },
+            "contact_requests": {
+                "title": "Запити на зв'язок",
+                "headers": {
+                    "id": "ID",
+                    "name": "Ім'я",
+                    "phone": "Телефон",
+                    "notes": "Примітки",
+                    "created": "Створено",
+                    "status": "Статус",
+                    "actions": "Дії"
+                },
+                "status": {
+                    "contacted": "Зв'язок встановлено",
+                    "pending": "Очікує"
+                },
+                "buttons": {
+                    "mark_contacted": "Позначити як зв'язались",
+                    "reset": "Скинути"
+                },
+                "toast": {
+                    "fetch_error": "Не вдалося завантажити запити",
+                    "marked_contacted": "Позначено як зв'язались.",
+                    "update_failed": "Не вдалося оновити статус.",
+                    "reset_success": "Статус скинуто.",
+                    "reset_failed": "Не вдалося скинути статус."
+                },
+                "pagination": {
+                    "prev": "Назад",
+                    "next": "Далі",
+                    "page": "Сторінка",
+                    "of": "з"
+                }
+            },
+            "catalog_admin": {
+                "add_new_bike": "Додати новий велосипед",
+                "manage_motor_positions": "Керування розташуванням моторів",
+                "manage_brake_types": "Керування типами гальм",
+                "manage_battery_types": "Керування типами батарей"
+            },
+            "brakes_type_admin": {
+                "title": "Поточні типи гальм",
+                "add": "Додати новий тип гальм",
+                "remove": "Видалити",
+                "confirm_delete": "Ви впевнені, що хочете видалити цей тип гальм?",
+                "table": {
+                    "name_uk": "Назва (українською)",
+                    "name_en": "Назва (англійською)",
+                    "name_ru": "Назва (російською)",
+                    "actions": "Дії"
+                }
+            },
+            "blogs_admin": {
+                "title": "Управління блогами",
+                "add": "Додати новий блог",
+                "no_blogs": "Блогів не знайдено.",
+                "delete": "Видалити",
+                "pagination": {
+                    "prev": "Назад",
+                    "next": "Далі",
+                    "page_info": "Сторінка {{current}} з {{total}}"
+                },
+                "otp_modal": {
+                    "title": "Введіть OTP для підтвердження видалення",
+                    "placeholder": "Введіть код OTP",
+                    "cancel": "Скасувати",
+                    "submit": "Видалити блог",
+                    "error": "Не вдалося видалити блог"
+                }
+            },
+            "rides_d": {
+                "title": "Поїздки для велосипеда №{{id}}",
+                "load_failed": "Не вдалося завантажити поїздки.",
+                "columns": {
+                    "id": "ID",
+                    "client": "Клієнт",
+                    "phone": "Телефон",
+                    "start": "Початок",
+                    "end": "Кінець",
+                    "amount": "Сума"
+                },
+                "pagination": {
+                    "prev": "Назад",
+                    "next": "Далі",
+                    "page_info": "Сторінка {{page}} з {{total}}"
+                }
+            },
             "stats": {
                 "total_rides": "Усього поїздок",
                 "total_revenue": "Загальний дохід",
@@ -227,7 +462,8 @@
             "users": "Користувачі",
             "orders": "Замовлення",
             "contactRequests": "Запити на зв'язок",
-            "orderRequests": "Запити на оренду"
+            "orderRequests": "Запити на оренду",
+            "blogs": "Блоги"
         },
         "topClients": {
             "title": "Топ Клієнтів",

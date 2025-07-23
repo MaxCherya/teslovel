@@ -4,6 +4,7 @@ import FullScreenLoader from "../../components/ui/loaders/FullScreenLoader";
 import { check2FAStatus } from "../../endpoints/auth";
 import { deleteAdminBlog, fetchAdminBlogs } from "../../endpoints/blogs";
 import i18n from "../../locales";
+import { useTranslation } from "react-i18next";
 
 const BlogsAdmin: React.FC = () => {
     const navigate = useNavigate();
@@ -16,6 +17,8 @@ const BlogsAdmin: React.FC = () => {
     const [lang, setLang] = useState<'uk' | 'en' | 'ru'>(i18n.language as 'uk' | 'en' | 'ru');
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
+
+    const { t } = useTranslation("", { keyPrefix: "admin.bike_admin.blogs_admin" });
 
     useEffect(() => {
         const onLanguageChanged = (lng: string) => {
@@ -91,18 +94,18 @@ const BlogsAdmin: React.FC = () => {
                 <div className="bg-white rounded-xl shadow-2xl p-4 sm:p-6 lg:p-8 max-w-full mx-auto border border-gray-100 space-y-6">
                     <div className="flex items-center justify-between">
                         <h2 className="text-lg sm:text-2xl font-semibold text-gray-800 tracking-tight">
-                            Blog Management
+                            {t("title")}
                         </h2>
                         <button
                             onClick={handleAddBlog}
                             className="bg-blue-600 text-white font-medium py-2 px-4 rounded-lg hover:bg-blue-700"
                         >
-                            Add New Blog
+                            {t("add")}
                         </button>
                     </div>
                     <div className="space-y-4">
                         {blogs.length === 0 ? (
-                            <p className="text-gray-600">No blogs available.</p>
+                            <p className="text-gray-600">{t("no_blogs")}</p>
                         ) : (
                             <ul className="space-y-4">
                                 {blogs.map((blog) => {
@@ -134,7 +137,7 @@ const BlogsAdmin: React.FC = () => {
                                                 onClick={() => handleRemoveBlog(blog.id)}
                                                 className="mt-2 sm:mt-0 bg-red-600 text-white font-medium py-1 px-3 rounded-lg hover:bg-red-700"
                                             >
-                                                Delete
+                                                {t("delete")}
                                             </button>
                                         </li>
                                     );
@@ -152,32 +155,32 @@ const BlogsAdmin: React.FC = () => {
                     onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
                     className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50"
                 >
-                    Prev
+                    {t("pagination.prev")}
                 </button>
                 <span className="text-gray-700">
-                    Page {currentPage} of {totalPages}
+                    {t("pagination.page_info", { current: currentPage, total: totalPages })}
                 </span>
                 <button
                     disabled={currentPage === totalPages}
                     onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
                     className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50"
                 >
-                    Next
+                    {t("pagination.next")}
                 </button>
             </div>
 
             {showOtpModal && (
                 <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50">
                     <div className="bg-white p-6 rounded-xl shadow-xl w-full max-w-md">
-                        <h3 className="text-lg font-bold mb-4">Enter OTP to confirm deletion</h3>
+                        <h3 className="text-lg font-bold mb-4">{t("otp_modal.title")}</h3>
                         <input
                             type="text"
                             value={otpCode}
                             onChange={(e) => setOtpCode(e.target.value)}
                             className="w-full border border-gray-300 rounded-lg px-4 py-2 mb-3"
-                            placeholder="Enter OTP code"
+                            placeholder={t("otp_modal.placeholder")}
                         />
-                        {errorMsg && <p className="text-sm text-red-500 mb-2">{errorMsg}</p>}
+                        {errorMsg && <p className="text-sm text-red-500 mb-2">{t("otp_modal.error")}</p>}
                         <div className="flex justify-end space-x-2">
                             <button
                                 onClick={() => {
@@ -188,13 +191,13 @@ const BlogsAdmin: React.FC = () => {
                                 }}
                                 className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-2 px-4 rounded-lg"
                             >
-                                Cancel
+                                {t("otp_modal.cancel")}
                             </button>
                             <button
                                 onClick={handleOtpSubmit}
                                 className="bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-lg"
                             >
-                                Delete Blog
+                                {t("otp_modal.submit")}
                             </button>
                         </div>
                     </div>

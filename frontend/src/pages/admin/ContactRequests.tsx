@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
-import { fetchContactRequests, markContactRequestContacted, resetContactRequestStatus } from "../../endpoints/ContactsMenu";
+import {
+    fetchContactRequests,
+    markContactRequestContacted,
+    resetContactRequestStatus,
+} from "../../endpoints/ContactsMenu";
 
 interface ContactRequest {
     id: number;
@@ -12,6 +17,7 @@ interface ContactRequest {
 }
 
 const ContactRequests: React.FC = () => {
+    const { t } = useTranslation("", { keyPrefix: "admin.bike_admin.contact_requests" });
     const [contacts, setContacts] = useState<ContactRequest[]>([]);
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
@@ -22,7 +28,7 @@ const ContactRequests: React.FC = () => {
             setContacts(data.results);
             setTotalPages(Math.ceil(data.count / 10));
         } catch (err) {
-            toast.error("Failed to fetch contact requests");
+            toast.error(t("toast.fetch_error"));
         }
     };
 
@@ -36,9 +42,9 @@ const ContactRequests: React.FC = () => {
             setContacts((prev) =>
                 prev.map((c) => (c.id === id ? { ...c, is_contacted: true } : c))
             );
-            toast.success("Marked as contacted.");
+            toast.success(t("toast.marked_contacted"));
         } catch {
-            toast.error("Failed to update status.");
+            toast.error(t("toast.update_failed"));
         }
     };
 
@@ -48,9 +54,9 @@ const ContactRequests: React.FC = () => {
             setContacts((prev) =>
                 prev.map((c) => (c.id === id ? { ...c, is_contacted: false } : c))
             );
-            toast.success("Status reset.");
+            toast.success(t("toast.reset_success"));
         } catch {
-            toast.error("Failed to reset status.");
+            toast.error(t("toast.reset_failed"));
         }
     };
 
@@ -59,20 +65,20 @@ const ContactRequests: React.FC = () => {
             <main className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8 lg:pt-8 pt-25 pb-8">
                 <div className="bg-white rounded-xl shadow-2xl p-4 sm:p-6 lg:p-8 max-w-full mx-auto border border-gray-100">
                     <h2 className="text-lg sm:text-2xl font-semibold text-gray-800 mb-6 tracking-tight">
-                        Contact Requests
+                        {t("title")}
                     </h2>
 
                     <div className="overflow-x-auto">
                         <table className="w-full min-w-[800px]">
                             <thead>
                                 <tr className="text-left text-gray-600">
-                                    <th className="px-4 py-3 text-sm font-medium">ID</th>
-                                    <th className="px-4 py-3 text-sm font-medium">Name</th>
-                                    <th className="px-4 py-3 text-sm font-medium">Phone</th>
-                                    <th className="px-4 py-3 text-sm font-medium">Notes</th>
-                                    <th className="px-4 py-3 text-sm font-medium">Created</th>
-                                    <th className="px-4 py-3 text-sm font-medium">Status</th>
-                                    <th className="px-4 py-3 text-sm font-medium">Actions</th>
+                                    <th className="px-4 py-3 text-sm font-medium">{t("headers.id")}</th>
+                                    <th className="px-4 py-3 text-sm font-medium">{t("headers.name")}</th>
+                                    <th className="px-4 py-3 text-sm font-medium">{t("headers.phone")}</th>
+                                    <th className="px-4 py-3 text-sm font-medium">{t("headers.notes")}</th>
+                                    <th className="px-4 py-3 text-sm font-medium">{t("headers.created")}</th>
+                                    <th className="px-4 py-3 text-sm font-medium">{t("headers.status")}</th>
+                                    <th className="px-4 py-3 text-sm font-medium">{t("headers.actions")}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -86,12 +92,14 @@ const ContactRequests: React.FC = () => {
                                             </a>
                                         </td>
                                         <td className="px-4 py-3 text-sm">{c.notes || "—"}</td>
-                                        <td className="px-4 py-3 text-sm">{new Date(c.created_at).toLocaleString()}</td>
+                                        <td className="px-4 py-3 text-sm">
+                                            {new Date(c.created_at).toLocaleString()}
+                                        </td>
                                         <td className="px-4 py-3 text-sm">
                                             {c.is_contacted ? (
-                                                <span className="text-green-600">Contacted</span>
+                                                <span className="text-green-600">{t("status.contacted")}</span>
                                             ) : (
-                                                <span className="text-yellow-600">Pending</span>
+                                                <span className="text-yellow-600">{t("status.pending")}</span>
                                             )}
                                         </td>
                                         <td className="px-4 py-3 text-sm">
@@ -100,14 +108,14 @@ const ContactRequests: React.FC = () => {
                                                     onClick={() => handleResetContacted(c.id)}
                                                     className="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600 text-sm"
                                                 >
-                                                    Reset
+                                                    {t("buttons.reset")}
                                                 </button>
                                             ) : (
                                                 <button
                                                     onClick={() => handleMarkContacted(c.id)}
                                                     className="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700 text-sm"
                                                 >
-                                                    Mark Contacted
+                                                    {t("buttons.mark_contacted")}
                                                 </button>
                                             )}
                                         </td>
@@ -123,15 +131,17 @@ const ContactRequests: React.FC = () => {
                             disabled={page === 1}
                             className="px-3 py-1 border rounded disabled:opacity-40"
                         >
-                            Prev
+                            {t("pagination.prev")}
                         </button>
-                        <span className="text-sm">Page {page} of {totalPages}</span>
+                        <span className="text-sm">
+                            {t("pagination.page")} {page} {t("pagination.of")} {totalPages}
+                        </span>
                         <button
                             onClick={() => setPage((p) => Math.min(p + 1, totalPages))}
                             disabled={page === totalPages}
                             className="px-3 py-1 border rounded disabled:opacity-40"
                         >
-                            Next
+                            {t("pagination.next")}
                         </button>
                     </div>
                 </div>
