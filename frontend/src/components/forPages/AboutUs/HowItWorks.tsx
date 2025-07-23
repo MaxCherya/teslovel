@@ -1,18 +1,16 @@
 import React from "react";
-
-const steps = [
-    { emoji: "📅", text: "Обираєш термін оренди" },
-    { emoji: "✍️", text: "Підписуєш договір, вносиш заставу" },
-    { emoji: "🚴", text: "Тест-драйв до 30 хв." },
-    { emoji: "📦", text: "Ти катаєшся" },
-];
+import { useTranslation } from "react-i18next";
 
 const HowItWorks: React.FC = () => {
+    const { t } = useTranslation("", { keyPrefix: "about.how_it_works" });
+
+    const steps = t("steps", { returnObjects: true }) as { emoji: string; text: string }[];
+
     return (
         <section className="w-full bg-gradient-to-b from-white to-gray-50 py-20 px-6" id="how-it-works">
             <div className="max-w-7xl mx-auto">
                 <h2 className="text-4xl lg:text-5xl font-extrabold text-center text-gray-900 mb-16 tracking-tight">
-                    Як це працює?
+                    {t("title")}
                 </h2>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 justify-center">

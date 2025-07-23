@@ -1,4 +1,150 @@
 {
+    "about": {
+        "why_us": {
+            "title": "Why Choose Us?",
+            "reasons": [
+                {
+                    "emoji": "🏙️",
+                    "text": "We're the only ones in the city"
+                },
+                {
+                    "emoji": "⛰️",
+                    "text": "Thrill without the uphill struggle"
+                },
+                {
+                    "emoji": "🎁",
+                    "text": "Clients get more than they expect"
+                }
+            ]
+        },
+        "terms": {
+            "title": "Terms & Prices",
+            "items": [
+                {
+                    "title": "Basic Rental",
+                    "price": "from 1500 UAH/week",
+                    "icon": "💸",
+                    "bg": "bg-gradient-to-r from-blue-500 to-blue-700"
+                },
+                {
+                    "title": "Long-term Discount",
+                    "price": "Discounts for long-term rental",
+                    "icon": "📆",
+                    "bg": "bg-gradient-to-r from-green-500 to-green-700"
+                },
+                {
+                    "title": "Promos & Bonuses",
+                    "price": "Follow on Instagram",
+                    "icon": "🎉",
+                    "bg": "bg-gradient-to-r from-pink-500 to-red-500"
+                }
+            ]
+        },
+        "rental_pros": {
+            "title": "Rental Benefits",
+            "items": [
+                {
+                    "icon": "⏱️",
+                    "text": "No waiting — ride whenever you want"
+                },
+                {
+                    "icon": "🌿",
+                    "text": "Lightweight, convenient, and eco-friendly"
+                },
+                {
+                    "icon": "📦",
+                    "text": "Perfect for delivery"
+                },
+                {
+                    "icon": "🤫",
+                    "text": "Silence instead of engine noise"
+                }
+            ]
+        },
+        "our_services": {
+            "title": "Our Services",
+            "items": [
+                {
+                    "icon": "🛵",
+                    "title": "Rental",
+                    "description": "From 1500 UAH/week"
+                },
+                {
+                    "icon": "🛠",
+                    "title": "Repair",
+                    "description": "With warranty service"
+                },
+                {
+                    "icon": "🛒",
+                    "title": "Sales",
+                    "description": "Planned with full support"
+                }
+            ]
+        },
+        "our_bikes": {
+            "title": "What’s inside our bikes?",
+            "features": [
+                {
+                    "label": "Formula1-grade frames"
+                },
+                {
+                    "label": "500W motor"
+                },
+                {
+                    "label": "PAS system (pedal assist)"
+                },
+                {
+                    "label": "Display, disc brakes, brake levers"
+                },
+                {
+                    "label": "60 Ah/year battery",
+                    "highlight": true
+                }
+            ]
+        },
+        "how_it_works": {
+            "title": "How it works?",
+            "steps": [
+                {
+                    "emoji": "📅",
+                    "text": "Choose rental period"
+                },
+                {
+                    "emoji": "✍️",
+                    "text": "Sign the contract and leave a deposit"
+                },
+                {
+                    "emoji": "🚴",
+                    "text": "Test ride up to 30 minutes"
+                },
+                {
+                    "emoji": "📦",
+                    "text": "Enjoy your ride"
+                }
+            ]
+        },
+        "header": {
+            "title": "TESLOVEL Electric Bicycles",
+            "subtitle": "Rent, test, enjoy — we’re here to help you!",
+            "rent_now": "Rent Now",
+            "contact_us": "Contact Us"
+        },
+        "section": {
+            "title": "About Us",
+            "intro": {
+                "part1": "We are ",
+                "names": "Mykola and Oleksandr Cherhyk",
+                "part2": ". With love and years of experience, we create electric bicycles that bring joy and comfort to every customer."
+            },
+            "phone": {
+                "label": "Phone"
+            },
+            "email": {
+                "label": "Email"
+            },
+            "imageAlt": "Mykola and Oleksandr Cherhyk"
+        }
+    },
     "blog": {
         "add": {
             "title": "Add New Blog Post",
