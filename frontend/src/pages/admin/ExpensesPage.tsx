@@ -112,7 +112,7 @@ const ExpensesPage: React.FC = () => {
                                                     onClick={() => handleDelete(exp.id)}
                                                     className="bg-red-600 cursor-pointer text-white px-3 py-1 rounded hover:bg-red-700 text-xs"
                                                 >
-                                                    {t("table.actions")}
+                                                    DEL
                                                 </button>
                                             </td>
                                         </tr>
