@@ -1,11 +1,11 @@
 {
     "name": "teslovel",
-    "version": "1.0.6",
+    "version": "1.0.7",
     "scripts": {
         "postinstall": "cd frontend && npm install",
         "heroku-postbuild": "cd frontend && npm run build"
     },
     "engines": {
-        "node": "20.x"
+        "node": "20.12.0"
     }
 }
