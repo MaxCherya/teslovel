@@ -13,7 +13,7 @@ interface Props {
     disabledDates: Date[];
 }
 
-const localeMap: { [key: string]: Locale } = {
+const localeMap: { [key: string]: any } = {
     en: enUS,
     uk,
     ua: uk,
