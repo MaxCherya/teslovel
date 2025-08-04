@@ -71,8 +71,8 @@ const MobileNav: React.FC<MobileNavProps> = ({
                             <span>{">"}</span>
                         </div>
                         <div className="w-full flex flex-row justify-between items-center p-4">
-                            <a href="/contact" className="text-black hover:text-gray-700">
-                                {t("nav.contacts")}
+                            <a href="/reviews" className="text-black hover:text-gray-700">
+                                {t('nav.reviews')}
                             </a>
                             <span>{">"}</span>
                         </div>

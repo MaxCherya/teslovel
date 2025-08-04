@@ -6,7 +6,7 @@ import FullScreenLoader from "../../components/ui/loaders/FullScreenLoader";
 import { useTranslation } from "react-i18next";
 
 const BatteryTypeAdmin: React.FC = () => {
-    const { t } = useTranslation("admin", { keyPrefix: "batteryTypeList" });
+    const { t } = useTranslation("", { keyPrefix: "admin.batteryTypeList" });
 
     const [batteryTypes, setBatteryTypes] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);

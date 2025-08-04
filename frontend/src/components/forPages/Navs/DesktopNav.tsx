@@ -31,8 +31,8 @@ const DesktopNav: React.FC<DesktopNavProps> = ({ toggleLanguageMenu, setShowBike
                 <a href='/about' className='text-black hover:text-gray-700'>
                     {t('nav.about')}
                 </a>
-                <a href='/contact' className='text-black hover:text-gray-700'>
-                    {t('nav.contacts')}
+                <a href='/reviews' className='text-black hover:text-gray-700'>
+                    {t('nav.reviews')}
                 </a>
             </div>
             <div className='flex flex-row gap-4 font-semibold items-center'>

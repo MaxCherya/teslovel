@@ -8,7 +8,6 @@ import Home from './pages/main/Home'
 import NotFound from './pages/main/NotFound'
 import About from './pages/main/About'
 import Models from './pages/main/Models'
-import Feedbacks from './pages/main/Feedbacks'
 import { useEffect } from 'react'
 import BikePage from './pages/main/BikePage'
 import BookPage from './pages/main/BookPage'
@@ -36,6 +35,7 @@ import BlogsAdmin from './pages/admin/BlogsAdmin';
 import AddNewPost from './pages/admin/AddNewPost';
 import Blog from './pages/main/Blog';
 import BlogPage from './pages/main/BlogPage';
+import Reviews from './pages/main/Reviews';
 
 function App() {
 
@@ -61,7 +61,7 @@ function App() {
           <Route path='models' element={<Models />} />
           <Route path='models/:bikeId' element={<BikePage />} />
           <Route path='book/:bikeId' element={<BookPage />} />
-          <Route path='feedbacks' element={<Feedbacks />} />
+          <Route path='reviews' element={<Reviews />} />
           <Route path='login' element={<Login />} />
           <Route path='signup' element={<Signup />} />
           <Route path="*" element={<NotFound />} />
