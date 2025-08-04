@@ -31,7 +31,7 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = IS_DEV
 
-ALLOWED_HOSTS = ['*' if IS_DEV else '']
+ALLOWED_HOSTS = ['*' if IS_DEV else 'teslovel-19b6326dcc4a.herokuapp.com']
 
 # Application definition
 
