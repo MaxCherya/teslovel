@@ -2,9 +2,10 @@ import React, { useState, useEffect } from "react";
 import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useTranslation } from "react-i18next";
-import en from "date-fns/locale/en-US";
-import uk from "date-fns/locale/uk";
-import ru from "date-fns/locale/ru";
+import { enUS } from 'date-fns/locale'
+import { uk } from 'date-fns/locale'
+import { ru } from 'date-fns/locale'
+
 
 interface Props {
     selectedRange: { start: Date | null; end: Date | null };
@@ -13,7 +14,7 @@ interface Props {
 }
 
 const localeMap: { [key: string]: Locale } = {
-    en,
+    en: enUS,
     uk,
     ua: uk,
     ru,
@@ -23,7 +24,7 @@ const BookingCalendar: React.FC<Props> = ({ selectedRange, onChange, disabledDat
     const [key, _setKey] = useState(0);
     const today = new Date();
     const { i18n } = useTranslation();
-    const currentLocale = localeMap[i18n.language] || en;
+    const currentLocale = localeMap[i18n.language] || enUS;
 
     useEffect(() => {
         registerLocale(i18n.language, currentLocale);
