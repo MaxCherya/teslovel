@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 from dotenv import load_dotenv
+import cloudinary
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -41,6 +42,20 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'rest_framework_simplejwt',
+    'django_otp',
+    'django_otp.plugins.otp_totp',
+    'two_factor',
+    'cloudinary',
+    'cloudinary_storage',
+    'backendApps.catalog',
+    'backendApps.specs_types',
+    'backendApps.customer_support',
+    'backendApps.accounts',
+    'backendApps.orders',
+    'backendApps.expenses',
+    'backendApps.blogs',
 ]
 
 MIDDLEWARE = [
@@ -50,16 +65,28 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django_otp.middleware.OTPMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+cloudinary.config(
+    cloud_name=os.getenv('CLOUD_NAME_CLOUDINARY'),
+    api_key=os.getenv('API_KEY_CLOUDINARY'),
+    api_secret=os.getenv('API_SECRET_CLOUDINARY')
+)
 
 ROOT_URLCONF = 'backend.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'frontend' / 'dist'],
+        'DIRS': [
+            BASE_DIR / 'frontend' / 'dist',   # for serving React index.html
+            BASE_DIR / 'templates',           # for Django templates like admin/login
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -83,6 +110,22 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_THROTTLE_CLASSES': [
+        'rest_framework.throttling.AnonRateThrottle',
+    ],
+    'DEFAULT_THROTTLE_RATES': {
+        'anon': '10/minute',  # or '100/day', '5/second', etc.
+    },
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'backendApps.accounts.authentication.CookieJWTAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+}
+
 
 
 # Password validation
@@ -123,6 +166,13 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [ BASE_DIR / "frontend" / "dist" ]
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+
+AUTH_USER_MODEL = 'accounts.CustomUser'
+
+
+CSRF_COOKIE_SECURE = not IS_DEV
+SESSION_COOKIE_SECURE = not IS_DEV
 
 
 # Default primary key field type

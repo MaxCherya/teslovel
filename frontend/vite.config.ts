@@ -12,5 +12,9 @@ export default defineConfig(({ mode }) => ({
     assetsDir: 'assets',
     emptyOutDir: true,
   },
+  server: {
+    host: true,
+    port: 5173,
+  },
   base: mode === 'production' ? '/static/' : '/',
 }))

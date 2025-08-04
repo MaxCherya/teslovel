@@ -1,0 +1,82 @@
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework import status
+from .serializers import *
+from django.utils.timezone import localtime
+from .utils import send_to_admins, get_client_ip, get_ip_location
+import time
+from rest_framework.permissions import AllowAny, IsAdminUser
+from rest_framework.decorators import permission_classes
+from rest_framework.pagination import PageNumberPagination
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def upload_contact_request(request):
+    data = request.data
+
+    # Honeypot
+    if data.get('user_email'):
+        return Response({'error': True, 'message': 'Forbidden'}, status=status.HTTP_403_FORBIDDEN)
+
+    # Timing
+    timestamp = float(data.get("formRenderedAt", 0))
+    now = time.time()
+    if now - timestamp < 3:
+        return Response({'error': 'Forbidden'}, status=status.HTTP_400_BAD_REQUEST)
+
+    serializer = ContactRequestUploadSerializer(data=data)
+
+    if serializer.is_valid():
+        contact = serializer.save()
+
+        # Get user location from IP
+        ip = get_client_ip(request)
+        if ip.startswith("127.") or ip.startswith("192.168.") or ip == "0.0.0.0":
+            ip = "93.183.203.67"
+        location = get_ip_location(ip)
+
+        message = (
+            "<b>📩 Новий запит на зв'язок</b>\n\n"
+            f"<b>👤 Ім'я:</b> {contact.name}\n"
+            f"<b>📞 Телефон:</b> {contact.phone_number}\n"
+            f"<b>📝 Додаткові нотатки:</b> {contact.notes or '—'}\n"
+            f"<b>🌍 Локація:</b> {location if location != 'Unknown' else 'невідомо'}\n"
+            f"<b>⏱️ Відправлено:</b> {localtime(contact.created_at).strftime('%d.%m.%Y %H:%M:%S')}"
+        )
+
+        send_to_admins(message)
+        return Response({'success': True}, status=status.HTTP_201_CREATED)
+
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(["GET"])
+@permission_classes([IsAdminUser])
+def list_contact_requests(request):
+    paginator = PageNumberPagination()
+    paginator.page_size = 10
+    queryset = ContactRequest.objects.all().order_by("-created_at")
+    result_page = paginator.paginate_queryset(queryset, request)
+    serializer = ContactRequestListSerializer(result_page, many=True)
+    return paginator.get_paginated_response(serializer.data)
+
+@api_view(["PATCH"])
+@permission_classes([IsAdminUser])
+def mark_contacted(request, contact_id):
+    try:
+        contact = ContactRequest.objects.get(id=contact_id)
+        contact.is_contacted = True
+        contact.save()
+        return Response({"detail": "Marked as contacted."})
+    except ContactRequest.DoesNotExist:
+        return Response({"detail": "Contact request not found."}, status=status.HTTP_404_NOT_FOUND)
+
+@api_view(["PATCH"])
+@permission_classes([IsAdminUser])
+def reset_contacted_status(request, contact_id):
+    try:
+        contact = ContactRequest.objects.get(id=contact_id)
+        contact.is_contacted = False
+        contact.save()
+        return Response({"detail": "Contacted status reset."})
+    except ContactRequest.DoesNotExist:
+        return Response({"detail": "Contact request not found."}, status=status.HTTP_404_NOT_FOUND)

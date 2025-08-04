@@ -6,6 +6,11 @@ import en from './en/translation.json'
 import ru from './ru/translation.json'
 import uk from './uk/translation.json'
 
+// Force Ukrainian on first visit
+if (!localStorage.getItem('i18nextLng')) {
+    localStorage.setItem('i18nextLng', 'uk')
+}
+
 i18n
     .use(LanguageDetector)
     .use(initReactI18next)

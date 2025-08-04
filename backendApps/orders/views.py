@@ -1,0 +1,251 @@
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework import status
+from .serializers import *
+from .models import *
+from django.utils.timezone import localtime
+from backendApps.customer_support.utils import send_to_admins, get_client_ip, get_ip_location
+import time
+from rest_framework.permissions import AllowAny
+from rest_framework.decorators import permission_classes
+from rest_framework.permissions import IsAdminUser
+from rest_framework.pagination import PageNumberPagination
+from django.db.models import Sum
+from django.utils.timezone import now
+from django.db.models import Count
+
+from backendApps.orders.models import Order
+from backendApps.expenses.models import BikeExpense
+from backendApps.catalog.models import Bike
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def upload_order_request(request):
+    data = request.data
+
+    # Honeypot check
+    if data.get('user_email'):
+        return Response({'error': True, 'message': 'Forbidden'}, status=status.HTTP_403_FORBIDDEN)
+
+    # Timing protection
+    timestamp = float(data.get("formRenderedAt", 0))
+    now = time.time()
+    if now - timestamp < 3:
+        return Response({'error': 'Forbidden'}, status=status.HTTP_400_BAD_REQUEST)
+
+    # Validates serializer first
+    serializer = OrderUploadSerializer(data=data)
+
+    if not serializer.is_valid():
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    validated_data = serializer.validated_data
+    bike = validated_data["bike"]
+    start_date = validated_data["start_date"]
+    end_date = validated_data["end_date"]
+
+    # Overlapping date check
+    conflict = Order.objects.filter(
+        bike=bike,
+        is_validated=True,
+        start_date__lte=end_date,
+        end_date__gte=start_date,
+    ).exists()
+
+    if conflict:
+        return Response({
+            "error": True,
+            "message": "Those dates are already occupied. Please select different range."
+        }, status=status.HTTP_409_CONFLICT)
+
+    # Saves order
+    order = serializer.save()
+
+    # IP & location
+    ip = get_client_ip(request)
+    if ip.startswith("127.") or ip.startswith("192.168.") or ip == "0.0.0.0":
+        ip = "93.183.203.67"
+    location = get_ip_location(ip)
+
+    # TG Message
+    message = (
+        "<b>🛵 Нова заявка на бронювання</b>\n\n"
+        f"<b>👤 Ім'я:</b> {order.name}\n"
+        f"<b>📞 Телефон:</b> {order.phone}\n"
+        f"<b>🗓️ Дати:</b> {order.start_date.strftime('%d.%m.%Y')} — {order.end_date.strftime('%d.%m.%Y')}\n"
+        f"<b>📝 Коментар:</b> {order.comments or '—'}\n"
+        f"<b>🌍 Локація:</b> {location if location != 'Unknown' else 'невідомо'}\n"
+        f"<b>⏱️ Відправлено:</b> {localtime(order.created_at).strftime('%d.%m.%Y %H:%M:%S')}"
+        "<b>🔔 Дія:</b> <i>Зв'яжіться з клієнтом та підтвердіть або скасуйте заявку в системі.</i>"
+    )
+
+    send_to_admins(message)
+    return Response({'success': True}, status=status.HTTP_201_CREATED)
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def get_bike_busy_days(request, bike_id):
+    try:
+        bike = Bike.objects.get(id=bike_id)
+    except Bike.DoesNotExist:
+        return Response({'error': 'Bike not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    serializer = BikeBusyDaysSerializer(bike)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+@api_view(["GET"])
+@permission_classes([IsAdminUser])
+def list_orders(request):
+    paginator = PageNumberPagination()
+    paginator.page_size = 10
+    orders = Order.objects.select_related("bike").order_by("-created_at")
+    result_page = paginator.paginate_queryset(orders, request)
+    serializer = OrderSerializer(result_page, many=True)
+    return paginator.get_paginated_response(serializer.data)
+
+@api_view(["PATCH"])
+@permission_classes([IsAdminUser])
+def update_order_status(request, order_id):
+    action = request.data.get("action")
+    if action not in ["validate", "reject"]:
+        return Response({"detail": "Invalid action."}, status=status.HTTP_400_BAD_REQUEST)
+
+    try:
+        order = Order.objects.get(id=order_id)
+    except Order.DoesNotExist:
+        return Response({"detail": "Order not found."}, status=status.HTTP_404_NOT_FOUND)
+
+    if action == "validate":
+        # Check for overlapping validated orders
+        conflict = Order.objects.filter(
+            bike=order.bike,
+            is_validated=True,
+            start_date__lte=order.end_date,
+            end_date__gte=order.start_date
+        ).exclude(id=order.id).exists()
+
+        if conflict:
+            return Response({"detail": "Conflict: another validated order exists for the selected period."},
+                            status=status.HTTP_409_CONFLICT)
+
+        order.is_validated = True
+        order.is_rejected = False
+
+    elif action == "reject":
+        order.is_validated = False
+        order.is_rejected = True
+
+    order.save()
+    return Response({"detail": f"Order {action}d successfully."})
+
+@api_view(["PATCH"])
+@permission_classes([IsAdminUser])
+def reset_order_status(request, order_id):
+    try:
+        order = Order.objects.get(id=order_id)
+    except Order.DoesNotExist:
+        return Response({"detail": "Order not found."}, status=status.HTTP_404_NOT_FOUND)
+
+    order.is_validated = False
+    order.is_rejected = False
+    order.save()
+
+    return Response({"detail": "Order status reset successfully."}, status=status.HTTP_200_OK)
+
+@api_view(["GET"])
+@permission_classes([IsAdminUser])
+def list_reviewed_orders(request):
+    paginator = PageNumberPagination()
+    paginator.page_size = 10
+
+    orders = Order.objects.select_related("bike").filter(
+        models.Q(is_validated=True) | models.Q(is_rejected=True)
+    ).order_by("-created_at")
+
+    result_page = paginator.paginate_queryset(orders, request)
+    serializer = OrderSerializer(result_page, many=True)
+    return paginator.get_paginated_response(serializer.data)
+
+@api_view(["GET"])
+@permission_classes([IsAdminUser])
+def list_validated_orders_for_bike(request, bike_id):
+    paginator = PageNumberPagination()
+    paginator.page_size = 10
+
+    orders = Order.objects.select_related("bike").filter(
+        bike_id=bike_id,
+        is_validated=True
+    ).order_by("-created_at")
+
+    result_page = paginator.paginate_queryset(orders, request)
+    serializer = OrderSerializer(result_page, many=True)
+    return paginator.get_paginated_response(serializer.data)
+
+@api_view(["GET"])
+@permission_classes([IsAdminUser])
+def overview_stats(request):
+    today = now().date()
+    current_month = today.month
+    current_year = today.year
+
+    # Orders
+    validated_orders = Order.objects.filter(is_validated=True, is_rejected=False)
+
+    total_revenue = validated_orders.aggregate(total=Sum('amount'))['total'] or 0
+    monthly_revenue = validated_orders.filter(created_at__year=current_year, created_at__month=current_month).aggregate(total=Sum('amount'))['total'] or 0
+    today_revenue = validated_orders.filter(created_at__date=today).aggregate(total=Sum('amount'))['total'] or 0
+
+    total_rides = validated_orders.count()
+    total_clients = validated_orders.values('phone').distinct().count()
+
+    # Expenses
+    all_expenses = BikeExpense.objects.all()
+    total_expenses = all_expenses.aggregate(total=Sum('amount'))['total'] or 0
+    monthly_expenses = all_expenses.filter(date__year=current_year, date__month=current_month).aggregate(total=Sum('amount'))['total'] or 0
+    today_expenses = all_expenses.filter(date__date=today).aggregate(total=Sum('amount'))['total'] or 0
+
+    return Response({
+        "total_revenue": total_revenue,
+        "monthly_revenue": monthly_revenue,
+        "today_revenue": today_revenue,
+        "total_rides": total_rides,
+        "total_clients": total_clients,
+        "total_expenses": total_expenses,
+        "monthly_expenses": monthly_expenses,
+        "today_expenses": today_expenses,
+    })
+
+@api_view(["GET"])
+@permission_classes([IsAdminUser])
+def top_bikes_by_rides(request):
+    top_bikes = (
+        Bike.objects.annotate(ride_count=Count('order', filter=models.Q(order__is_validated=True)))
+        .filter(ride_count__gt=0)
+        .order_by('-ride_count')[:10]
+    )
+
+    data = [
+        {
+            "id": bike.id,
+            "name": bike.name,
+            "rides": bike.ride_count,
+        }
+        for bike in top_bikes
+    ]
+
+    return Response(data)
+
+@api_view(["GET"])
+@permission_classes([IsAdminUser])
+def top_clients(request):
+    top = (
+        Order.objects.filter(is_validated=True)
+        .values("phone")
+        .annotate(
+            name=models.functions.Substr("name", 1, 240),
+            total_rides=Count("id"),
+            total_spent=Sum("amount"),
+        )
+        .order_by("-total_rides")[:10]
+    )
+    return Response(list(top))

@@ -1,0 +1,907 @@
+{
+    "reviews": {
+        "title": "Our Customer Reviews",
+        "description": "See what our customers are saying about us on Google Maps!",
+        "leaveReview": "Leave a Review"
+    },
+    "about": {
+        "why_us": {
+            "title": "Why Choose Us?",
+            "reasons": [
+                {
+                    "emoji": "🏙️",
+                    "text": "We're the only ones in the city"
+                },
+                {
+                    "emoji": "⛰️",
+                    "text": "Thrill without the uphill struggle"
+                },
+                {
+                    "emoji": "🎁",
+                    "text": "Clients get more than they expect"
+                }
+            ]
+        },
+        "terms": {
+            "title": "Terms & Prices",
+            "items": [
+                {
+                    "title": "Basic Rental",
+                    "price": "from 1500 UAH/week",
+                    "icon": "💸",
+                    "bg": "bg-gradient-to-r from-blue-500 to-blue-700"
+                },
+                {
+                    "title": "Long-term Discount",
+                    "price": "Discounts for long-term rental",
+                    "icon": "📆",
+                    "bg": "bg-gradient-to-r from-green-500 to-green-700"
+                },
+                {
+                    "title": "Promos & Bonuses",
+                    "price": "Follow on Instagram",
+                    "icon": "🎉",
+                    "bg": "bg-gradient-to-r from-pink-500 to-red-500"
+                }
+            ]
+        },
+        "rental_pros": {
+            "title": "Rental Benefits",
+            "items": [
+                {
+                    "icon": "⏱️",
+                    "text": "No waiting — ride whenever you want"
+                },
+                {
+                    "icon": "🌿",
+                    "text": "Lightweight, convenient, and eco-friendly"
+                },
+                {
+                    "icon": "📦",
+                    "text": "Perfect for delivery"
+                },
+                {
+                    "icon": "🤫",
+                    "text": "Silence instead of engine noise"
+                }
+            ]
+        },
+        "our_services": {
+            "title": "Our Services",
+            "items": [
+                {
+                    "icon": "🛵",
+                    "title": "Rental",
+                    "description": "From 1500 UAH/week"
+                },
+                {
+                    "icon": "🛠",
+                    "title": "Repair",
+                    "description": "With warranty service"
+                },
+                {
+                    "icon": "🛒",
+                    "title": "Sales",
+                    "description": "Planned with full support"
+                }
+            ]
+        },
+        "our_bikes": {
+            "title": "What’s inside our bikes?",
+            "features": [
+                {
+                    "label": "Formula1-grade frames"
+                },
+                {
+                    "label": "500W motor"
+                },
+                {
+                    "label": "PAS system (pedal assist)"
+                },
+                {
+                    "label": "Display, disc brakes, brake levers"
+                },
+                {
+                    "label": "60 Ah/year battery",
+                    "highlight": true
+                }
+            ]
+        },
+        "how_it_works": {
+            "title": "How it works?",
+            "steps": [
+                {
+                    "emoji": "📅",
+                    "text": "Choose rental period"
+                },
+                {
+                    "emoji": "✍️",
+                    "text": "Sign the contract and leave a deposit"
+                },
+                {
+                    "emoji": "🚴",
+                    "text": "Test ride up to 30 minutes"
+                },
+                {
+                    "emoji": "📦",
+                    "text": "Enjoy your ride"
+                }
+            ]
+        },
+        "header": {
+            "title": "TESLOVEL Electric Bicycles",
+            "subtitle": "Rent, test, enjoy — we’re here to help you!",
+            "rent_now": "Rent Now",
+            "contact_us": "Contact Us"
+        },
+        "section": {
+            "title": "About Us",
+            "intro": {
+                "part1": "We are ",
+                "names": "Mykola and Oleksandr Cherhyk",
+                "part2": ". With love and years of experience, we create electric bicycles that bring joy and comfort to every customer."
+            },
+            "phone": {
+                "label": "Phone"
+            },
+            "email": {
+                "label": "Email"
+            },
+            "imageAlt": "Mykola and Oleksandr Cherhyk"
+        }
+    },
+    "blog": {
+        "add": {
+            "title": "Add New Blog Post",
+            "titleLabel": "Title",
+            "contentLabel": "Content",
+            "submit": "Submit Post",
+            "uploading": "Uploading...",
+            "success": "Blog post uploaded successfully!",
+            "error": "Upload failed: {{message}}",
+            "validation": {
+                "titles_required": "All titles must be filled.",
+                "contents_required": "All contents must be filled.",
+                "image_too_large": "Images must be under 5MB.",
+                "invalid_dimensions": "{{field}} must be exactly {{width}}x{{height}}px.",
+                "no_paste_images": "Please insert image links instead of pasting media.",
+                "invalid_image_url": "Invalid image URL. Must end with .jpg/.png/.gif"
+            },
+            "fields": {
+                "banner_en": "Banner EN (1584x396)",
+                "banner_uk": "Banner UK (1584x396)",
+                "banner_ru": "Banner RU (1584x396)",
+                "poster": "Poster (500x500)"
+            }
+        },
+        "load_more": "Load More",
+        "notFound": "Blog post not found."
+    },
+    "admin": {
+        "bike_admin": {
+            "order_requests": {
+                "title": "Pending Order Requests",
+                "columns": {
+                    "order_id": "Order ID",
+                    "bike": "Bike",
+                    "name": "Customer Name",
+                    "phone": "Phone",
+                    "amount": "Amount",
+                    "start": "Start",
+                    "end": "End",
+                    "comments": "Comments",
+                    "created_at": "Created At",
+                    "status": "Status",
+                    "actions": "Actions"
+                },
+                "status": {
+                    "validated": "Validated",
+                    "rejected": "Rejected",
+                    "pending": "Pending"
+                },
+                "buttons": {
+                    "validate": "Validate",
+                    "reject": "Reject"
+                },
+                "pagination": {
+                    "prev": "Prev",
+                    "next": "Next",
+                    "page": "Page",
+                    "of": "of"
+                },
+                "toast": {
+                    "validated": "Order validated successfully!",
+                    "rejected": "Order rejected.",
+                    "failed_validate": "Failed to validate order.",
+                    "failed_reject": "Failed to reject order."
+                },
+                "none": "None"
+            },
+            "expenses_d": {
+                "title": "Expenses for Bike #{{bikeId}}",
+                "add_button": "➕ Add Expense",
+                "table": {
+                    "id": "ID",
+                    "bike": "Bike",
+                    "description": "Description",
+                    "amount": "Amount",
+                    "date": "Date",
+                    "actions": "Actions"
+                },
+                "pagination": {
+                    "prev": "Prev",
+                    "next": "Next",
+                    "page": "Page {{current}} of {{total}}"
+                },
+                "modal": {
+                    "title": "Add Expense",
+                    "description_label": "Description",
+                    "description_placeholder": "What was the expense for?",
+                    "amount_label": "Amount (₴)",
+                    "amount_placeholder": "0.00",
+                    "cancel": "Cancel",
+                    "save": "Save"
+                },
+                "toast": {
+                    "load_error": "Failed to load expenses.",
+                    "delete_confirm": "Are you sure you want to delete this expense?",
+                    "delete_success": "Expense deleted successfully.",
+                    "delete_error": "Failed to delete expense.",
+                    "fill_error": "Fill all fields.",
+                    "add_success": "Expense added.",
+                    "add_error": "Failed to add expense."
+                }
+            },
+            "engine_position_admin": {
+                "title": "Current Engine Positions",
+                "add": "Add New Engine Position",
+                "remove": "Remove",
+                "confirm_delete": "Are you sure you want to delete this engine position?",
+                "headers": {
+                    "uk": "Name (Ukrainian)",
+                    "en": "Name (English)",
+                    "ru": "Name (Russian)",
+                    "actions": "Actions"
+                }
+            },
+            "orders": {
+                "title": "Current Orders (Validated or Rejected)",
+                "headers": {
+                    "order_id": "Order ID",
+                    "bike": "Bike",
+                    "name": "Customer Name",
+                    "phone": "Phone",
+                    "amount": "Amount",
+                    "start": "Start",
+                    "end": "End",
+                    "comments": "Comments",
+                    "created": "Created At",
+                    "status": "Status",
+                    "actions": "Actions"
+                },
+                "status": {
+                    "validated": "Validated",
+                    "rejected": "Rejected"
+                },
+                "actions": {
+                    "reset": "Reset"
+                },
+                "pagination": {
+                    "prev": "Prev",
+                    "next": "Next",
+                    "page": "Page",
+                    "of": "of"
+                },
+                "none": "None",
+                "errors": {
+                    "fetch": "Failed to fetch current orders",
+                    "reset": "Failed to reset order."
+                },
+                "success": {
+                    "reset": "Order status reset."
+                }
+            },
+            "contact_requests": {
+                "title": "Contact Requests",
+                "headers": {
+                    "id": "ID",
+                    "name": "Name",
+                    "phone": "Phone",
+                    "notes": "Notes",
+                    "created": "Created",
+                    "status": "Status",
+                    "actions": "Actions"
+                },
+                "status": {
+                    "contacted": "Contacted",
+                    "pending": "Pending"
+                },
+                "buttons": {
+                    "mark_contacted": "Mark Contacted",
+                    "reset": "Reset"
+                },
+                "toast": {
+                    "fetch_error": "Failed to fetch contact requests",
+                    "marked_contacted": "Marked as contacted.",
+                    "update_failed": "Failed to update status.",
+                    "reset_success": "Status reset.",
+                    "reset_failed": "Failed to reset status."
+                },
+                "pagination": {
+                    "prev": "Prev",
+                    "next": "Next",
+                    "page": "Page",
+                    "of": "of"
+                }
+            },
+            "catalog_admin": {
+                "add_new_bike": "Add New Bike",
+                "manage_motor_positions": "Manage Motor Positions",
+                "manage_brake_types": "Manage Brake Types",
+                "manage_battery_types": "Manage Battery Types"
+            },
+            "brakes_type_admin": {
+                "title": "Current Brake Types",
+                "add": "Add New Brake Type",
+                "remove": "Remove",
+                "confirm_delete": "Are you sure you want to delete this brake type?",
+                "table": {
+                    "name_uk": "Name (Ukrainian)",
+                    "name_en": "Name (English)",
+                    "name_ru": "Name (Russian)",
+                    "actions": "Actions"
+                }
+            },
+            "blogs_admin": {
+                "title": "Blog Management",
+                "add": "Add New Blog",
+                "no_blogs": "No blogs available.",
+                "delete": "Delete",
+                "pagination": {
+                    "prev": "Prev",
+                    "next": "Next",
+                    "page_info": "Page {{current}} of {{total}}"
+                },
+                "otp_modal": {
+                    "title": "Enter OTP to confirm deletion",
+                    "placeholder": "Enter OTP code",
+                    "cancel": "Cancel",
+                    "submit": "Delete Blog",
+                    "error": "Failed to delete blog"
+                }
+            },
+            "rides_d": {
+                "title": "Rides for Bike #{{id}}",
+                "load_failed": "Failed to load rides.",
+                "columns": {
+                    "id": "ID",
+                    "client": "Client",
+                    "phone": "Phone",
+                    "start": "Start",
+                    "end": "End",
+                    "amount": "Amount"
+                },
+                "pagination": {
+                    "prev": "Prev",
+                    "next": "Next",
+                    "page_info": "Page {{page}} of {{total}}"
+                }
+            },
+            "stats": {
+                "total_rides": "Total Rides",
+                "total_revenue": "Total Revenue",
+                "total_expenses": "Total Expenses",
+                "net_income": "Net Income",
+                "this_month": "This Month",
+                "today": "Today",
+                "revenue_minus_expenses": "Revenue − Expenses"
+            },
+            "rides": {
+                "title": "Recent Rides",
+                "id": "ID",
+                "client": "Client",
+                "phone": "Phone",
+                "start": "Start",
+                "end": "End",
+                "amount": "Amount",
+                "no_data": "No rides found."
+            },
+            "expenses": {
+                "title": "Recent Expenses",
+                "id": "ID",
+                "date": "Date",
+                "description": "Description",
+                "amount": "Amount",
+                "no_data": "No expenses found."
+            },
+            "actions": {
+                "expenses": "Expenses",
+                "rides": "Rides",
+                "remove": "Remove Bike",
+                "change_status": "Change Status",
+                "statuses": {
+                    "available": "Available",
+                    "maintenance": "On Maintenance",
+                    "not_available": "Not Available"
+                }
+            },
+            "page": {
+                "bike": "Bike",
+                "edit": "Edit",
+                "save": "Save",
+                "cancel": "Cancel",
+                "loading": "Loading...",
+                "otp": {
+                    "title": "Enter OTP to confirm deletion",
+                    "placeholder": "Enter OTP code",
+                    "confirm_delete": "Delete Bike"
+                }
+            },
+            "details": {
+                "change": "Change",
+                "cancel_upload": "Cancel",
+                "uploading": "Uploading...",
+                "upload_failed": "Upload failed",
+                "image_dimension_error": "Image must be {{width}}x{{height}}px",
+                "edit": "Edit",
+                "cancel": "Cancel",
+                "save": "Save",
+                "saving": "Saving...",
+                "not_selected": "Not selected",
+                "section": {
+                    "descriptions": "Descriptions",
+                    "specs": "Technical Specs",
+                    "components": "Bike Components"
+                },
+                "lang": {
+                    "uk": "🇺🇦 Ukrainian",
+                    "ru": "🇷🇺 Russian",
+                    "en": "🇬🇧 English"
+                },
+                "specs": {
+                    "price_day": "Price per day",
+                    "max_speed": "Max speed",
+                    "range": "Range",
+                    "wheels_size": "Wheels size",
+                    "power": "Power",
+                    "battery_current": "Battery current"
+                },
+                "units": {
+                    "price_day": "₴",
+                    "max_speed": "km/h",
+                    "range": "km",
+                    "wheels_size": "\"",
+                    "power": "W",
+                    "battery_current": "Ah"
+                },
+                "components": {
+                    "battery_type": "Battery type",
+                    "brakes_type": "Brakes type",
+                    "engine_position": "Engine position"
+                },
+                "images": {
+                    "main_img": "Main Image",
+                    "landscape_img": "Landscape Image",
+                    "side_photo_left": "Side Photo Left",
+                    "side_photo_right": "Side Photo Right",
+                    "front_photo_view": "Front View",
+                    "rear_photo_view": "Rear View",
+                    "top_photo_view": "Top View",
+                    "drive_train_closeup_photo": "Drivetrain Close-up",
+                    "handlebar_controls_photo": "Handlebar & Controls",
+                    "suspension_fork_photo": "Suspension Fork",
+                    "wheel_tire_condition_photo": "Wheels & Tires",
+                    "serial_number_or_branding_photo": "Serial Number / Branding",
+                    "nav_photo": "Nav Photo"
+                }
+            }
+        },
+        "batteryTypeList": {
+            "title": "Current Battery Types",
+            "addButton": "Add New Battery Type",
+            "nameUk": "Name (Ukrainian)",
+            "nameEn": "Name (English)",
+            "nameRu": "Name (Russian)",
+            "actions": "Actions",
+            "remove": "Remove",
+            "removeSuccess": "Battery type removed",
+            "removeError": "Failed to remove battery type",
+            "loadError": "Failed to load battery types"
+        },
+        "userList": {
+            "title": "User Management",
+            "searchPlaceholder": "Search by phone or username...",
+            "username": "Username",
+            "phone": "Phone",
+            "twoFA": "2FA Enabled",
+            "admin": "Admin",
+            "actions": "Actions",
+            "removeAdmin": "Remove Admin",
+            "makeAdmin": "Make Admin",
+            "otpModal": {
+                "title": "Enter OTP",
+                "placeholder": "Enter your OTP",
+                "cancel": "Cancel",
+                "confirm": "Confirm"
+            }
+        },
+        "bikeForm": {
+            "images": {
+                "main_img": "Main Image",
+                "nav_photo": "Navigation Photo",
+                "landscape_img": "Landscape Image",
+                "side_photo_left": "Side Photo (Left)",
+                "side_photo_right": "Side Photo (Right)",
+                "front_photo_view": "Front Photo View",
+                "rear_photo_view": "Rear Photo View",
+                "top_photo_view": "Top Photo View",
+                "drive_train_closeup_photo": "Drive Train Closeup Photo",
+                "handlebar_controls_photo": "Handlebar Controls Photo",
+                "suspension_fork_photo": "Suspension Fork Photo",
+                "wheel_tire_condition_photo": "Wheel/Tire Condition Photo",
+                "serial_number_or_branding_photo": "Serial Number/Branding Photo"
+            },
+            "title": "Create a New Bike",
+            "name": "Bike Name",
+            "descriptionUk": "Description (Ukrainian)",
+            "descriptionEn": "Description (English)",
+            "descriptionRu": "Description (Russian)",
+            "pricePerDay": "Price per Day (UAH)",
+            "maxSpeed": "Max Speed (km/h)",
+            "range": "Range (km)",
+            "wheelSize": "Wheel Size (inches)",
+            "power": "Power (W)",
+            "batteryCurrent": "Battery Current (Ah)",
+            "status": "Status",
+            "batteryType": "Battery Type",
+            "brakesType": "Brakes Type",
+            "enginePosition": "Engine Position",
+            "imagesSection": "Bike Images",
+            "selectStatus": "Select Status",
+            "selectBattery": "Select Battery Type",
+            "selectBrakes": "Select Brakes Type",
+            "selectEngine": "Select Engine Position",
+            "imageError": "Image must be exactly {{width}}×{{height}} pixels.",
+            "example": "Example: {{label}}",
+            "addButton": "Add Bike",
+            "success": "Bike successfully created!",
+            "error": "Failed to create bike: {{message}}",
+            "reload": "Reloading..."
+        },
+        "enginePosition": {
+            "addTitle": "Create a New Engine Position",
+            "nameUK": "Name (UK)",
+            "nameEN": "Name (EN)",
+            "nameRU": "Name (RU)",
+            "placeholderUK": "Enter name in Ukrainian",
+            "placeholderEN": "Enter name in English",
+            "placeholderRU": "Enter name in Russian",
+            "submit": "Add Engine Position",
+            "submitting": "Submitting...",
+            "success": "Engine position created successfully",
+            "error": "Failed to create engine position"
+        },
+        "brakesType": {
+            "addTitle": "Create a New Brake Type",
+            "nameUK": "Name (UK)",
+            "nameEN": "Name (EN)",
+            "nameRU": "Name (RU)",
+            "placeholderUK": "Enter name in Ukrainian",
+            "placeholderEN": "Enter name in English",
+            "placeholderRU": "Enter name in Russian",
+            "submit": "Add Brake Type",
+            "submitting": "Submitting...",
+            "success": "Brake type created successfully",
+            "error": "Failed to create brake type"
+        },
+        "batteryType": {
+            "addTitle": "Create a New Battery Type",
+            "nameUK": "Name (UK)",
+            "nameEN": "Name (EN)",
+            "nameRU": "Name (RU)",
+            "placeholderUK": "Enter name in Ukrainian",
+            "placeholderEN": "Enter name in English",
+            "placeholderRU": "Enter name in Russian",
+            "submit": "Add Battery Type",
+            "submitting": "Submitting...",
+            "success": "Battery type created successfully",
+            "error": "Error creating battery type"
+        },
+        "header": "Bike Rental Admin",
+        "nav": {
+            "catalog": "Catalog",
+            "users": "Users",
+            "orders": "Orders",
+            "contactRequests": "Contact Requests",
+            "orderRequests": "Order Requests",
+            "blogs": "Blogs"
+        },
+        "topClients": {
+            "title": "Top Clients",
+            "columns": {
+                "name": "Client Name",
+                "phone": "Phone",
+                "rides": "Total Rides",
+                "spent": "Total Spent"
+            }
+        },
+        "topBikes": {
+            "title": "Top Bikes",
+            "subtitle": "Most used bikes by number of rides",
+            "columns": {
+                "index": "#",
+                "name": "Bike Name",
+                "rides": "Rides"
+            }
+        },
+        "overview": {
+            "revenue": {
+                "title": "Revenue",
+                "total": "Total Revenue",
+                "monthly": "Monthly Revenue",
+                "today": "Today's Revenue"
+            },
+            "expenses": {
+                "title": "Expenses",
+                "total": "Total Expenses",
+                "monthly": "Monthly Expenses",
+                "today": "Today's Expenses"
+            },
+            "net": {
+                "title": "Net Income",
+                "total": "Total Net Income",
+                "monthly": "Monthly Net Income",
+                "today": "Today's Net Income",
+                "totalSubtitle": "Revenue - Expenses",
+                "monthlySubtitle": "In {{month}}",
+                "todaySubtitle": "On {{today}}"
+            },
+            "other": {
+                "title": "Other Metrics",
+                "rides": "Total Rides",
+                "clients": "Total Clients"
+            },
+            "allTime": "All time"
+        }
+    },
+    "profile": {
+        "title": "Your Profile",
+        "username": "Username",
+        "phone": "Phone Number",
+        "enable2fa": "Enable Two-Factor Authentication",
+        "scan_qr": "Scan this QR Code in your Authenticator App",
+        "otp_placeholder": "Enter the 6-digit code",
+        "confirm": "Confirm",
+        "cancel": "Cancel",
+        "invalid_otp": "The OTP you entered is invalid. Please try again.",
+        "disable2fa": "Disable 2FA",
+        "enter_otp_to_disable": "Enter OTP to disable 2FA",
+        "admin_panel": "Admin Panel"
+    },
+    "homePage": {
+        "catwalk": {
+            "bookBtn": "Book Now",
+            "kmH": "km/h",
+            "km": "km",
+            "pricePerDay": "From {{price}} UAH per day"
+        },
+        "mainInfo": {
+            "header": "Electric Bike Rental in Dnipro",
+            "description": "Teslovel offers electric bike rentals in Dnipro – for commuting, leisure, and delivery services. We provide electric bikes for rent by the day, by the week, or on custom terms depending on your needs. A wide range of electric bike models to suit different preferences and requirements. Affordable, transparent rental conditions under contract. Convenient contact options and a high level of service.",
+            "feature_1": "For awesome journeys",
+            "feature_2": "For delivery service workers",
+            "feature_3": "For exciting leisure"
+        },
+        "CTACallMe": {
+            "header": "Have questions? Leave a request!",
+            "btn": "Call me"
+        }
+    },
+    "bikeHero": {
+        "pricePerDay": "From {{price}} UAH/day",
+        "bookBtn": "Book Now",
+        "unavailableBtn": "Unavailable"
+    },
+    "bikeDescription": {
+        "title": "About the Bike"
+    },
+    "bikeSpecs": {
+        "title": "Specifications",
+        "performance": "Performance",
+        "maxSpeed": "Max Speed",
+        "range": "Range",
+        "power": "Power",
+        "components": "Components",
+        "batteryType": "Battery Type",
+        "brakes": "Brakes",
+        "wheelSize": "Wheel Size",
+        "enginePosition": "Engine Position"
+    },
+    "bikeBooking": {
+        "title": "Ready to ride?",
+        "available": "{{name}} is available for booking!",
+        "unavailable": "{{name}} is currently unavailable.",
+        "bookBtn": "Book Now",
+        "unavailableBtn": "Unavailable"
+    },
+    "bikeCard": {
+        "bookBtn": "Book Now",
+        "priceSuffix": "UAH / day",
+        "status": {
+            "available": "Available",
+            "onMaintenance": "On Maintenance",
+            "notAvailable": "Not Available"
+        }
+    },
+    "models": {
+        "title": "Our Bike Fleet",
+        "totalLabel": "Total models",
+        "availableLabel": "Available"
+    },
+    "nav": {
+        "models": "Models",
+        "blog": "Blog",
+        "about": "About Us",
+        "contacts": "Contacts",
+        "language": "Language",
+        "account": "Account",
+        "call": "Call Us",
+        "welcome": "Welcome",
+        "phone": "Phone",
+        "view_profile": "View Profile",
+        "logout": "Logout",
+        "reviews": "Reviews"
+    },
+    "bikesMenu": {
+        "title": "Bike Models",
+        "allModels": "All Models"
+    },
+    "contactsMenu": {
+        "title": "Contacts",
+        "header": "Get in Touch",
+        "callBtn": "Call Us",
+        "or": "Or",
+        "leaveContact": "Leave Your Contact Info",
+        "nameLabel": "Name",
+        "namePlaceholder": "Your name",
+        "phoneLabel": "Phone",
+        "additionalInfo": "Additional Information",
+        "additionalPlaceholder": "e.g., preferred time, type of bike, etc.",
+        "sendBtn": "Send",
+        "successAlert": "Contact form submitted! We'll reach out soon.",
+        "invalidName": "Please enter your name.",
+        "invalidPhone": "Please enter a valid phone number.",
+        "tooFast": "The form was submitted too quickly. Please try again.",
+        "errorAlert": "Something went wrong. Please try again later."
+    },
+    "languageMenu": {
+        "title": "Choose Language"
+    },
+    "installedItems": {
+        "title": "Installed on our bikes",
+        "frame": "High-quality frame formula",
+        "rims": "Reinforced rims",
+        "antiPunctureTires": "Anti-puncture tires",
+        "diskBrakes": "High-performance disk brakes",
+        "motors": "Powerful electric motors",
+        "pasSystem": "PAS system",
+        "rearDrive": "Rear drive",
+        "dropoutReinforcers": "Dropout reinforcers",
+        "brakeLevers": "Electric brake levers",
+        "display": "Universal display"
+    },
+    "cardsSwiper": {
+        "latestModels": "Latest models"
+    },
+    "faq": [
+        {
+            "q": "What do I need to rent an electric bike?",
+            "a": "You need to present a passport, foreign passport, or driver's license. A formal rental agreement and handover act are also signed, outlining usage rules, liability, and return conditions. This ensures transparency and safety for both parties."
+        },
+        {
+            "q": "Is a deposit required?",
+            "a": "Yes, a deposit of 500 UAH per electric bike is required. It is refunded at the end of the rental if there is no damage."
+        },
+        {
+            "q": "What is the minimum age for renting a bike?",
+            "a": "Only individuals aged 18 and above can rent an electric bike."
+        },
+        {
+            "q": "What support service do you offer?",
+            "a": "We provide technical support, quick contact via phone, messengers, or social media, and fast response in case of breakdowns or other issues."
+        },
+        {
+            "q": "What features do your electric bikes have?",
+            "a": "Our bikes are equipped with powerful 500W hub motors, high-capacity batteries, PAS systems, quality disc brakes, puncture-resistant tires, and displays with indicators for a comfortable and safe ride."
+        },
+        {
+            "q": "What rental durations are available?",
+            "a": "You can rent a bike from 1 day up to the entire season. The rental season is valid when the temperature is between +5°C and +40°C."
+        },
+        {
+            "q": "Can I test the bike before renting?",
+            "a": "Yes, we offer a free test ride for up to 30 minutes after deposit payment so you can assess the comfort and quality."
+        },
+        {
+            "q": "Do you plan to sell bikes?",
+            "a": "Yes, in the future, there will be an option to purchase an electric bike with warranty service."
+        },
+        {
+            "q": "What are the advantages of an e-bike over other transport?",
+            "a": "It’s fast, eco-friendly, convenient, and cheap. You save time, avoid traffic, and enjoy your ride. They’re great for deliveries and daily commuting."
+        },
+        {
+            "q": "Why do people choose you?",
+            "a": "We are the only service of this kind in the city, offering full support, maintenance, a personal approach, and unique long-range batteries."
+        },
+        {
+            "q": "How can I contact you?",
+            "a": "Reach out via Instagram, fill out the form on our website, or call the provided number. We’ll call you back during the day."
+        }
+    ],
+    "bookPage": {
+        "title": "{{bikeName}} Booking",
+        "formTitle": "Book your ride",
+        "nameLabel": "Your name",
+        "namePlaceholder": "Enter your full name",
+        "commentsLabel": "Comments",
+        "commentsPlaceholder": "Additional notes (optional)",
+        "selectDateError": "Please select a date range before booking.",
+        "successMessage": "Your booking was successful!",
+        "submitButton": "Book Now",
+        "booked": "Booked",
+        "dateOverlapError": "Selected dates are already booked.",
+        "noDatesSelected": "No dates selected yet.",
+        "selectedDates": "Selected: {{start}} → {{end}}",
+        "nameAndPhoneError": "Please, enter your name and phone number."
+    },
+    "loading": {
+        "title": "Powering your e-bike journey..."
+    },
+    "units": {
+        "kmh": "km/h",
+        "km": "km",
+        "watt": "W",
+        "volt": "V",
+        "inch": "inches"
+    },
+    "login": {
+        "title": "Login",
+        "phonePlaceholder": "Phone Number",
+        "passwordPlaceholder": "Password",
+        "otpPlaceholder": "Enter OTP code",
+        "confirmOtpBtn": "Confirm OTP",
+        "loginBtn": "Login",
+        "noAccount": "Don't have an account?",
+        "signUp": "Sign up",
+        "failure": "Login failed. Please check your credentials.",
+        "errors": {
+            "required": "Please fill in all fields",
+            "otp_required": "OTP code is required.",
+            "invalid_otp": "Invalid OTP code."
+        }
+    },
+    "logout": {
+        "failure": "Logout failed. Please try again."
+    },
+    "signup": {
+        "title": "Sign Up",
+        "phonePlaceholder": "Phone Number (e.g., +1234567890)",
+        "passwordPlaceholder": "Password",
+        "confirmPasswordPlaceholder": "Confirm Password",
+        "signupBtn": "Sign Up",
+        "hasAccount": "Already have an account?",
+        "loginLink": "Login",
+        "successMessage": "Account created successfully. Please log in.",
+        "failureMessage": "Registration failed. Please try again later.",
+        "errors": {
+            "requiredPhone": "Phone number is required",
+            "invalidPhone": "Invalid phone number format",
+            "requiredPassword": "Password is required",
+            "passwordLength": "Password must be at least 8 characters",
+            "passwordFormat": "Password must contain letters and numbers",
+            "requiredConfirm": "Confirm password is required",
+            "passwordMismatch": "Passwords do not match"
+        }
+    }
+}
