@@ -1,6 +1,6 @@
 {
-    "name": "django-reactjs-heroku-template",
-    "version": "1.0.0",
+    "name": "teslovel",
+    "version": "1.0.3",
     "scripts": {
         "postinstall": "cd frontend && npm install",
         "heroku-postbuild": "cd frontend && npm run build"
