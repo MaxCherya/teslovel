@@ -113,12 +113,18 @@ if IS_DEV:
         }
     }
 else:
+    db_from_env = dj_database_url.parse(
+        os.getenv('DATABASE_URL'),
+        conn_max_age=600,
+    )
+    db_from_env['ENGINE'] = 'django.db.backends.mysql'
+
+    # ✅ Strip out invalid param
+    db_from_env['OPTIONS'] = db_from_env.get('OPTIONS', {})
+    db_from_env['OPTIONS'].pop('sslmode', None)
+
     DATABASES = {
-        'default': dj_database_url.config(
-            default=os.getenv('DATABASE_URL'),
-            conn_max_age=600,
-            ssl_require=True
-        )
+        'default': db_from_env
     }
 
 
