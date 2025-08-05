@@ -7,7 +7,7 @@ const Reviews: React.FC = () => {
 
     return (
         <div className="w-full min-h-screen bg-gray-100 text-gray-900 flex flex-col items-center justify-center p-4 sm:p-8">
-            <div className="max-w-5xl w-full">
+            <div className="max-w-5xl w-full mt-15 lg:mt-0">
                 <h1 className="text-4xl sm:text-5xl font-bold text-center mb-8 animate-fade-in-down">
                     {t("reviews.title")}
                 </h1>

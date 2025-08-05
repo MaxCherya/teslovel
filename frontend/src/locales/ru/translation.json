@@ -680,7 +680,7 @@
     },
     "homePage": {
         "catwalk": {
-            "bookBtn": "Забронировать",
+            "bookBtn": "Оставить заявку",
             "kmH": "км/ч",
             "km": "км",
             "pricePerDay": "От {{price}} грн в день аренды"
@@ -699,7 +699,7 @@
     },
     "bikeHero": {
         "pricePerDay": "От {{price}} грн/день",
-        "bookBtn": "Забронировать",
+        "bookBtn": "Оставить заявку",
         "unavailableBtn": "Недоступен"
     },
     "bikeDescription": {
@@ -721,11 +721,11 @@
         "title": "Готовы прокатиться?",
         "available": "{{name}} доступен для аренды!",
         "unavailable": "{{name}} в настоящее время недоступен.",
-        "bookBtn": "Забронировать",
+        "bookBtn": "Оставить заявку",
         "unavailableBtn": "Недоступен"
     },
     "bikeCard": {
-        "bookBtn": "Забронировать",
+        "bookBtn": "Оставить заявку",
         "priceSuffix": "грн / день",
         "status": {
             "available": "Доступен",
@@ -840,15 +840,15 @@
         }
     ],
     "bookPage": {
-        "title": "Бронирование {{bikeName}}",
-        "formTitle": "Забронировать поездку",
+        "title": "Заявка на {{bikeName}}",
+        "formTitle": "Оставить заявку",
         "nameLabel": "Ваше имя",
         "namePlaceholder": "Введите полное имя",
         "commentsLabel": "Комментарии",
         "commentsPlaceholder": "Дополнительные пожелания (необязательно)",
-        "selectDateError": "Пожалуйста, выберите диапазон дат перед бронированием.",
-        "successMessage": "Бронирование успешно оформлено!",
-        "submitButton": "Забронировать",
+        "selectDateError": "Пожалуйста, выберите диапазон дат для отправки заявки.",
+        "successMessage": "Ваша заявка успешно отправлена! Наш менеджер свяжется с вами в ближайшее время.",
+        "submitButton": "Оставить заявку",
         "booked": "Забронировано",
         "dateOverlapError": "Выбранные даты уже заняты.",
         "noDatesSelected": "Даты ещё не выбраны.",

@@ -680,7 +680,7 @@
     },
     "homePage": {
         "catwalk": {
-            "bookBtn": "Забронювати",
+            "bookBtn": "Залишити заявку",
             "kmH": "км/г",
             "km": "км",
             "pricePerDay": "Від {{price}} грн за день оренди"
@@ -699,7 +699,7 @@
     },
     "bikeHero": {
         "pricePerDay": "Від {{price}} грн/день",
-        "bookBtn": "Забронювати",
+        "bookBtn": "Залишити заявку",
         "unavailableBtn": "Недоступний"
     },
     "bikeDescription": {
@@ -721,11 +721,11 @@
         "title": "Готові проїхатись?",
         "available": "{{name}} доступний для оренди!",
         "unavailable": "{{name}} наразі недоступний.",
-        "bookBtn": "Забронювати",
+        "bookBtn": "Залишити заявку",
         "unavailableBtn": "Недоступний"
     },
     "bikeCard": {
-        "bookBtn": "Забронювати",
+        "bookBtn": "Залишити заявку",
         "priceSuffix": "грн / день",
         "status": {
             "available": "Доступний",
@@ -840,15 +840,15 @@
         }
     ],
     "bookPage": {
-        "title": "Бронювання {{bikeName}}",
-        "formTitle": "Забронювати поїздку",
+        "title": "Заявка на {{bikeName}}",
+        "formTitle": "Залишити заявку",
         "nameLabel": "Ваше ім’я",
         "namePlaceholder": "Введіть повне ім’я",
         "commentsLabel": "Коментарі",
         "commentsPlaceholder": "Додаткові побажання (необов’язково)",
-        "selectDateError": "Будь ласка, виберіть діапазон дат для бронювання.",
-        "successMessage": "Бронювання успішно оформлено!",
-        "submitButton": "Забронювати",
+        "selectDateError": "Будь ласка, виберіть діапазон дат для подачі заявки..",
+        "successMessage": "Вашу заявку успішно надіслано! Наш менеджер зателефонує вам найближчим часом.",
+        "submitButton": "Залишити заявку",
         "booked": "Заброньовано",
         "dateOverlapError": "Вибрані дати вже зайняті.",
         "noDatesSelected": "Дата ще не вибрана.",

@@ -63,7 +63,7 @@ export default function MainLayout() {
                         <a href="/models" className="hover:text-gray-800 transition">{t('nav.models')}</a>
                         <a href="/blog" className="hover:text-gray-800 transition">{t('nav.blog')}</a>
                         <a href="/about" className="hover:text-gray-800 transition">{t('nav.about')}</a>
-                        <a href="/contact" className="hover:text-gray-800 transition">{t('nav.contacts')}</a>
+                        <a href="/reviews" className="hover:text-gray-800 transition">{t('nav.reviews')}</a>
                     </div>
                 </div>
             </footer>

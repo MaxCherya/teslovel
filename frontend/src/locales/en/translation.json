@@ -680,7 +680,7 @@
     },
     "homePage": {
         "catwalk": {
-            "bookBtn": "Book Now",
+            "bookBtn": "Leave a Request",
             "kmH": "km/h",
             "km": "km",
             "pricePerDay": "From {{price}} UAH per day"
@@ -699,7 +699,7 @@
     },
     "bikeHero": {
         "pricePerDay": "From {{price}} UAH/day",
-        "bookBtn": "Book Now",
+        "bookBtn": "Leave a Request",
         "unavailableBtn": "Unavailable"
     },
     "bikeDescription": {
@@ -721,11 +721,11 @@
         "title": "Ready to ride?",
         "available": "{{name}} is available for booking!",
         "unavailable": "{{name}} is currently unavailable.",
-        "bookBtn": "Book Now",
+        "bookBtn": "Leave a Request",
         "unavailableBtn": "Unavailable"
     },
     "bikeCard": {
-        "bookBtn": "Book Now",
+        "bookBtn": "Leave a Request",
         "priceSuffix": "UAH / day",
         "status": {
             "available": "Available",
@@ -840,15 +840,15 @@
         }
     ],
     "bookPage": {
-        "title": "{{bikeName}} Booking",
-        "formTitle": "Book your ride",
+        "title": "Request for {{bikeName}}",
+        "formTitle": "Submit Request",
         "nameLabel": "Your name",
         "namePlaceholder": "Enter your full name",
         "commentsLabel": "Comments",
         "commentsPlaceholder": "Additional notes (optional)",
-        "selectDateError": "Please select a date range before booking.",
-        "successMessage": "Your booking was successful!",
-        "submitButton": "Book Now",
+        "selectDateError": "Please select a date range to submit your request.",
+        "successMessage": "Your request was successfully submitted! Our manager will contact you shortly.",
+        "submitButton": "Submit Request",
         "booked": "Booked",
         "dateOverlapError": "Selected dates are already booked.",
         "noDatesSelected": "No dates selected yet.",

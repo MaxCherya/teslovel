@@ -178,7 +178,9 @@ const BookPage: React.FC = () => {
             const res = await uploadOrderRequest({ payload });
 
             if (res?.success) {
-                toast.success(t("bookPage.successMessage"));
+                toast.success(t("bookPage.successMessage"), {
+                    autoClose: 15000,
+                });
                 navigate("/");
             } else {
                 toast.error(t("bookPage.serverError") || "Помилка сервера");
