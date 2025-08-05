@@ -36,6 +36,7 @@ Teslovel is a modern web application built with a powerful full-stack architectu
 * [**Pillow**](https://pypi.org/project/Pillow/) — Imaging library used for generating and manipulating image files (required by `qrcode` for PNG output)
 * [**cloudinary**](https://pypi.org/project/cloudinary/) — A cloud-based image and video management solution. Used in combination with [`django-cloudinary-storage`](https://github.com/klis87/django-cloudinary-storage) to enable direct uploads and delivery of optimized images through Cloudinary CDN. All image fields in the `Bike` model are now managed via Cloudinary.
 * [**dj-database-url**](https://pypi.org/project/dj-database-url/) — Utility to parse database URLs (e.g. Heroku `DATABASE_URL`) into Django-compatible `DATABASES` settings. Simplifies production deployments and keeps environment-based configs clean.
+* [**mysqlclient**](https://pypi.org/project/mysqlclient/) — A fast and reliable MySQL database adapter for Python. Used by Django to connect to MySQL databases in production environments like AWS RDS or PlanetScale.
 
 ### Dev & Build Tools
 
