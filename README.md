@@ -59,8 +59,6 @@ More languages can be added as the project evolves.
 
 ## 📄 Documentation
 
-Here's a cleaner, more beautiful, and professional version of your project structure documentation for `README.md`:
-
 ---
 
 ## 📁 Project Structure
@@ -90,8 +88,6 @@ This project is a full-stack web application powered by **Django** (backend) and
 * **`Procfile` & `package.json`** – Enable Heroku to build and serve both backend and frontend correctly.
 * **`requirements.txt`** – All Python libraries needed (used by Heroku and for local setup).
 
-Here's a clean and professional version of the `## 📁 backendApps` section for your `README.md`:
-
 ---
 
 ## 📁 `backendApps`
@@ -110,9 +106,6 @@ This directory contains all modular Django apps that power the backend functiona
 
 Each app is self-contained with its own models, serializers, views, and URLs, following Django's app-based architecture.
 
-
-Here's a refined and professional version of your `## 📁 frontend` section for `README.md`:
-
 ---
 
 ## 📁 `frontend`
@@ -128,9 +121,6 @@ Below is a brief overview of custom additions and key files:
 | **`src/`**     | Core of the frontend app: includes pages, components, hooks, API logic, styles, and more.                                                      |
 
 The frontend is designed as a **Single Page Application (SPA)** and is configured to work smoothly when served by Django in production or development.
-
-
-Here's a clean and well-structured version of your `## 📁 frontend/src` section for `README.md`:
 
 ---
 
