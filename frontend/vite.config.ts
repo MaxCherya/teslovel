@@ -12,9 +12,4 @@ export default defineConfig(() => ({
     assetsDir: 'assets',
     emptyOutDir: true,
   },
-  server: {
-    host: true,
-    port: 5173,
-  },
-  base: '/static/',
 }))
