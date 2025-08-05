@@ -3,13 +3,13 @@ import react from '@vitejs/plugin-react-swc'
 import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig(() => ({
-  base: '/static/',
+  base: '/static/assets/',
   plugins: [
     react(),
     tailwindcss(),
   ],
   build: {
-    outDir: 'dist',
+    outDir: 'dist/assets',
     emptyOutDir: true,
   },
 }))
