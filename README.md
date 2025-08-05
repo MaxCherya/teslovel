@@ -41,7 +41,7 @@ Teslovel is a modern web application built with a powerful full-stack architectu
 
 - [Python-dotenv](https://pypi.org/project/python-dotenv/)
 - [npm](https://www.npmjs.com/) / [Node.js](https://nodejs.org/)
-- [Gunicorn](https://gunicorn.org/) _Planned for deployment_
+- [Gunicorn](https://gunicorn.org/)
 - [Tailwind CLI / PostCSS](https://tailwindcss.com/docs/installation)
 
 ---
@@ -60,7 +60,86 @@ More languages can be added as the project evolves.
 
 ## 📄 Documentation
 
-More documentation will be added as the project grows, including setup instructions, API usage, deployment guides, and architecture decisions.
+---
+
+## 📁 Project Structure
+
+This project is a full-stack web application powered by **Django** (backend) and **ReactJS** (frontend). Below is an overview of the key directories and files:
+
+```bash
+├── .vscode/               # VSCode settings to prevent common TypeScript issues
+├── backend/               # Core Django backend (settings.py, urls.py, wsgi.py, etc.)
+├── backendApps/           # All Django apps used in the project
+├── frontend/              # ReactJS frontend application
+├── templates/             # Django HTML templates (entry point: index.html)
+├── .gitignore             # Git ignore rules (e.g., node_modules, __pycache__)
+├── manage.py              # Django project management CLI
+├── package.json           # Node.js config for Heroku compatibility (React buildpack)
+├── Procfile               # Heroku deployment configuration
+└── requirements.txt       # Python dependencies for virtual environment
+```
+
+## 🔧 Key Notes
+
+* **`.vscode/`** – Helps maintain consistent TypeScript development experience across environments.
+* **`backend/`** – Contains project-wide Django configuration files.
+* **`backendApps/`** – Modular Django apps live here (e.g., accounts, API, auth).
+* **`frontend/`** – Contains all React components, assets, and build logic.
+* **`templates/`** – Includes `index.html` and other Django-served templates.
+* **`Procfile` & `package.json`** – Enable Heroku to build and serve both backend and frontend correctly.
+* **`requirements.txt`** – All Python libraries needed (used by Heroku and for local setup).
+
+---
+
+## 📁 `backendApps`
+
+This directory contains all modular Django apps that power the backend functionality of the project:
+
+| App Name               | Description                                                                                                    |
+| ---------------------- | -------------------------------------------------------------------------------------------------------------- |
+| **`accounts`**         | Manages the extended user model, authentication endpoints, token management, and profile settings such as 2FA. |
+| **`blogs`**            | Implements the blog system, including models, endpoints, and admin features.                                   |
+| **`catalog`**          | Contains models and APIs for bikes and all items displayed on the store page.                                  |
+| **`customer_support`** | Handles "Contact Us" functionality, including user inquiries and related models.                               |
+| **`expenses`**         | Manages expense tracking models and related admin panel endpoints.                                             |
+| **`orders`**           | Contains the `Order` model and endpoints for order placement, validation, and management.                      |
+| **`specs_type`**       | Defines specification models such as battery types, brake types, engine positions, etc.                        |
+
+Each app is self-contained with its own models, serializers, views, and URLs, following Django's app-based architecture.
+
+---
+
+## 📁 `frontend`
+
+This folder contains the **React + TypeScript + Vite** frontend application, optimized with the **SWC compiler** for faster builds. For a deeper understanding of the structure, refer to the [Vite official documentation](https://vitejs.dev/).
+
+Below is a brief overview of custom additions and key files:
+
+| Path/File      | Description                                                                                                                                    |
+| -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| **`views.py`** | Django view that serves `index.html` with all necessary context tokens (e.g., CSRF, session). Enables seamless Django integration for the SPA. |
+| **`public/`**  | Contains static assets such as the favicon (tab icon).                                                                                         |
+| **`src/`**     | Core of the frontend app: includes pages, components, hooks, API logic, styles, and more.                                                      |
+
+The frontend is designed as a **Single Page Application (SPA)** and is configured to work smoothly when served by Django in production or development.
+
+---
+
+## 📁 `frontend/src`
+
+This is the core folder of the **React + TypeScript** frontend application. Below is a breakdown of the main subdirectories:
+
+| Folder/File       | Description                                                                              |
+| ----------------- | ---------------------------------------------------------------------------------------- |
+| **`assets/`**     | Contains images and static assets used across pages.                                     |
+| **`components/`** | Main directory for all reusable React components.                                        |
+| **`endpoints/`**  | Contains modular API utility functions for interacting with Django backend endpoints.    |
+| **`lib/`**        | Core utilities including custom hooks, fetchers, route helpers, and global types.        |
+| **`locales/`**    | i18n configuration and localization files for multi-language support.                    |
+| **`pages/`**      | All route-based pages of the application. Each file here corresponds to a main view.     |
+| **`types/`**      | Additional TypeScript definitions, including support for external libraries like Swiper. |
+
+For details about application setup files such as `App.tsx`, `main.tsx`, and `index.css`, refer to the [official Vite + React documentation](https://vitejs.dev/guide/).
 
 ---
 
