@@ -3,7 +3,7 @@
     "version": "1.0.7",
     "scripts": {
         "postinstall": "cd frontend && npm install",
-        "heroku-postbuild": "cd frontend && npm run build"
+        "heroku-postbuild": "cd frontend && npm run build && cp dist/index.html dist/assets/index.html && cd .. && python manage.py collectstatic --noinput"
     },
     "engines": {
         "node": "20.12.0"

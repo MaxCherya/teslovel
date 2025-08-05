@@ -4,7 +4,7 @@ from django.views.generic import TemplateView
 
 @method_decorator(ensure_csrf_cookie, name='dispatch')
 class CSRFAwareIndexView(TemplateView):
-    template_name = "index.html"
+    template_name = "assets/index.html"
 
     def get(self, request, *args, **kwargs):
         return super().get(request, *args, **kwargs)
