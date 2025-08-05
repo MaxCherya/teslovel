@@ -9,8 +9,7 @@ export default defineConfig(() => ({
     tailwindcss(),
   ],
   build: {
-    outDir: 'dist',
-    assetsDir: 'assets',
+    outDir: 'frontend/dist',
     emptyOutDir: true,
   },
 }))
